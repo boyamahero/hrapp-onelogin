@@ -1,8 +1,8 @@
 {
-  "name": "laravel-quasar-pwa-template",
+  "name": "egat-hr",
   "version": "1.0.0",
   "description": "A Quasar Framework app",
-  "productName": "Quasar App",
+  "productName": "EGAT HR",
   "cordovaId": "org.cordova.quasar.app",
   "author": "Your Author",
   "private": true,

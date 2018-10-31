@@ -22,3 +22,8 @@ Route::get('/test', function () {
     'data' => 'Test api response'
   ]);
 });
+Route::get('/logout', function () {
+  return response()->json([
+    'data' => 'logout done'
+  ]);
+});

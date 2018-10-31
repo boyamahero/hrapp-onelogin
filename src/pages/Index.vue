@@ -16,6 +16,11 @@
         </q-btn>
       </div>
       <div>
+        <q-btn :loading="loading" color="red" @click="logout">
+          Logout
+        </q-btn>
+      </div>
+      <div>
         <code>
           {{response}}
         </code>
@@ -28,6 +33,7 @@
 </style>
 
 <script>
+import { Loading } from 'quasar'
 export default {
   name: 'PageIndex',
   data () {
@@ -62,6 +68,28 @@ export default {
         this.color = color
         this.loading = false
       }, 700)
+    },
+    logout () {
+      Loading.show({
+        delay: 300 // milliseconds
+      })
+      this.$store.dispatch('destroyToken')
+        .then(response => {
+          this.$router.push({name: 'login'})
+        })
+        .catch(e => {
+          if (e.message === 'Request failed with status code 500') {
+            this.showAlert = true
+            this.error = 'เครื่องแม่ข่ายเว็ปไซต์มีปัญหา'
+          }
+          if (e.message === 'Network Error') {
+            this.showAlert = true
+            this.error = 'เครื่องแม่ข่ายมีปัญหา'
+          }
+        })
+        .finally(function () {
+          Loading.hide()
+        })
     }
   }
 }

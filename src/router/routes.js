@@ -2,10 +2,25 @@
 const routes = [
   {
     path: '/',
+    name: 'index',
     component: () => import('layouts/MyLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      {
+        path: '',
+        component: () => import('pages/Index.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      }
     ]
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('pages/Login'),
+    meta: {
+      requiresVisitor: true
+    }
   }
 ]
 
