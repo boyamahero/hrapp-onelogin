@@ -56,7 +56,7 @@ module.exports = function (ctx) {
         api: JSON.stringify(
           ctx.dev
             ? '/api'
-            : 'http://some.endpoint/api' // production end-point
+            : 'https://hrapp.egat.co.th/api' // production end-point
         ),
       },
     },
