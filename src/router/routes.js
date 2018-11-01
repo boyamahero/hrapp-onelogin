@@ -2,11 +2,11 @@
 const routes = [
   {
     path: '/',
-    name: 'index',
     component: () => import('layouts/MyLayout.vue'),
     children: [
       {
         path: '',
+        name: 'index',
         component: () => import('pages/Index.vue'),
         meta: {
           requiresAuth: true

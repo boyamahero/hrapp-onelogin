@@ -22,7 +22,12 @@ Route::get('/test', function () {
     'data' => 'Test api response'
   ]);
 });
-Route::get('/logout', function () {
+Route::post('/login', function () {
+  return response()->json([
+    'access_token' => 'login done'
+  ]);
+});
+Route::post('/logout', function () {
   return response()->json([
     'data' => 'logout done'
   ]);
