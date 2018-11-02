@@ -1,5 +1,7 @@
 <?php
 
+use App\User;
+use App\Employee;
 use Illuminate\Http\Request;
 
 /*
@@ -22,13 +24,10 @@ Route::get('/test', function () {
     'data' => 'Test api response'
   ]);
 });
-Route::post('/login', function () {
-  return response()->json([
-    'access_token' => 'login done'
-  ]);
+
+Route::get('/employees/{id}', function($id){
+  return User::where('username',$id)->with('employee')->get();
 });
-Route::post('/logout', function () {
-  return response()->json([
-    'data' => 'logout done'
-  ]);
-});
+
+Route::post('/login', 'AuthController@login');
+Route::post('/logout', 'AuthController@logout');
