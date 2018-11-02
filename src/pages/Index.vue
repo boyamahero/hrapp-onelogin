@@ -1,29 +1,59 @@
 <template>
-  <q-page class="flex flex-center">
-    <div class="column justify-center items-center">
-      <div>
-        <h5>Laravel 5.7 (as API backend) + Quasar PWA (Vuejs)</h5>
+  <q-page>
+    <div class="row item-center">
+      <div class="col">
+          <q-carousel
+          quick-nav
+          quick-nav-icon="stop">
+      <q-carousel-slide>
+        <q-card class="q-ma-xs justify-center personcard">
+      <q-card-main>
+        <p class="header">ข้อมูลส่วนบุคคล</p>
+        <q-card-separator />
+        <p>หมายเลขประจำตัว : 594073</p>
+        <p>ตำแหน่ง : พช.4</p>
+        <p>สังกัด : รวห. อจส. กทห-ห. หพอ-ห.</p>
+      </q-card-main>
+      </q-card>
+      </q-carousel-slide>
+      <q-carousel-slide >
+        <q-card class="q-ma-xs justify-center personcard">
+      <q-card-main>
+        <p class="header">ข้อมูลเงินเดือน</p>
+        <q-card-separator />
+        <p>เงินเดือน : 12,500</p>
+      </q-card-main>
+      </q-card>
+      </q-carousel-slide>
+      <q-carousel-slide>
+        <q-card class="q-ma-xs justify-center personcard">
+      <q-card-main>
+        <p class="header">ข้อมูลการทำงาน</p>
+        <q-card-separator />
+        <p>วันที่เริ่มงาน : 1 กันยายน 2557</p>
+        <p>วันที่เกษียณอายุ : 1 ตุลาคม 2593</p>
+        <p>อายุงาน : 4 ปี 5 เดือน</p>
+      </q-card-main>
+      </q-card>
+      </q-carousel-slide>
+    </q-carousel>
       </div>
-      <div>
-        <img alt="Quasar logo" src="~assets/quasar-logo-full.svg">
-      </div>
-      <div>
-        <p>Make an api request to Laravel <i>/api/test</i><br>
-          <sub>Before you need to run <i>artisan serve</i></sub>
-        </p>
-        <q-btn :loading="loading" :color="color" @click="makeRequest">
-          make an api request
-        </q-btn>
-      </div>
-      <div>
-        <q-btn :loading="logoutloading" color="red" @click="logout">
-          Logout
-        </q-btn>
-      </div>
-      <div>
-        <code>
-          {{response}}
-        </code>
+    </div>
+        <div class="row item-center">
+      <div class="col">
+        <q-card class="q-ma-md justify-center">
+      <q-card-main>
+         <p class="header">เมนู</p>
+        <div class="row text-center">
+          <div class="col-6"><img src="statics/menu/menu1.png"></div>
+          <div class="col-6"><img src="statics/menu/menu2.png"></div>
+        </div>
+        <div class="row text-center">
+          <div class="col-6"><img src="statics/menu/menu3.png"></div>
+          <div class="col-6"><img src="statics/menu/menu4.png"></div>
+        </div>
+      </q-card-main>
+    </q-card>
       </div>
     </div>
   </q-page>

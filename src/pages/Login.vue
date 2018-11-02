@@ -2,14 +2,17 @@
   <q-layout>
     <q-page-container>
       <q-page padding>
-        <div class="flex flex-center">
-          <div class="full-width" style="max-width: 90vw;">
-            <img alt="EGAT HR Mobile Application" src="~assets/egathr-logo-full.svg">
-            <q-input v-model="username" type="number" float-label="Username" color="secondary"/>
+          <div class="full-width">
+            <div class="row justify-center text-center">
+              <div class="col-xs-9 col-lg-2">
+             <img alt="EGAT HR Mobile Application" src="statics/egathr-logo-full.png" width="100%">
+             <br><br>
+            <!-- <img alt="EGAT HR Mobile Application" src="~assets/egathr-logo-full.svg"> -->
+            <q-input class="login-input" v-model="username" type="number" placeholder="ชื่อผู้ใช้"/>
             <br>
-            <q-input v-model="password" float-label="Password" color="secondary" type="password" />
+            <q-input class="login-input" v-model="password" placeholder="รหัสผ่าน" color="secondary" type="password"/>
             <br>
-            <q-btn color="warning" size="3vh" label="Login" class="full-width" :loading="loading" @click="login"/>
+            <q-btn color="primary" size="3vh" label="ลงชื่อเข้าใช้" :loading="loading" @click="login"/>
             <br>
             <br>
             <q-alert
@@ -21,8 +24,9 @@
               >
               {{ error }}
             </q-alert>
+             </div>
+            </div>
           </div>
-        </div>
       </q-page>
     </q-page-container>
   </q-layout>

@@ -1,57 +1,46 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-layout-header>
-      <q-toolbar
-        color="primary"
-        :glossy="$q.theme === 'mat'"
-        :inverted="$q.theme === 'ios'"
+    </q-layout-header>
+<q-toolbar
+        inverted
+        color="white"
       >
         <q-btn
           flat
-          dense
-          round
           @click="leftDrawerOpen = !leftDrawerOpen"
           aria-label="Menu"
         >
-          <q-icon name="menu" />
+          <q-icon name="menu" class="menu"/>
         </q-btn>
 
         <q-toolbar-title>
-          Quasar App
-          <div slot="subtitle">Running on Quasar v{{ $q.version }}</div>
+          <div class="row justify-end">
+          <div class="col-xs-9 col-lg-9 text-right self-center">
+          <div class="subtitle">EGAT HR APP</div>
+          <div class="title">นายบุญฤทธิ์ บุญลือ</div>
+          </div>
+          <div class="col-xs-3 col-lg-1 text-right">
+              <img src="statics/594073.jpg" class="q-item-avatar self-center">
+          </div>
+          </div>
         </q-toolbar-title>
       </q-toolbar>
-    </q-layout-header>
-
     <q-layout-drawer
       v-model="leftDrawerOpen"
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
+      :width="70"
     >
       <q-list
         no-border
         link
         inset-delimiter
       >
-        <q-list-header>Essential Links</q-list-header>
-        <q-item @click.native="openURL('http://quasar-framework.org')">
-          <q-item-side icon="school" />
-          <q-item-main label="Docs" sublabel="quasar-framework.org" />
+        <q-item>
+          <q-item-side icon="call"/>
         </q-item>
-        <q-item @click.native="openURL('https://github.com/quasarframework/')">
-          <q-item-side icon="code" />
-          <q-item-main label="GitHub" sublabel="github.com/quasarframework" />
-        </q-item>
-        <q-item @click.native="openURL('https://discord.gg/5TDhbDg')">
-          <q-item-side icon="chat" />
-          <q-item-main label="Discord Chat Channel" sublabel="https://discord.gg/5TDhbDg" />
-        </q-item>
-        <q-item @click.native="openURL('http://forum.quasar-framework.org')">
-          <q-item-side icon="record_voice_over" />
-          <q-item-main label="Forum" sublabel="forum.quasar-framework.org" />
-        </q-item>
-        <q-item @click.native="openURL('https://twitter.com/quasarframework')">
-          <q-item-side icon="rss feed" />
-          <q-item-main label="Twitter" sublabel="@quasarframework" />
+        <q-item @click.native="logout" :loading="logoutloading">
+          <q-item-side icon="power_settings_new" color="red" />
         </q-item>
       </q-list>
     </q-layout-drawer>
@@ -59,21 +48,96 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+
+ <q-layout-footer  reveal>
+<q-tabs :inverted="$q.theme === 'ios'">
+        <q-item class="justify-between">
+          <q-item-side icon="home" style="color:#14548a"/>
+          <q-btn
+          flat
+          >
+            <q-item-side icon="horizontal_split" style="color:#14548a"/>
+            <q-popover
+                :anchor="anchor"
+                :self="self"
+              >
+                <q-list link style="min-width: 200px">
+                  <div class="subheader">เมนูอื่นๆ</div>
+                  <q-item>
+                    <q-item-main label="เกี่ยวกับองค์กร" />
+                  </q-item>
+                  <q-item>
+                    <q-item-main label="SPEED ค่านิยมองค์กร" />
+                  </q-item>
+                  <q-item>
+                    <q-item-main label="โครงสายบังคับบัญชา" />
+                  </q-item>
+                </q-list>
+              </q-popover>
+          </q-btn>
+        </q-item>
+</q-tabs>
+  </q-layout-footer>
   </q-layout>
 </template>
 
 <script>
-import { openURL } from 'quasar'
 
 export default {
   name: 'MyLayout',
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      leftDrawerOpen: this.$q.platform.is.desktop,
+      response: '',
+      loading: false,
+      logoutloading: false
     }
   },
   methods: {
-    openURL
+    async makeRequest () {
+      let response
+      let color = 'negative'
+      this.loading = true
+
+      try {
+        response = ''
+        let req = await fetch(process.env.api + '/test')
+
+        if (!req.ok) throw new Error('error request')
+
+        let {data} = await req.json()
+        response = data
+        color = 'positive'
+      } catch (err) {
+        console.log(err)
+        response = err.message
+      }
+
+      setTimeout(() => {
+        this.response = response
+        this.color = color
+        this.loading = false
+      }, 700)
+    },
+    logout () {
+      this.logoutloading = true
+      this.$store.dispatch('destroyToken')
+        .then(response => {
+          this.logoutloading = false
+          this.$router.push({name: 'login'})
+        })
+        .catch(e => {
+          this.logoutloading = false
+          if (e.message === 'Request failed with status code 500') {
+            this.showAlert = true
+            this.error = 'เครื่องแม่ข่ายเว็ปไซต์มีปัญหา'
+          }
+          if (e.message === 'Network Error') {
+            this.showAlert = true
+            this.error = 'เครื่องแม่ข่ายมีปัญหา'
+          }
+        })
+    }
   }
 }
 </script>
