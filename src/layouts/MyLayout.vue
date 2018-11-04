@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-layout-header>
     </q-layout-header>
-<q-toolbar
+    <q-toolbar
         inverted
         color="white"
       >
@@ -49,7 +49,7 @@
       <router-view />
     </q-page-container>
 
- <q-layout-footer  reveal>
+ <q-layout-footer reveal>
 <q-tabs :inverted="$q.theme === 'ios'">
         <q-item class="justify-between">
           <q-item-side icon="home" style="color:#14548a"/>

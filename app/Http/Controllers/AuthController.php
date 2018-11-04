@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use SoapClient;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
+use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
@@ -18,7 +19,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('jwt.verify', ['except' => ['login']]);
     }
     
     public function login(Request $request)
@@ -41,13 +42,13 @@ class AuthController extends Controller
             $this->createUserNotExist($credentials);
 
             if (! $access_token = JWTAuth::attempt($credentials))
-                return response()->json(['message' => 'หมายเลขผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'], 401);        
+                return response()->json(['message' => 'หมายเลขผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'], 401);
 
         } catch (JWTException $e) {
             // something went wrong whilst attempting to encode the token
             return response()->json(['message' => 'ไม่สามารถเข้าระบบได้'], 500);
         }
-        
+
         return response()->json([
             'access_token' => $access_token,
             'token_type' => 'bearer',
@@ -57,11 +58,11 @@ class AuthController extends Controller
 
     public function logout()
     {
-        auth()->user()->tokens->each(function($token, $key){
-            $token->delete();
-        });
-
-        return response()->json('ออกจากระบบเรียบร้อยแล้ว',200);
+        JWTAuth::invalidate();
+        
+        return response([
+            'message' => 'ออกจากระบบเรียบร้อยแล้ว'
+        ], 200);
     }
 
     public function egatLogin($url,$credentials)
@@ -74,10 +75,10 @@ class AuthController extends Controller
     {
         $employee = \App\Position::where('employee_code',$credentials['username'])->first();
 
-        $user = \App\User::where('email',$credentials['username']."@egat.co.th")->first();
+        $user = User::where('email',$credentials['username']."@egat.co.th")->first();
         if(! $user)
         {
-            return \App\User::create([
+            return User::create([
                 'username' => $credentials['username'],
                 'name' => $employee->employee_name,
                 'email' => $credentials['username']."@egat.co.th",
@@ -98,7 +99,7 @@ class AuthController extends Controller
 
     public function isAdmin($id)
     {
-        $admin = \App\User::where('username',$id)
+        $admin = User::where('username',$id)
                         ->where('admin',true)
                         ->exists();
         return $admin?:false;
