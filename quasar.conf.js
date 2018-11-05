@@ -20,7 +20,7 @@ module.exports = function (ctx) {
       'material-icons', // optional, you are not bound to it
       // 'ionicons',
       // 'mdi',
-      // 'fontawesome'
+      'fontawesome'
     ],
     supportIE: false,
     build: {
@@ -99,7 +99,9 @@ module.exports = function (ctx) {
         'QLayoutFooter',
         'QPopover',
         'QBreadcrumbs',
-        'QBreadcrumbsEl'
+        'QBreadcrumbsEl',
+        'QParallax',
+        'QModal'
       ],
       directives: [
         'Ripple',

@@ -8,10 +8,9 @@
       >
         <q-btn
           flat
-          @click="leftDrawerOpen = !leftDrawerOpen"
-          aria-label="Menu"
+          @click="$router.go(-1)"
         >
-          <q-icon name="menu" class="menu"/>
+          <q-icon name="fas fa-arrow-alt-circle-left" class="menu"/>
         </q-btn>
 
         <q-toolbar-title>

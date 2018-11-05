@@ -19,7 +19,13 @@ const routes = [
         meta: {
           requiresAuth: true
         }
-      },
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MyLayoutBack.vue'),
+    children: [
       {
         path: 'infographic',
         name: 'infographic',
@@ -31,7 +37,7 @@ const routes = [
       {
         path: 'infographic_list',
         name: 'infographic_list',
-        component: () => import('pages/Infographic_list.vue'),
+        component: () => import('pages/InfographicList.vue'),
         meta: {
           requiresAuth: true
         }
