@@ -15,6 +15,20 @@ const routes = [
     ]
   },
   {
+    path: '/stat',
+    component: () => import('layouts/MyLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'stat',
+        component: () => import('pages/stat.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      }
+    ]
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import('pages/Login'),

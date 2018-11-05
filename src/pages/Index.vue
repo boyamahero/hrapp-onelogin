@@ -1,10 +1,11 @@
 <template>
   <q-page>
-    <div class="row item-center">
-      <div class="col">
-          <q-carousel
+    <div class="row justify-center">
+      <div class="col-md-9 col-xs-12">
+      <q-carousel
           quick-nav
-          quick-nav-icon="stop">
+          quick-nav-icon="stop"
+          >
       <q-carousel-slide>
         <q-card class="q-ma-xs justify-center personcard">
       <q-card-main>
@@ -39,23 +40,31 @@
     </q-carousel>
       </div>
     </div>
-        <div class="row item-center">
-      <div class="col">
-        <q-card class="q-ma-md justify-center">
+    <div class="row justify-center">
+      <div class="col-md-9 col-xs-12">
+      <q-card class="q-ma-md">
       <q-card-main>
          <p class="header">เมนู</p>
-        <div class="row text-center">
+         <div class="row text-center">
+          <div class="col-6 q-pa-xs"><img class="full-width" src="statics/menu/menu1.png"></div>
+          <div class="col-6 q-pa-xs"><img class="full-width" src="statics/menu/menu2.png"></div>
+          </div>
+          <div class="row text-center">
+          <div class="col-6 q-pa-xs"><img class="full-width" src="statics/menu/menu3.png"></div>
+          <div class="col-6 q-pa-xs"><img class="full-width" src="statics/menu/menu4.png"></div>
+         </div>
+        <!-- <div class="row text-center menupic">
           <div class="col-6"><img src="statics/menu/menu1.png"></div>
           <div class="col-6"><img src="statics/menu/menu2.png"></div>
         </div>
-        <div class="row text-center">
+        <div class="row text-center menupic">
           <div class="col-6"><img src="statics/menu/menu3.png"></div>
           <div class="col-6"><img src="statics/menu/menu4.png"></div>
-        </div>
+        </div> -->
       </q-card-main>
     </q-card>
-      </div>
     </div>
+     </div>
   </q-page>
 </template>
 

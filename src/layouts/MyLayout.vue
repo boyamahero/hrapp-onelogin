@@ -37,7 +37,21 @@
         inset-delimiter
       >
         <q-item>
-          <q-item-side icon="call"/>
+          <q-item-side icon="contact_support"/>
+                <q-popover>
+                <q-list style="min-width: 200px">
+                  <div class="subheader">เกี่ยวกับแอพ</div>
+                  <q-item>
+                    <q-item-main label="จัดทำโดย" />
+                  </q-item>
+                  <q-item>
+                    <q-item-main label="กองเทคโนโลยีสารสนเทศสายงานบริหาร" />
+                  </q-item>
+                  <q-item>
+                    <q-item-main label="โทร 65323" />
+                  </q-item>
+                </q-list>
+              </q-popover>
         </q-item>
         <q-item @click.native="logout" :loading="logoutloading">
           <q-item-side icon="power_settings_new" color="red" />
@@ -50,17 +64,13 @@
     </q-page-container>
 
  <q-layout-footer  reveal>
-<q-tabs :inverted="$q.theme === 'ios'">
-        <q-item class="justify-between">
-          <q-item-side icon="home" style="color:#14548a"/>
-          <q-btn
-          flat
-          >
-            <q-item-side icon="horizontal_split" style="color:#14548a"/>
-            <q-popover
-                :anchor="anchor"
-                :self="self"
-              >
+        <q-item class="justify-between" style="padding:0">
+          <q-btn flat>
+          <q-item-side icon="home"  @click.native="$router.push('/')" style="color:#14548a;font-size: 20px;"/>
+          </q-btn>
+          <q-btn flat>
+            <q-item-side icon="horizontal_split" style="color:#14548a;font-size: 20px;"/>
+            <q-popover>
                 <q-list link style="min-width: 200px">
                   <div class="subheader">เมนูอื่นๆ</div>
                   <q-item>
@@ -76,7 +86,6 @@
               </q-popover>
           </q-btn>
         </q-item>
-</q-tabs>
   </q-layout-footer>
   </q-layout>
 </template>
