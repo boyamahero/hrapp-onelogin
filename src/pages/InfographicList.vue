@@ -29,6 +29,9 @@
 <script>
 export default {
   name: 'PageIndex',
+  mounted () {
+    this.getInfographic()
+  },
   data () {
     return {
       color: 'primary',
@@ -37,39 +40,19 @@ export default {
       logoutloading: false,
       maximizedModal: false,
       dataInModal: '',
-      infolist: [
-        {
-          id: 5,
-          title: 'การจ้างผู้ปฏิบัติงาน',
-          path: '205.jpg'
-        },
-        {
-          id: 7,
-          title: 'ใบ กว.',
-          path: '207.jpg'
-        },
-        {
-          id: 10,
-          title: 'การลงเวลาทำงาน เหลื่อมเวลา',
-          path: '210.jpg'
-        },
-        {
-          id: 11,
-          title: 'ขั้นตอนการเบิกค่าล่วงเวลา',
-          path: '211.jpg'
-        },
-        {
-          id: 12,
-          title: 'สิทธิการลา',
-          path: '212.jpg'
-        }
-      ]
+      infolist: []
     }
   },
   methods: {
     show (value) {
       this.maximizedModal = true
       this.dataInModal = value
+    },
+    getInfographic () {
+      this.$axios.get('info-categories/2')
+        .then((res) => {
+          this.infolist = res.data
+        })
     }
   }
 }
