@@ -20,7 +20,7 @@
           <div class="subtitle">EGAT HR APP</div>
           <div class="title">นายบุญฤทธิ์ บุญลือ</div>
           </div>
-          <div class="col-xs-3 col-lg-1 text-right">
+          <div class="col-xs-3 col-lg-2 text-right">
               <img src="statics/594073.jpg" class="q-item-avatar self-center">
           </div>
           </div>

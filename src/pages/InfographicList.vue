@@ -9,12 +9,12 @@
         @click.native="show(value)"
         >
           <q-item-side>
-            <div class="wrapperA" v-bind:style="{ 'background-image': 'url(statics/infographic/2/' + value.path + ')' }"></div>
+            <div class="wrapperA" v-bind:style="{ 'background-image': 'url(statics/infographic/' + value.category_id + '/' + value.featured_image + ')' }"></div>
           </q-item-side>
           <q-item-main>{{value.title}}</q-item-main>
         <q-modal v-model="maximizedModal" maximized>
           <div class="row closemodal"><q-icon name="fas fa-window-close" @click.native="maximizedModal = false"/></div>
-          <img :src="'statics/infographic/2/' + dataInModal.path" class="full-width">
+          <img :src="'statics/infographic/' + value.category_id + '/' + dataInModal.featured_image" class="full-width">
         </q-modal>
         </q-item>
         </q-list>
@@ -49,7 +49,7 @@ export default {
       this.dataInModal = value
     },
     getInfographic () {
-      this.$axios.get('info-categories/2')
+      this.$axios.get('info-categories/' + this.$route.params.id)
         .then((res) => {
           this.infolist = res.data
         })
