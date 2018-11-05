@@ -11,17 +11,27 @@ const routes = [
         meta: {
           requiresAuth: true
         }
-      }
-    ]
-  },
-  {
-    path: '/stat',
-    component: () => import('layouts/MyLayout.vue'),
-    children: [
+      },
       {
-        path: '',
+        path: 'stat',
         name: 'stat',
-        component: () => import('pages/stat.vue'),
+        component: () => import('pages/Stat.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'infographic',
+        name: 'infographic',
+        component: () => import('pages/Infographic.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'infographic_list',
+        name: 'infographic_list',
+        component: () => import('pages/Infographic_list.vue'),
         meta: {
           requiresAuth: true
         }

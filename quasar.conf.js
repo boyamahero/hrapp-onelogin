@@ -97,7 +97,9 @@ module.exports = function (ctx) {
         'QCarouselSlide',
         'QCarouselControl',
         'QLayoutFooter',
-        'QPopover'
+        'QPopover',
+        'QBreadcrumbs',
+        'QBreadcrumbsEl'
       ],
       directives: [
         'Ripple',
