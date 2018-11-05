@@ -1,7 +1,9 @@
 <?php
 
 use App\User;
+use App\Category;
 use App\Employee;
+use App\Infographic;
 use Illuminate\Http\Request;
 
 /*
@@ -16,7 +18,7 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('jwt.verify')->get('/user', function (Request $request) {
-    return $request->user();
+    return $request->user()->employee()->first();
 });
 
 Route::get('/test', function () {
@@ -25,8 +27,16 @@ Route::get('/test', function () {
   ]);
 });
 
-Route::get('/employees/{id}', function($id){
-  return User::where('username',$id)->with('employee')->get();
+Route::get('/employee/{id}', function ($id) {
+  return Employee::where('id',$id)->first();
+});
+
+Route::get('/info-categories', function () {
+  return Category::all();
+});
+
+Route::get('/info-categories/{id}', function ($id) {
+  return Infographic::where('category_id',$id)->get();
 });
 
 Route::post('/login', 'AuthController@login');

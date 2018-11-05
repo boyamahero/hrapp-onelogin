@@ -70,7 +70,7 @@ export default {
     show (value) {
       this.maximizedModal = true
       this.dataInModal = value
-      }
+    }
   }
 }
 </script>
