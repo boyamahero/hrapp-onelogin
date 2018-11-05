@@ -11,75 +11,100 @@ const asyncData = {
   marker: {
     symbol: 'square'
   },
-  data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, {
-    y: 26.5,
-    marker: {
-      symbol: 'url(http://www.highcharts.com/demo/gfx/sun.png)'
-    }
-  }, 23.3, 18.3, 13.9, 9.6]
+  data: [
+    7.0,
+    6.9,
+    9.5,
+    14.5,
+    18.2,
+    21.5,
+    25.2,
+    {
+      y: 26.5,
+      marker: {
+        symbol: 'url(http://www.highcharts.com/demo/gfx/sun.png)'
+      }
+    },
+    23.3,
+    18.3,
+    13.9,
+    9.6
+  ]
 }
-export default{
-    components: {
-        VueHighcharts
-    },
-    data () {
-      return {
-        options: {
-          chart: {
-            type: 'spline'
-          },
+export default {
+  components: {
+    VueHighcharts
+  },
+  data () {
+    return {
+      options: {
+        chart: {
+          type: 'spline'
+        },
+        title: {
+          text: 'Monthly Average Temperature'
+        },
+        subtitle: {
+          text: 'Source: WorldClimate.com'
+        },
+        xAxis: {
+          categories: [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec'
+          ]
+        },
+        yAxis: {
           title: {
-            text: 'Monthly Average Temperature'
+            text: 'Temperature'
           },
-          subtitle: {
-            text: 'Source: WorldClimate.com'
-          },
-          xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-              'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-          },
-          yAxis: {
-            title: {
-              text: 'Temperature'
-            },
-            labels: {
-              formatter: function () {
-                return this.value + '°'
-              }
+          labels: {
+            formatter: function () {
+              return this.value + '°'
             }
-          },
-          tooltip: {
-            crosshairs: true,
-            shared: true
-          },
-          credits: {
-            enabled: false
-          },
-          plotOptions: {
-            spline: {
-              marker: {
-                radius: 4,
-                lineColor: '#666666',
-                lineWidth: 1
-              }
+          }
+        },
+        tooltip: {
+          crosshairs: true,
+          shared: true
+        },
+        credits: {
+          enabled: false
+        },
+        plotOptions: {
+          spline: {
+            marker: {
+              radius: 4,
+              lineColor: '#666666',
+              lineWidth: 1
             }
-          },
-          series: []
-        }
+          }
+        },
+        series: []
       }
-    },
-    methods: {
-      load () {
-          let lineCharts = this.$refs.lineCharts
-          lineCharts.delegateMethod('showLoading', 'Loading...')
-          setTimeout(() => {
-              lineCharts.addSeries(asyncData)
-              lineCharts.hideLoading()
-          }, 2000)
-      }
-    },
-    mounted () {
-      this.load()
     }
+  },
+  methods: {
+    load () {
+      let lineCharts = this.$refs.lineCharts
+      lineCharts.delegateMethod('showLoading', 'Loading...')
+      setTimeout(() => {
+        lineCharts.addSeries(asyncData)
+        lineCharts.hideLoading()
+      }, 2000)
+    }
+  },
+  mounted () {
+    this.load()
+  }
 }
 </script>

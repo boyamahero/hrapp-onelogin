@@ -62,6 +62,10 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+<<<<<<< HEAD
+=======
+
+>>>>>>> b904a58258630036c1c2bd99274491306620b9a4
  <q-layout-footer  reveal>
         <q-item class="justify-between" style="padding:0">
           <q-btn flat>

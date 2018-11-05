@@ -29,8 +29,9 @@ class AuthController extends Controller
         try {
 
             /* attempt to verify the credentials on egat authen web service */
-            if(!$this->egatLogin($this->serviceURL,$credentials))
-                return response()->json(['message' => 'หมายเลขผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'], 401);  
+            if(env('EGAT_AUTHEN'))
+                if(!$this->egatLogin($this->serviceURL,$credentials))
+                    return response()->json(['message' => 'หมายเลขผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'], 401);  
 
             $username = (int)$request->input('username');
 

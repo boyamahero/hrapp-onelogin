@@ -66,7 +66,7 @@ export default {
           this.loading = false
           if (e.message === 'Request failed with status code 401') {
             this.showAlert = true
-            this.error = 'ยืนยันตนไม่ผ่าน รหัสผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง'
+            this.error = 'รหัสผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง'
           }
           if (e.message === 'Request failed with status code 500') {
             this.showAlert = true
