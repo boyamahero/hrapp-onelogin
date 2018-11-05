@@ -21,7 +21,7 @@ export default {
     destroyToken (context) {
       if (context.getters.loggedIn) {
         return new Promise((resolve, reject) => {
-          axios.post('logout')
+          axios.post('/logout')
             .then(response => {
               localStorage.removeItem('access_token')
               context.commit('destroyToken')

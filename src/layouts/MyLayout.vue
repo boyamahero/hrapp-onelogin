@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-layout-header>
     </q-layout-header>
-<q-toolbar
+    <q-toolbar
         inverted
         color="white"
       >
@@ -63,6 +63,7 @@
       <router-view />
     </q-page-container>
 
+<<<<<<< HEAD
  <q-layout-footer  reveal>
         <q-item class="justify-between" style="padding:0">
           <q-btn flat>
@@ -71,6 +72,20 @@
           <q-btn flat>
             <q-item-side icon="horizontal_split" style="color:#14548a;font-size: 20px;"/>
             <q-popover>
+=======
+ <q-layout-footer reveal>
+<q-tabs :inverted="$q.theme === 'ios'">
+        <q-item class="justify-between">
+          <q-item-side icon="home" style="color:#14548a"/>
+          <q-btn
+          flat
+          >
+            <q-item-side icon="horizontal_split" style="color:#14548a"/>
+            <q-popover
+                :anchor="anchor"
+                :self="self"
+              >
+>>>>>>> 76bf0d68e43f0d72c2031c401197476309f940e3
                 <q-list link style="min-width: 200px">
                   <div class="subheader">เมนูอื่นๆ</div>
                   <q-item>
