@@ -12,20 +12,18 @@
             <div class="wrapperA" v-bind:style="{ 'background-image': 'url(statics/infographic/' + value.category_id + '/' + value.featured_image + ')' }"></div>
           </q-item-side>
           <q-item-main>{{value.title}}</q-item-main>
-        <q-modal v-model="maximizedModal" maximized>
-          <div class="row closemodal"><q-icon name="fas fa-window-close" @click.native="maximizedModal = false"/></div>
-          <img :src="'statics/infographic/' + value.category_id + '/' + dataInModal.featured_image" class="full-width">
-        </q-modal>
         </q-item>
         </q-list>
+        <q-modal v-model="maximizedModal" maximized>
+          <div class="row closemodal"><q-icon name="fas fa-window-close" @click.native="maximizedModal = false"/></div>
+          <img :src="'statics/infographic/' + dataInModal.category_id + '/' + dataInModal.featured_image" class="full-width">
+        </q-modal>
     </div>
      </div>
   </q-page>
 </template>
-
 <style>
 </style>
-
 <script>
 export default {
   name: 'PageIndex',
