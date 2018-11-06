@@ -5,8 +5,10 @@
       <q-card class="q-ma-md">
       <q-card-main>
          <p class="header">ข้อมูลที่เป็นประโยชน์ด้านบุคคล</p>
-          <div v-for="value in dataCategories" :key="value.id" class="row inline">
-          <div class="q-mx-xs"><img class="full-width" :src="'statics/modules/' + value.slug + '.png'" @click="$router.push({ name: 'infographic_list', params: { id: value.id ,title: value.name }})"></div>
+         <div class="row q-my-md">
+          <div v-for="value in dataCategories" :key="value.id" class="col-lg-2 col-md-3 col-xs-6">
+          <div class="q-px-xs"><img class="full-width" :src="'statics/modules/' + value.slug + '.png'" @click="$router.push({ name: 'infographic_list', params: { id: value.id ,title: value.name }})"></div>
+         </div>
          </div>
       </q-card-main>
     </q-card>

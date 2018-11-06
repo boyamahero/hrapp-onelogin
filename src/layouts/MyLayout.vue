@@ -6,22 +6,29 @@
         inverted
         color="white"
       >
-        <q-btn
+        <q-btn v-if="this.$route.name==='index'"
           flat
           @click="leftDrawerOpen = !leftDrawerOpen"
           aria-label="Menu"
         >
           <q-icon name="menu" class="menu"/>
         </q-btn>
+        <q-btn v-else
+          flat
+          @click="$router.go(-1)"
+        >
+          <q-icon name="fas fa-arrow-alt-circle-left" class="menu"/>
+        </q-btn>
 
         <q-toolbar-title>
-          <div class="row justify-end">
+          <div class="row q-mr-md">
           <div class="col-xs-9 col-lg-9 text-right self-center">
           <div class="subtitle">EGAT HR APP</div>
-          <div class="title">นายบุญฤทธิ์ บุญลือ</div>
+          <div class="title">{{personalData.name}}</div>
+          <div class="subtitle">{{personalData.name_english}}</div>
           </div>
           <div class="col-xs-3 col-lg-2 text-right">
-              <img src="statics/594073.jpg" class="q-item-avatar self-center">
+              <img :src="personImage" class="q-item-avatar self-center">
           </div>
           </div>
         </q-toolbar-title>
@@ -98,34 +105,22 @@ export default {
       leftDrawerOpen: this.$q.platform.is.desktop,
       response: '',
       loading: false,
-      logoutloading: false
+      logoutloading: false,
+      personalData: JSON.parse(localStorage.getItem('personalData') || '[]'),
+      personImage: localStorage.getItem('personImage') || ''
     }
   },
+  created () {
+    this.getUserDetails()
+  },
   methods: {
-    async makeRequest () {
-      let response
-      let color = 'negative'
-      this.loading = true
-
-      try {
-        response = ''
-        let req = await fetch(process.env.api + '/test')
-
-        if (!req.ok) throw new Error('error request')
-
-        let {data} = await req.json()
-        response = data
-        color = 'positive'
-      } catch (err) {
-        console.log(err)
-        response = err.message
-      }
-
-      setTimeout(() => {
-        this.response = response
-        this.color = color
-        this.loading = false
-      }, 700)
+    getUserDetails () {
+      this.$axios.get('user')
+        .then((res) => {
+          var personImage = (typeof res.data.docuname !== 'undefined') ? 'https://hrapi.egat.co.th/images/' + res.data.docuname + '.' + res.data.extension : ''
+          localStorage.setItem('personalData', JSON.stringify(res.data))
+          localStorage.setItem('personImage', personImage)
+        })
     },
     logout () {
       this.logoutloading = true
