@@ -74,10 +74,11 @@
           <q-btn flat>
           <q-item-side icon="home"  @click.native="$router.push('/')" style="color:#14548a;font-size: 20px;"/>
           </q-btn>
+          <img src="statics/speedlogo.png" class="col-xs-9 col-lg-1 absolute-center q-mb-lg" width="40%">
           <q-btn flat>
             <q-item-side icon="horizontal_split" style="color:#14548a;font-size: 20px;"/>
             <q-popover>
-                <q-list link style="min-width: 200px">
+                <q-list link style="min-width: 200px;">
                   <div class="subheader">เมนูอื่นๆ</div>
                   <q-item>
                     <q-item-main label="เกี่ยวกับองค์กร" />
@@ -107,6 +108,7 @@ export default {
   },
   mounted () {
     this.setUser()
+      .then()
       .catch(() => {
         this.$q.notify({
           color: 'negative',

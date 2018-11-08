@@ -9,11 +9,24 @@
       <q-carousel-slide>
         <q-card class="q-ma-xs justify-center personcard">
       <q-card-main>
-        <p class="header">ข้อมูลส่วนบุคคล</p>
+        <p class="header">ข้อมูลทั่วไป</p>
         <q-card-separator />
-        <p>หมายเลขประจำตัว : {{personalData.id}}</p>
-        <p>ศาสนา : {{personalData.religion_name}}</p>
-        <p>สังกัด : {{personalData.org_path}}</p>
+        <p>หมายเลขประจำตัว : {{user.id}}</p>
+        <p>ตำแหน่ง : {{user.position_abb}}</p>
+        <p>สังกัด : {{user.org_path}}</p>
+      </q-card-main>
+      </q-card>
+      </q-carousel-slide>
+      <q-carousel-slide>
+        <q-card class="q-ma-xs justify-center personcard">
+      <q-card-main>
+        <p class="header">ข้อมูลการทำงาน</p>
+        <q-card-separator />
+        <p>ตำแหน่ง : {{user.position_abb}}</p>
+        <p>วันที่เปลี่ยนตำแหน่ง : {{convertEnToTHDate(user.old_dat)}}</p>
+        <p>อายุงานในตำแหน่ง : {{user.position_age}}</p>
+        <p>วันที่เลื่อนระดับ : {{convertEnToTHDate(user.old_dat)}}</p>
+        <p>อายุงานในระดับ : {{user.old_dat_age}}</p>
       </q-card-main>
       </q-card>
       </q-carousel-slide>
@@ -22,35 +35,10 @@
       <q-card-main>
         <p class="header">ข้อมูลการทำงาน</p>
         <q-card-separator />
-        <p>วันที่เข้างาน : {{convertTHDate(personalData.entry_thai_date)}}</p>
-        <p>วันที่บรรจุ : {{convertTHDate(personalData.assign_thai_date)}}</p>
-        <p>อายุงาน : {{personalData.agew}}</p>
-        <p>วันที่เกษียณ : {{convertTHDate(personalData.retire_thai_date)}}</p>
-      </q-card-main>
-      </q-card>
-      </q-carousel-slide>
-      <q-carousel-slide >
-        <q-card class="q-ma-xs justify-center personcard">
-      <q-card-main>
-        <p class="header">ข้อมูลหน่วยงาน</p>
-        <q-card-separator />
-        <p v-if="personalData.deputy_full !== ''">{{personalData.deputy_full}}</p>
-        <p v-if="personalData.assistant_full !== ''">{{personalData.assistant_full}}</p>
-        <p v-if="personalData.division_full !== ''">{{personalData.division_full}}</p>
-        <p v-if="personalData.department_full !== ''">{{personalData.department_full}}</p>
-        <p v-if="personalData.section_full !== ''">{{personalData.section_full}}</p>
-      </q-card-main>
-      </q-card>
-      </q-carousel-slide>
-      <q-carousel-slide>
-        <q-card class="q-ma-xs justify-center personcard">
-      <q-card-main>
-        <p class="header">ข้อมูลตำแหน่ง</p>
-        <q-card-separator />
-        <p>ตำแหน่ง : {{personalData.org_key_full}}</p>
-        <p>ตำแหน่งย่อ : {{personalData.org_key}}</p>
-        <p>อายุงานในตำแหน่ง : {{personalData.old_dat_age}}</p>
-        <p>วันที่ได้รับตำแหน่ง : {{convertEnToTHDate(personalData.old_dat)}}</p>
+        <p>วันที่เข้างาน : {{convertTHDate(user.entry_thai_date)}}</p>
+        <p>อายุงาน กฟผ. : {{user.agew}}</p>
+        <p>วันที่เกษียณ : {{convertTHDate(user.retire_thai_date)}}</p>
+        <p>อายุงานคงเหลือ: {{user.remain_work_age}}</p>
       </q-card-main>
       </q-card>
       </q-carousel-slide>
@@ -59,9 +47,9 @@
       <q-card-main>
         <p class="header">ข้อมูลสถานที่ทำงาน</p>
         <q-card-separator />
-        <p>ตึกทำงาน : {{personalData.building}}</p>
-        <p>ห้องทำงาน : {{personalData.room}}</p>
-        <p>เบอร์โทร : {{personalData.phone}}</p>
+        <p>ตึกทำงาน : {{user.building}}</p>
+        <p>ห้องทำงาน : {{user.room}}</p>
+        <p>เบอร์โทร : {{user.phone}}</p>
       </q-card-main>
       </q-card>
       </q-carousel-slide>
@@ -73,13 +61,11 @@
       <q-card class="q-ma-md">
       <q-card-main>
          <p class="header">เมนู</p>
-         <div class="row text-center gutter-xs">
-          <div class="col-6"><img class="full-width" src="statics/menu/menu-ess1.png" @click="$router.push('/')"></div>
-          <div class="col-6"><img class="full-width" src="statics/menu/menu-infographic.png" @click="$router.push('/infographic')"></div>
-          </div>
-          <div class="row text-center gutter-xs">
-          <div class="col-6"><img class="full-width" src="statics/menu/menu-dashboard.png" @click="$router.push('/')"></div>
-          <div class="col-6"><img class="full-width" src="statics/menu/menu-search1.png" @click="$router.push('/')"></div>
+         <div class="row gutter-xs">
+          <div class="col-lg-2 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-ess1.png" @click="$router.push('/')"></div>
+          <div class="col-lg-2 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-infographic.png" @click="$router.push('/infographic')"></div>
+          <div class="col-lg-2 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-dashboard.png" @click="$router.push('/')"></div>
+          <div class="col-lg-2 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-search1.png" @click="$router.push('/')"></div>
          </div>
       </q-card-main>
     </q-card>
@@ -92,16 +78,15 @@
 </style>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'PageIndex',
   data () {
     return {
-      color: 'primary',
-      response: '',
-      loading: false,
-      personalData: JSON.parse(localStorage.getItem('personalData') || '[]'),
-      logoutloading: false
     }
+  },
+  computed: {
+    ...mapState('user', ['user'])
   },
   methods: {
     convertThaiMonth (month) {
