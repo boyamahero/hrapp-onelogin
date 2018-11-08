@@ -73,13 +73,13 @@
       <q-card class="q-ma-md">
       <q-card-main>
          <p class="header">เมนู</p>
-         <div class="row text-center">
-          <div class="col-6 q-px-xs"><img class="full-width" src="statics/menu/menu-ess1.png" @click="$router.push('/')"></div>
-          <div class="col-6 q-px-xs"><img class="full-width" src="statics/menu/menu-infographic.png" @click="$router.push('/infographic')"></div>
+         <div class="row text-center gutter-xs">
+          <div class="col-6"><img class="full-width" src="statics/menu/menu-ess1.png" @click="$router.push('/')"></div>
+          <div class="col-6"><img class="full-width" src="statics/menu/menu-infographic.png" @click="$router.push('/infographic')"></div>
           </div>
-          <div class="row text-center">
-          <div class="col-6 q-px-xs"><img class="full-width" src="statics/menu/menu-dashboard.png" @click="$router.push('/')"></div>
-          <div class="col-6 q-px-xs"><img class="full-width" src="statics/menu/menu-search1.png" @click="$router.push('/')"></div>
+          <div class="row text-center gutter-xs">
+          <div class="col-6"><img class="full-width" src="statics/menu/menu-dashboard.png" @click="$router.push('/')"></div>
+          <div class="col-6"><img class="full-width" src="statics/menu/menu-search1.png" @click="$router.push('/')"></div>
          </div>
       </q-card-main>
     </q-card>
@@ -105,49 +105,49 @@ export default {
   },
   methods: {
     convertThaiMonth (month) {
-        var ThaiMonth = ''
-     switch (month) {
-         case '01':
-         ThaiMonth = 'ม.ค.'
-         break
-         case '02':
-         ThaiMonth = 'ก.พ.'
-         break
-         case '03':
-         ThaiMonth = 'มี.ค.'
-         break
-         case '04':
-         ThaiMonth = 'เม.ย.'
-         break
-         case '05':
-         ThaiMonth = 'พ.ค.'
-         break
-         case '06':
-         ThaiMonth = 'มิ.ย.'
-         break
-         case '07':
-         ThaiMonth = 'ก.ค.'
-         break
-         case '08':
-         ThaiMonth = 'ส.ค.'
-         break
-         case '09':
-         ThaiMonth = 'ก.ย.'
-         break
-         case '10':
-         ThaiMonth = 'ต.ค.'
-         break
-         case '11':
-         ThaiMonth = 'พ.ย.'
-         break
-         case '12':
-         ThaiMonth = 'ธ.ค.'
-         break
-    }
-        return ThaiMonth
+      var ThaiMonth = ''
+      switch (month) {
+        case '01':
+          ThaiMonth = 'ม.ค.'
+          break
+        case '02':
+          ThaiMonth = 'ก.พ.'
+          break
+        case '03':
+          ThaiMonth = 'มี.ค.'
+          break
+        case '04':
+          ThaiMonth = 'เม.ย.'
+          break
+        case '05':
+          ThaiMonth = 'พ.ค.'
+          break
+        case '06':
+          ThaiMonth = 'มิ.ย.'
+          break
+        case '07':
+          ThaiMonth = 'ก.ค.'
+          break
+        case '08':
+          ThaiMonth = 'ส.ค.'
+          break
+        case '09':
+          ThaiMonth = 'ก.ย.'
+          break
+        case '10':
+          ThaiMonth = 'ต.ค.'
+          break
+        case '11':
+          ThaiMonth = 'พ.ย.'
+          break
+        case '12':
+          ThaiMonth = 'ธ.ค.'
+          break
+      }
+      return ThaiMonth
     },
     convertTHDate (date) {
-    var mm = (date || '').split('.')
+      var mm = (date || '').split('.')
       return parseInt(mm[0]) + ' ' + this.convertThaiMonth(mm[1]) + ' ' + mm[2]
     },
     convertEnToTHDate (date) {

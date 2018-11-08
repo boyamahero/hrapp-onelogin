@@ -1,5 +1,6 @@
 import axios from 'axios'
 axios.defaults.baseURL = process.env.api
+
 export default {
   state: {
     token: localStorage.getItem('access_token') || null

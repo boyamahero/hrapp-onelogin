@@ -24,11 +24,11 @@
           <div class="row q-mr-md">
           <div class="col-xs-9 col-lg-9 text-right self-center">
           <div class="subtitle">EGAT HR APP</div>
-          <div class="title">{{personalData.name}}</div>
-          <div class="subtitle">{{personalData.name_english}}</div>
+          <div class="title">{{user.name}}</div>
+          <div class="subtitle">{{ user.name_english }}</div>
           </div>
           <div class="col-xs-3 col-lg-2 text-right">
-              <img :src="personImage" class="q-item-avatar self-center">
+              <img :src="user.image_path" class="q-item-avatar self-center">
           </div>
           </div>
         </q-toolbar-title>
@@ -60,7 +60,7 @@
                 </q-list>
               </q-popover>
         </q-item>
-        <q-item @click.native="logout" :loading="logoutloading">
+        <q-item @click.native="logout">
           <q-item-side icon="power_settings_new" color="red" />
         </q-item>
       </q-list>
@@ -97,31 +97,30 @@
 </template>
 
 <script>
-
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'MyLayout',
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop,
-      response: '',
-      loading: false,
-      logoutloading: false,
-      personalData: JSON.parse(localStorage.getItem('personalData') || '[]'),
-      personImage: localStorage.getItem('personImage') || ''
+      leftDrawerOpen: this.$q.platform.is.desktop
     }
   },
-  created () {
-    this.getUserDetails()
+  mounted () {
+    this.setUser()
+      .catch(() => {
+        this.$q.notify({
+          color: 'negative',
+          position: 'top',
+          message: 'Loading failed',
+          icon: 'report_problem'
+        })
+      })
+  },
+  computed: {
+    ...mapState('user', ['user'])
   },
   methods: {
-    getUserDetails () {
-      this.$axios.get('user')
-        .then((res) => {
-          var personImage = (typeof res.data.docuname !== 'undefined') ? 'https://hrapi.egat.co.th/images/' + res.data.docuname + '.' + res.data.extension : ''
-          localStorage.setItem('personalData', JSON.stringify(res.data))
-          localStorage.setItem('personImage', personImage)
-        })
-    },
+    ...mapActions('user', ['setUser']),
     logout () {
       this.logoutloading = true
       this.$store.dispatch('destroyToken')
