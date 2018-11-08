@@ -11,9 +11,15 @@
       <q-card-main>
         <p class="header">ข้อมูลทั่วไป</p>
         <q-card-separator />
+<<<<<<< HEAD
         <p>หมายเลขประจำตัว : {{user.id}}</p>
         <p>ตำแหน่ง : {{user.position_abb}}</p>
         <p>สังกัด : {{user.org_path}}</p>
+=======
+        <p>หมายเลขประจำตัว : {{personalData.id}}</p>
+        <p>ตำแหน่ง : {{personalData.org_key}}</p>
+        <p>สังกัด : {{personalData.org_path}}</p>
+>>>>>>> 217963a25514fda17003a93cf4fed25c72fca2d1
       </q-card-main>
       </q-card>
       </q-carousel-slide>
@@ -22,11 +28,17 @@
       <q-card-main>
         <p class="header">ข้อมูลการทำงาน</p>
         <q-card-separator />
+<<<<<<< HEAD
         <p>ตำแหน่ง : {{user.position_abb}}</p>
         <p>วันที่เปลี่ยนตำแหน่ง : {{convertEnToTHDate(user.old_dat)}}</p>
         <p>อายุงานในตำแหน่ง : {{user.position_age}}</p>
         <p>วันที่เลื่อนระดับ : {{convertEnToTHDate(user.old_dat)}}</p>
         <p>อายุงานในระดับ : {{user.old_dat_age}}</p>
+=======
+        <p>ตำแหน่ง : {{personalData.org_key_full}}</p>
+        <p>อายุงานในระดับ : {{personalData.old_dat_age}}</p>
+        <p>วันที่เลื่อนระดับ : {{convertEnToTHDate(personalData.old_dat)}}</p>
+>>>>>>> 217963a25514fda17003a93cf4fed25c72fca2d1
       </q-card-main>
       </q-card>
       </q-carousel-slide>
@@ -35,10 +47,16 @@
       <q-card-main>
         <p class="header">ข้อมูลการทำงาน</p>
         <q-card-separator />
+<<<<<<< HEAD
         <p>วันที่เข้างาน : {{convertTHDate(user.entry_thai_date)}}</p>
         <p>อายุงาน กฟผ. : {{user.agew}}</p>
         <p>วันที่เกษียณ : {{convertTHDate(user.retire_thai_date)}}</p>
         <p>อายุงานคงเหลือ: {{user.remain_work_age}}</p>
+=======
+        <p>วันที่เข้างาน : {{convertTHDate(personalData.entry_thai_date)}}</p>
+        <p>วันที่เกษียณ : {{convertTHDate(personalData.retire_thai_date)}}</p>
+        <p>อายุงาน กฟผ. : {{personalData.agew}}</p>
+>>>>>>> 217963a25514fda17003a93cf4fed25c72fca2d1
       </q-card-main>
       </q-card>
       </q-carousel-slide>
@@ -61,11 +79,19 @@
       <q-card class="q-ma-md">
       <q-card-main>
          <p class="header">เมนู</p>
+<<<<<<< HEAD
          <div class="row gutter-xs">
           <div class="col-lg-2 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-ess1.png" @click="$router.push('/')"></div>
           <div class="col-lg-2 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-infographic.png" @click="$router.push('/infographic')"></div>
           <div class="col-lg-2 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-dashboard.png" @click="$router.push('/')"></div>
           <div class="col-lg-2 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-search1.png" @click="$router.push('/')"></div>
+=======
+         <div class="row q-my-md">
+          <div class="col-lg-2 col-md-3 col-xs-6 q-px-xs"><img class="full-width" src="statics/menu/menu-ess1.png" @click="$router.push('/')"></div>
+          <div class="col-lg-2 col-md-3 col-xs-6 q-px-xs"><img class="full-width" src="statics/menu/menu-infographic.png" @click="$router.push('/infographic')"></div>
+          <div class="col-lg-2 col-md-3 col-xs-6 q-px-xs"><img class="full-width" src="statics/menu/menu-dashboard.png" @click="$router.push('/')"></div>
+          <div class="col-lg-2 col-md-3 col-xs-6 q-px-xs"><img class="full-width" src="statics/menu/menu-search1.png" @click="$router.push('/')"></div>
+>>>>>>> 217963a25514fda17003a93cf4fed25c72fca2d1
          </div>
       </q-card-main>
     </q-card>
