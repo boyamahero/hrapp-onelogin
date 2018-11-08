@@ -74,11 +74,7 @@
           <q-btn flat>
           <q-item-side icon="home"  @click.native="$router.push('/')" style="color:#14548a;font-size: 20px;"/>
           </q-btn>
-<<<<<<< HEAD
           <img src="statics/speedlogo.png" class="col-xs-9 col-lg-1 absolute-center q-mb-lg" width="40%">
-=======
-          <!-- <img src="statics/speedlogo.png" class="col-xs-9 col-lg-1 absolute-center q-mb-lg" width="40%"> -->
->>>>>>> 217963a25514fda17003a93cf4fed25c72fca2d1
           <q-btn flat>
             <q-item-side icon="horizontal_split" style="color:#14548a;font-size: 20px;"/>
             <q-popover>
