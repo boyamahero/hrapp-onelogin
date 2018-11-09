@@ -86,6 +86,7 @@ module.exports = function (ctx) {
         'QListHeader',
         'QItem',
         'QItemMain',
+        'QItemTile',
         'QItemSide',
         'QCard',
         'QCardTitle',
@@ -101,7 +102,9 @@ module.exports = function (ctx) {
         'QBreadcrumbs',
         'QBreadcrumbsEl',
         'QParallax',
-        'QModal'
+        'QModal',
+        'QSearch',
+        'QInfiniteScroll'
       ],
       directives: [
         'Ripple',

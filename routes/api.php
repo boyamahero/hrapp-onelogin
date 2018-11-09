@@ -39,5 +39,12 @@ Route::get('/info-categories/{id}', function ($id) {
   return Infographic::where('category_id',$id)->get();
 });
 
+Route::get('/search/{keyword}', function ($keyword) {
+  return Employee::whereLike(['name','id','deputy_abb','assistant_abb','division_abb','department_abb','section_abb'], $keyword)
+    ->where('status','!=','0')
+    ->orderBy('senior')
+    ->paginate(5);
+});
+
 Route::post('/login', 'AuthController@login');
 Route::post('/logout', 'AuthController@logout');
