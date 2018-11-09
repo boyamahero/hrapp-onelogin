@@ -9,6 +9,11 @@ const setUser = ({ commit }) => {
     axios.get('/user')
       .then((res) => {
         commit('SET_USER', res.data)
+        if (res.headers.authorization) {
+          axios.defaults.headers.common['Authorization'] = res.headers.authorization
+          const token = (res.headers.authorization).replace('Bearer ', '')
+          localStorage.setItem('access_token', token)
+        }
       })
       .catch((err) => {
         console.error(err)
