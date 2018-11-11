@@ -42,6 +42,7 @@ Route::get('/info-categories/{id}', function ($id) {
 Route::get('/search/{keyword}', function ($keyword) {
   return Employee::whereLike(['name','id','deputy_abb','assistant_abb','division_abb','department_abb','section_abb'], $keyword)
     ->where('status','!=','0')
+    ->orderBy('employee_subgroup','desc')
     ->orderBy('senior')
     ->paginate(5);
 });

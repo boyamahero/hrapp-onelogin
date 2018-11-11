@@ -14,9 +14,10 @@ const setUser = ({ commit }) => {
           const token = (res.headers.authorization).replace('Bearer ', '')
           localStorage.setItem('access_token', token)
         }
+        resolve(res)
       })
       .catch((err) => {
-        console.error(err)
+        reject(err)
       })
   })
 }

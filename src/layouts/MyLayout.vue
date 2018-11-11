@@ -110,12 +110,13 @@ export default {
     this.setUser()
       .then()
       .catch(() => {
-        this.$q.notify({
-          color: 'negative',
-          position: 'top',
-          message: 'Loading failed',
-          icon: 'report_problem'
-        })
+        // this.$q.notify({
+        //   color: 'negative',
+        //   position: 'top',
+        //   message: 'Loading failed',
+        //   icon: 'report_problem'
+        // })
+        this.$router.push({name: 'login'})
       })
   },
   computed: {
