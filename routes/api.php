@@ -5,6 +5,7 @@ use App\Category;
 use App\Employee;
 use App\Infographic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +45,55 @@ Route::get('/search/{keyword}', function ($keyword) {
     ->where('status','!=','0')
     ->orderBy('employee_subgroup','desc')
     ->orderBy('senior')
-    ->paginate(5);
+    ->paginate(10);
+});
+
+Route::get('/manpower/{level?}/{abb?}', function ($level = null, $abb = null) {
+
+  switch ($level) {
+    case "1":
+      $orgs = DB::connection('HRDatabase')->table('Employees')
+                ->select(DB::raw('count(*) as employee_count, assistant_abb'))
+                ->where('status','!=','0')->whereIn('employee_group',[1,2,5])
+                ->where('deputy_abb',$abb)
+                ->groupBy('assistant_abb')
+                ->get();
+      break;
+    case "2":
+      $orgs = DB::connection('HRDatabase')->table('Employees')
+                ->select(DB::raw('count(*) as employee_count, division_abb'))
+                ->where('status','!=','0')->whereIn('employee_group',[1,2,5])
+                ->where('assistant_abb',$abb)
+                ->groupBy('division_abb')
+                ->get();
+      break;
+    case "3":
+      $orgs = DB::connection('HRDatabase')->table('Employees')
+                ->select(DB::raw('count(*) as employee_count, department_abb'))
+                ->where('status','!=','0')->whereIn('employee_group',[1,2,5])
+                ->where('division_abb',$abb)
+                ->groupBy('department_abb')
+                ->get();
+        break;
+    case "4":
+      $orgs = DB::connection('HRDatabase')->table('Employees')
+              ->select(DB::raw('count(*) as employee_count, section_abb'))
+              ->where('status','!=','0')->whereIn('employee_group',[1,2,5])
+              ->where('department_abb',$abb)
+              ->groupBy('section_abb')
+              ->get();
+        break;
+    default:
+        $orgs = DB::connection('HRDatabase')->table('Employees')
+                ->select(DB::raw('count(*) as employee_count, deputy_abb'))
+                ->where('status','!=','0')->whereIn('employee_group',[1,2,5])
+                ->groupBy('deputy_abb')
+                ->get();
+      }
+
+  return response()->json([
+      'data' => $orgs
+  ]);
 });
 
 Route::post('/login', 'AuthController@login');

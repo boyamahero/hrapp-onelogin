@@ -8,7 +8,7 @@ class Employee extends Model
 {
     protected $connection = 'HRDatabase';
 
-    protected $table = 'Employees';
+    protected $table = 'employees';
 
     protected $appends = ['image_path'];
 
