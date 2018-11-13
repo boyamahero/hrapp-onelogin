@@ -7,7 +7,7 @@
         placeholder="ชื่อ/นามสกุล/สังกัดย่อ/เลขประจำตัว"
         icon="person"
         float-label="คำค้น"
-        color="secondary"
+        color="blue-5"
         clearable
         inverted
         @change="val => { searchText = val }"
