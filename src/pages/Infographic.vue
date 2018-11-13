@@ -7,7 +7,9 @@
          <p class="header">ข้อมูลที่เป็นประโยชน์ด้านบุคคล</p>
          <div class="row q-my-md">
           <div v-for="value in dataCategories" :key="value.id" class="col-lg-2 col-md-3 col-xs-6">
-          <div class="q-px-xs"><img class="full-width" :src="'statics/modules/' + value.slug + '.png'" @click="$router.push({ name: 'infographic_list', params: { id: value.id ,title: value.name }})"></div>
+            <div class="q-px-xs">
+              <div @click="goto('infographic_list', { id: value.id ,title: value.name })"><v-lazy-image  class="full-width" :src="'statics/modules/' + value.slug + '.png'" /></div>
+            </div>
          </div>
          </div>
       </q-card-main>
@@ -21,8 +23,12 @@
 </style>
 
 <script>
+import VLazyImage from 'v-lazy-image'
 export default {
-  name: 'PageIndex',
+  name: 'InfoPage',
+  components: {
+    VLazyImage
+  },
   mounted () {
     this.getCategoires()
   },
@@ -41,6 +47,9 @@ export default {
         .then((res) => {
           this.dataCategories = res.data
         })
+    },
+    goto (name, params) {
+      this.$router.push({name: name, params: params})
     }
   }
 }
