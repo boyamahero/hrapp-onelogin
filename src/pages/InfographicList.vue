@@ -9,7 +9,7 @@
         @click.native="show(value)"
         >
           <q-item-side>
-            <div class="wrapperA" v-bind:style="{ 'background-image': 'url(statics/infographic/' + value.category_id + '/' + value.featured_image + ')' }"></div>
+            <div class="wrapperA" v-lazy:background-image="'statics/infographic/' + value.category_id + '/' + value.featured_image"></div>
           </q-item-side>
           <q-item-main>{{value.title}}</q-item-main>
         </q-item>
