@@ -8,7 +8,7 @@
          <div class="row q-my-md">
           <div v-for="value in dataCategories" :key="value.id" class="col-lg-2 col-md-3 col-xs-6">
             <div class="q-px-xs">
-              <div @click="goto('infographic_list', { id: value.id ,title: value.name })"><v-lazy-image  class="full-width" :src="'statics/modules/' + value.slug + '.png'" /></div>
+              <div @click="goto('infographic_list', { id: value.id ,title: value.name })"><img  class="full-width" :src="'statics/modules/' + value.slug + '.png'" /></div>
             </div>
          </div>
          </div>
@@ -23,12 +23,8 @@
 </style>
 
 <script>
-import VLazyImage from 'v-lazy-image'
 export default {
   name: 'InfoPage',
-  components: {
-    VLazyImage
-  },
   mounted () {
     this.getCategoires()
   },

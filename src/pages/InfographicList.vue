@@ -16,7 +16,7 @@
         </q-list>
         <q-modal v-model="maximizedModal" maximized>
           <div class="row closemodal"><q-icon name="fas fa-window-close" @click.native="maximizedModal = false"/></div>
-          <v-lazy-image :src="'statics/infographic/' + dataInModal.category_id + '/' + dataInModal.featured_image" class="full-width"/>
+          <img :src="'statics/infographic/' + dataInModal.category_id + '/' + dataInModal.featured_image" class="full-width"/>
         </q-modal>
     </div>
      </div>
@@ -25,12 +25,8 @@
 <style>
 </style>
 <script>
-import VLazyImage from 'v-lazy-image'
 export default {
   name: 'InfoListPage',
-  components: {
-    VLazyImage
-  },
   mounted () {
     this.getInfographic()
   },
