@@ -49,6 +49,9 @@ export default {
         },
         subtitle: {
           text: ''
+        },
+        credits: {
+          enabled: false
         }
       }
     }
