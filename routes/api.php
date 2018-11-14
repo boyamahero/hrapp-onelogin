@@ -3,6 +3,7 @@
 use App\User;
 use App\Category;
 use App\Employee;
+use App\Competency;
 use App\Infographic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,8 +29,14 @@ Route::get('/test', function () {
   ]);
 });
 
+Route::get('/competencies/{id}', function ($id) {
+  return response()->json([
+    'data' => User::where('username',$id)->with('competencies')->get()
+  ]);
+});
+
 Route::get('/employee/{id}', function ($id) {
-  return Employee::where('id',$id)->first();
+  return User::where('username',$id)->with('employee')->get();
 });
 
 Route::get('/info-categories', function () {

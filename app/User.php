@@ -19,6 +19,13 @@ class User extends Authenticatable implements JWTSubject
     protected $guarded = [];
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $appends = ['user_id'];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
@@ -37,11 +44,24 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function getUserIdAttribute()
+    {
+        return sprintf("%06d", $this->username);
+    }
+
     /**
      * Get the employee record associated with the user.
      */
     public function employee()
     {
         return $this->hasOne('App\Employee', 'id', 'username');
+    }
+
+    /**
+     * Get the competencies record associated with the user.
+     */
+    public function competencies()
+    {
+        return $this->hasMany('App\Competency', 'EMPN', 'user_id');
     }
 }
