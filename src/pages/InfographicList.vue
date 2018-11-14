@@ -14,10 +14,6 @@
           <q-item-main>{{value.title}}</q-item-main>
         </q-item>
         </q-list>
-        <q-modal v-model="maximizedModal" maximized>
-          <div class="row closemodal"><q-icon name="fas fa-window-close" @click.native="maximizedModal = false"/></div>
-          <img :src="'statics/infographic/' + dataInModal.category_id + '/' + dataInModal.featured_image" class="full-width"/>
-        </q-modal>
     </div>
      </div>
   </q-page>
@@ -25,6 +21,10 @@
 <style>
 </style>
 <script>
+import zoom from 'vue-image-zoom'
+import Vue from 'vue'
+import 'vue-image-zoom/dist/vue-image-zoom.css'
+Vue.use(zoom)
 export default {
   name: 'InfoListPage',
   mounted () {
@@ -36,15 +36,16 @@ export default {
       response: '',
       loading: false,
       logoutloading: false,
-      maximizedModal: false,
-      dataInModal: '',
       infolist: []
     }
   },
   methods: {
     show (value) {
-      this.maximizedModal = true
-      this.dataInModal = value
+      this.$zoom('statics/infographic/' + value.category_id + '/' + value.featured_image, {
+        allowZoom: true,
+        autoScale: true,
+        closeOnClickModal: true
+      })
     },
     getInfographic () {
       this.$axios.get('info-categories/' + this.$route.params.id)
