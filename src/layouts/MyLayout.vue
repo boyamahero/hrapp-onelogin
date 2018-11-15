@@ -38,7 +38,19 @@
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
       :width="70"
     >
+    <q-list
+        id="q-list-itema"
+        no-border
+        link
+        inset-delimiter
+      >
+        <q-item
+        @click.native="leftDrawerOpen = false">
+           <q-icon name="menu" class="menu q-pt-md"/>
+        </q-item>
+    </q-list>
       <q-list
+        id="q-list-itemb"
         no-border
         link
         inset-delimiter
@@ -75,22 +87,22 @@
           <q-item-side icon="home"  @click.native="$router.push('/')" style="color:#14548a;font-size: 20px;"/>
           </q-btn>
           <q-btn flat>
-          <img src="statics/speedlogo.png" class="col-xs-9 col-lg-1 col-md-3">
+          <img src="statics/speedlogo.png" class="col-xs-9 col-lg-1 col-md-3" @click.native="show(value)">
           </q-btn>
           <q-btn flat>
             <q-item-side icon="horizontal_split" style="color:#14548a;font-size: 20px;"/>
             <q-popover>
                 <q-list link style="min-width: 200px;">
-                  <div class="subheader">เมนูอื่นๆ</div>
+                  <div class="subheader">ช่องทางติดต่อ</div>
                   <q-item>
-                    <q-item-main label="เกี่ยวกับองค์กร" />
+                    <q-item-main label="แจ้งเปลี่ยนแปลงข้อมูล" />
                   </q-item>
-                  <q-item>
+                  <!-- <q-item>
                     <q-item-main label="SPEED ค่านิยมองค์กร" />
                   </q-item>
                   <q-item>
                     <q-item-main label="โครงสายบังคับบัญชา" />
-                  </q-item>
+                  </q-item> -->
                 </q-list>
               </q-popover>
           </q-btn>
@@ -101,11 +113,15 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+// import 'vue-image-zoom/dist/vue-image-zoom.css'
+// import Vue from 'vue'
+// Vue.use(zoom)
 export default {
   name: 'MyLayout',
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      // leftDrawerOpen: this.$q.platform.is.desktop
+      leftDrawerOpen: false
     }
   },
   mounted () {
