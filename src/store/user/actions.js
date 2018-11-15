@@ -11,8 +11,8 @@ const setUser = ({ commit }) => {
         commit('SET_USER', res.data)
         if (res.headers.authorization) {
           axios.defaults.headers.common['Authorization'] = res.headers.authorization
-          const token = (res.headers.authorization).replace('Bearer ', '')
-          localStorage.setItem('access_token', token)
+          localStorage.setItem('access_token', (res.headers.authorization).replace('Bearer ', ''))
+          commit('retrieveToken', (res.headers.authorization).replace('Bearer ', ''), { root: true })
         }
         resolve(res)
       })

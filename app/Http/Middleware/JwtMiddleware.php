@@ -20,8 +20,8 @@ class JwtMiddleware extends BaseMiddleware
     {
         try {
             $user = JWTAuth::parseToken()->authenticate();
-            $refreshed = JWTAuth::refresh(JWTAuth::getToken());
-            header('Authorization: Bearer ' . $refreshed); 
+            // $refreshed = JWTAuth::refresh(JWTAuth::getToken());
+            // header('Authorization: Bearer ' . $refreshed); 
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
                 return response()->json(['status' => 'Token is Invalid']);

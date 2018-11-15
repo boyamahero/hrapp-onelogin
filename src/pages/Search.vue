@@ -59,27 +59,62 @@ export default {
     handle () {
       console.log('toggle')
     },
+    setNewToken (value) {
+      if (value) {
+        this.$axios.defaults.headers.common['Authorization'] = value
+        localStorage.setItem('access_token', (value).replace('Bearer ', ''))
+        this.$store.commit('retrieveToken', (value).replace('Bearer ', ''), { root: true })
+      }
+    },
     search () {
       if ((this.searchText && this.searchText.length > 2) || (this.searchText.length === 0)) {
-        this.$axios.get('search/' + this.searchText)
+        this.$axios.get('search/' + this.searchText,
+          {headers: {
+              'Authorization': `Bearer ${this.$store.state.token.token}`
+            }
+          })
           .then((res) => {
             this.employees = res.data.data
             this.total = res.data.total
             this.current_page = res.data.current_page
             this.last_page = res.data.last_page
             this.next_page_url = res.data.next_page_url
+            this.setNewToken(res.headers.authorization)
+          }).catch(() => {
+            this.$q.dialog({
+              color: 'negative',
+              message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+              icon: 'report_problem',
+              ok: 'ok'
+            }).then(() => {
+              this.$router.push({name: 'login'})
+            })
           })
       }
     },
     loadMore (index, done) {
       setTimeout(() => {
         if ((this.next_page_url)) {
-          this.$axios.get(this.next_page_url)
+          this.$axios.get(this.next_page_url,
+            {headers: {
+                'Authorization': `Bearer ${this.$store.state.token.token}`
+              }
+            })
             .then((res) => {
               console.log('loadmore')
               this.employees = this.employees.concat(res.data.data)
               this.current_page = res.data.current_page
               this.next_page_url = res.data.next_page_url
+              this.setNewToken(res.headers.authorization)
+            }).catch(() => {
+              this.$q.dialog({
+                color: 'negative',
+                message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+                icon: 'report_problem',
+                ok: 'ok'
+              }).then(() => {
+                this.$router.push({name: 'login'})
+              })
             })
         }
         done()

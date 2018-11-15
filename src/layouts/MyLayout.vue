@@ -21,13 +21,13 @@
         </q-btn>
 
         <q-toolbar-title>
-          <div class="row q-mr-md">
-          <div class="col-xs-9 col-lg-9 text-right self-center">
-          <div class="subtitle">EGAT HR APP</div>
-          <div class="title">{{user.name}}</div>
-          <div class="subtitle">{{ user.name_english }}</div>
+          <div class="row justify-center">
+          <div class="col-xs-7 col-lg-8 text-right self-center">
+            <div class="subtitle">EGAT HR APP</div>
+            <div class="title">{{user.name}}</div>
+            <div class="subtitle">{{ user.name_english }}</div>
           </div>
-          <div class="col-xs-3 col-lg-2 text-right">
+          <div class="col-xs-2 col-lg-1 text-right">
               <img :src="user.image_path" class="q-item-avatar self-center">
           </div>
           </div>
@@ -112,13 +112,14 @@ export default {
     this.setUser()
       .then()
       .catch(() => {
-        // this.$q.notify({
-        //   color: 'negative',
-        //   position: 'top',
-        //   message: 'Loading failed',
-        //   icon: 'report_problem'
-        // })
-        this.$router.push({name: 'login'})
+        this.$q.dialog({
+          color: 'negative',
+          message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+          icon: 'report_problem',
+          ok: 'ok'
+        }).then(() => {
+          this.$router.push({name: 'login'})
+        })
       })
   },
   computed: {

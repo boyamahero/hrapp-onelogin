@@ -47,15 +47,15 @@ Route::get('/info-categories/{id}', function ($id) {
   return Infographic::where('category_id',$id)->get();
 });
 
-Route::get('/search/{keyword}', function ($keyword) {
-  return Employee::whereLike(['name','id','deputy_abb','assistant_abb','division_abb','department_abb','section_abb'], $keyword)
+Route::middleware('jwt.verify')->get('/search/{keyword}', function ($keyword) {
+  return Employee::select('id','name','position_abb','org_path','building','room','phone','deputy_abb','assistant_abb','division_abb','department_abb','section_abb','status','employee_subgroup','senior')->whereLike(['name','id','deputy_abb','assistant_abb','division_abb','department_abb','section_abb'], $keyword)
     ->where('status','!=','0')
     ->orderBy('employee_subgroup','desc')
     ->orderBy('senior')
     ->paginate(10);
 });
 
-Route::get('/manpower/{level?}/{abb?}', function ($level = null, $abb = null) {
+Route::middleware('jwt.verify')->get('/manpower/{level?}/{abb?}', function ($level = null, $abb = null) {
 
   switch ($level) {
     case "1":
