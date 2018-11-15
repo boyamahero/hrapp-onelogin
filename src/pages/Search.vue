@@ -1,7 +1,13 @@
 <template>
-  <q-page padding>
-    <div class="container">
-      <q-search
+  <q-page>
+      <div class="row justify-center">
+      <div class="col-md-9 col-xs-12">
+      <q-card class="q-mx-md q-mb-xs q-mt-md">
+      <q-card-main>
+         <p class="header">ค้นหาข้อมูลผู้ปฎิบัติงาน</p>
+         <div class="row q-ma-md">
+        <q-search
+        class="full-width"
         v-model="searchText"
         :debounce="1000"
         placeholder="ชื่อ/นามสกุล/สังกัดย่อ/เลขประจำตัว"
@@ -13,11 +19,22 @@
         @change="val => { searchText = val }"
         @input="search"
       />
-      <div class="row justify-between">
-        <div v-if="total > 0" class="q-py-xs self-center text-small">พบผลการค้นหาจำนวน {{ total }} ท่าน</div>
-        <div v-if="total > 0" class="q-pa-xs"> <q-icon name="filter_list" size="1.5rem" @click.native="handle"/> </div>
+         </div>
+      </q-card-main>
+    </q-card>
+    </div>
+     </div>
+      <div class="row justify-center">
+        <div class="col-md-9 col-xs-12 justify-between">
+          <div class="row justify-between">
+        <div v-if="total > 0" class="q-ma-md self-center">พบผลการค้นหาจำนวน {{ total }} ท่าน</div>
+        <div v-if="total > 0" class="q-ma-md"> <q-icon name="filter_list" size="1.5rem" @click.native="handle"/> </div>
       </div>
-      <q-item-separator />
+      </div>
+      </div>
+      <!-- <q-item-separator /> -->
+      <div class="row justify-center">
+        <div class="col-md-9 col-xs-12 justify-between">
       <q-infinite-scroll :handler="loadMore" ref="infiniteScroll">
         <q-card v-for="(employee, index) in employees" :key="index">
           <q-item>
@@ -25,24 +42,32 @@
             <img :src="employee.image_path" class="avatarList">
           </q-item-side>
             <q-item-main>
-              <q-item-tile class="q-body-1 text-small text-weight-bold">{{ employee.name }} ({{ employee.id }})</q-item-tile>
-              <q-item-tile class="q-body-1 text-small"><q-icon name="work" /> {{ employee.position_abb }}</q-item-tile>
-              <q-item-tile class="q-body-1 text-small"><q-icon name="business" /> {{ employee.org_path }}</q-item-tile>
-              <q-item-tile class="q-body-1 text-small" v-if="employee.building.trim() !== '-' || employee.room !== '-'"><q-icon name="room" /> {{ employee.building }} <span v-if="employee.room &&  employee.room!='-'">ห้อง {{employee.room.replace('ห้อง','')}} </span></q-item-tile>
-              <q-item-tile class="q-body-1 text-small" v-if="employee.phone &&  employee.phone!='-'"><q-icon name="call" /> {{ employee.phone }}</q-item-tile>
+              <q-item-tile class="q-body-1 text-weight-bold">{{ employee.name }} ({{ employee.id }})</q-item-tile>
+              <q-item-tile class="q-body-1"><q-icon name="work" /> {{ employee.position_abb }}</q-item-tile>
+              <q-item-tile class="q-body-1"><q-icon name="business" /> {{ employee.org_path }}</q-item-tile>
+              <q-item-tile class="q-body-1" v-if="employee.building.trim() !== '-' || employee.room !== '-'"><q-icon name="room" /> {{ employee.building }} <span v-if="employee.room &&  employee.room!='-'">ห้อง {{employee.room.replace('ห้อง','')}} </span></q-item-tile>
+              <q-item-tile class="q-body-1" v-if="employee.phone &&  employee.phone!='-'"><q-icon name="call" /> {{ employee.phone }}</q-item-tile>
             </q-item-main>
           </q-item>
         </q-card>
-        <div class="row justify-center" style="margin-bottom: 50px;" v-if="next_page_url">
+        <back-to-top bottom="100px" right="10px">
+          <button type="button" class="btn btn-info btn-to-top"><i class="fa fa-chevron-up"></i></button>
+        </back-to-top>
+        <div class="row justify-center" style="margin-bottom: 20px;" v-if="next_page_url">
           <q-spinner-dots slot="message" :size="40" />
         </div>
       </q-infinite-scroll>
-    </div>
+      </div>
+      </div>
   </q-page>
 </template>
 
 <script>
+import BackToTop from 'vue-backtotop'
 export default {
+  components: {
+    BackToTop
+  },
   // name: 'PageName',
   data () {
     return {

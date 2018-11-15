@@ -26,6 +26,9 @@
       <vue-highcharts :options="options" id="Level4" ref="pineChartLevel4"></vue-highcharts>
       </div>
     </div>
+    <back-to-top bottom="100px" right="10px">
+      <button type="button" class="btn btn-info btn-to-top"><i class="fa fa-chevron-up"></i></button>
+    </back-to-top>
     </div>
    </q-page>
 </template>
@@ -33,9 +36,12 @@
 <script>
 import VueHighcharts from 'vue2-highcharts'
 import {scroller} from 'vue-scrollto/src/scrollTo'
+import BackToTop from 'vue-backtotop'
+
 export default {
   components: {
-    VueHighcharts
+    VueHighcharts,
+    BackToTop
   },
   data () {
     return {
