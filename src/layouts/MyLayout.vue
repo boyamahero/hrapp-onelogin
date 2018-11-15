@@ -38,17 +38,16 @@
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
       :width="70"
     >
-    <q-list
-        id="q-list-itema"
+      <q-list
+        class="q-mt-md"
         no-border
         link
         inset-delimiter
       >
-        <q-item
-        @click.native="leftDrawerOpen = false">
-           <q-icon name="menu" class="menu q-pt-md"/>
+        <q-item>
+           <q-icon name="menu" class="menu" @click.native="leftDrawerOpen = false"/>
         </q-item>
-    </q-list>
+      </q-list>
       <q-list
         id="q-list-itemb"
         no-border
