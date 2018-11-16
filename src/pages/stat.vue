@@ -26,6 +26,9 @@
       <vue-highcharts :options="options" id="Level4" ref="pineChartLevel4"></vue-highcharts>
       </div>
     </div>
+    <back-to-top bottom="100px" right="10px">
+      <button type="button" class="btn btn-info btn-to-top"><i class="fa fa-chevron-up"></i></button>
+    </back-to-top>
     </div>
    </q-page>
 </template>
@@ -33,9 +36,12 @@
 <script>
 import VueHighcharts from 'vue2-highcharts'
 import {scroller} from 'vue-scrollto/src/scrollTo'
+import BackToTop from 'vue-backtotop'
+
 export default {
   components: {
-    VueHighcharts
+    VueHighcharts,
+    BackToTop
   },
   data () {
     return {
@@ -49,6 +55,9 @@ export default {
         },
         subtitle: {
           text: ''
+        },
+        credits: {
+          enabled: false
         }
       }
     }
@@ -57,19 +66,40 @@ export default {
     this.getDataAll()
   },
   methods: {
+    setNewToken (value) {
+      if (value) {
+        this.$axios.defaults.headers.common['Authorization'] = value
+        localStorage.setItem('access_token', (value).replace('Bearer ', ''))
+        this.$store.commit('retrieveToken', (value).replace('Bearer ', ''), { root: true })
+      }
+    },
     getDataAll () {
       let listdata = []
-      this.$axios.get('manpower')
+      this.$axios.get('manpower',
+        {headers: {
+            'Authorization': `Bearer ${this.$store.state.token.token}`
+          }
+        })
         .then((res) => {
           let data = res.data.data
-        for (let i = 0; i < data.length; i++) {
+          for (let i = 0; i < data.length; i++) {
             if (data[i].deputy_abb === '' || null) {
               data[i].deputy_abb = 'ส่วนกลาง'
             }
             listdata.push([data[i].deputy_abb, parseInt(data[i].employee_count)])
-        }
-        this.loadChart(listdata)
+          }
+          this.loadChart(listdata)
+          this.setNewToken(res.headers.authorization)
+        }).catch(() => {
+        this.$q.dialog({
+          color: 'negative',
+          message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+          icon: 'report_problem',
+          ok: 'ok'
+        }).then(() => {
+          this.$router.push({name: 'login'})
         })
+      })
     },
     loadChart (data) {
       this.Level1 = false
@@ -116,50 +146,64 @@ export default {
       this.Level4 = false
       let listdata = []
       let total = 0
-      this.$axios.get('manpower/' + level + '/' + abb)
+      this.$axios.get('manpower/' + level + '/' + abb,
+        {headers: {
+            'Authorization': `Bearer ${this.$store.state.token.token}`
+          }
+        })
         .then((res) => {
           let data = res.data.data
-                for (let i = 0; i < data.length; i++) {
-                    if (data[i].assistant_abb === '' || null) {
-                    data[i].assistant_abb = 'ส่วนกลาง'
+          for (let i = 0; i < data.length; i++) {
+            if (data[i].assistant_abb === '' || null) {
+              data[i].assistant_abb = 'ส่วนกลาง'
+            }
+            listdata.push([data[i].assistant_abb, parseInt(data[i].employee_count)])
+            total += parseInt(data[i].employee_count)
+          }
+          let option = {
+            title: {
+              text: 'หน่วยงาน ' + abb
+            },
+            subtitle: {
+              text: 'จำนวน ' + total.toLocaleString() + ' คน'
+            }
+          }
+          let asyncData = {
+            type: 'pie',
+            allowPointSelect: true,
+            keys: ['name', 'y', 'selected', 'sliced'],
+            data: listdata,
+            showInLegend: true,
+            tooltip: {pointFormat: 'จำนวน : <b>{point.y:.f}</b>'},
+            events: {
+                    click: function (event) {
+                      if (event.point.name !== 'ส่วนกลาง') {
+                        this.loadLevel2(2, event.point.name) // 2 ช
+                      }
+                    }.bind(this)
                 }
-                listdata.push([data[i].assistant_abb, parseInt(data[i].employee_count)])
-                total += parseInt(data[i].employee_count)
-            }
-      let option = {
-        title: {
-          text: 'หน่วยงาน ' + abb
-        },
-        subtitle: {
-          text: 'จำนวน ' + total.toLocaleString() + ' คน'
-        }
-      }
-      let asyncData = {
-        type: 'pie',
-        allowPointSelect: true,
-        keys: ['name', 'y', 'selected', 'sliced'],
-        data: listdata,
-        showInLegend: true,
-        tooltip: {pointFormat: 'จำนวน : <b>{point.y:.f}</b>'},
-        events: {
-                click: function (event) {
-                  if (event.point.name !== 'ส่วนกลาง') {
-                    this.loadLevel2(2, event.point.name) // 2 ช
-                  }
-                }.bind(this)
-            }
-      }
-      const ScrollTo = scroller()
-      ScrollTo('#Level1')
-      let pineChartLevel1 = this.$refs.pineChartLevel1
-      pineChartLevel1.delegateMethod('showLoading', 'Loading...')
-      pineChartLevel1.mergeOption(option)
-      setTimeout(() => {
-        pineChartLevel1.removeSeries()
-        pineChartLevel1.addSeries(asyncData)
-        pineChartLevel1.hideLoading()
-      }, 2000)
+          }
+          const ScrollTo = scroller()
+          ScrollTo('#Level1')
+          let pineChartLevel1 = this.$refs.pineChartLevel1
+          pineChartLevel1.delegateMethod('showLoading', 'Loading...')
+          pineChartLevel1.mergeOption(option)
+          setTimeout(() => {
+            pineChartLevel1.removeSeries()
+            pineChartLevel1.addSeries(asyncData)
+            pineChartLevel1.hideLoading()
+          }, 2000)
+          this.setNewToken(res.headers.authorization)
+        }).catch(() => {
+        this.$q.dialog({
+          color: 'negative',
+          message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+          icon: 'report_problem',
+          ok: 'ok'
+        }).then(() => {
+          this.$router.push({name: 'login'})
         })
+      })
     },
     loadLevel2 (level, abb) {
       this.Level1 = true
@@ -168,7 +212,11 @@ export default {
       this.Level4 = false
       let listdata = []
       let total = 0
-      this.$axios.get('manpower/' + level + '/' + abb)
+      this.$axios.get('manpower/' + level + '/' + abb,
+        {headers: {
+            'Authorization': `Bearer ${this.$store.state.token.token}`
+          }
+        })
         .then((res) => {
           let data = res.data.data
             for (let i = 0; i < data.length; i++) {
@@ -178,40 +226,50 @@ export default {
                 listdata.push([data[i].division_abb, parseInt(data[i].employee_count)])
                 total += parseInt(data[i].employee_count)
             }
-      let option = {
-        title: {
-          text: 'หน่วยงาน ' + abb
-        },
-        subtitle: {
-          text: 'จำนวน ' + total.toLocaleString() + ' คน'
-        }
-      }
-      let asyncData = {
-        type: 'pie',
-        allowPointSelect: true,
-        keys: ['name', 'y', 'selected', 'sliced'],
-        data: listdata,
-        showInLegend: true,
-        tooltip: {pointFormat: 'จำนวน : <b>{point.y:.f}</b>'},
-        events: {
-                click: function (event) {
-                    if (event.point.name !== 'ส่วนกลาง') {
-                    this.loadLevel3(3, event.point.name)
-                    }
-                }.bind(this)
+          let option = {
+            title: {
+              text: 'หน่วยงาน ' + abb
+            },
+            subtitle: {
+              text: 'จำนวน ' + total.toLocaleString() + ' คน'
             }
-      }
-      const ScrollTo = scroller()
-      ScrollTo('#Level2')
-      let pineChartLevel2 = this.$refs.pineChartLevel2
-      pineChartLevel2.delegateMethod('showLoading', 'Loading...')
-      pineChartLevel2.mergeOption(option)
-      setTimeout(() => {
-        pineChartLevel2.removeSeries()
-        pineChartLevel2.addSeries(asyncData)
-        pineChartLevel2.hideLoading()
-      }, 2000)
+          }
+        let asyncData = {
+          type: 'pie',
+          allowPointSelect: true,
+          keys: ['name', 'y', 'selected', 'sliced'],
+          data: listdata,
+          showInLegend: true,
+          tooltip: {pointFormat: 'จำนวน : <b>{point.y:.f}</b>'},
+          events: {
+                  click: function (event) {
+                      if (event.point.name !== 'ส่วนกลาง') {
+                      this.loadLevel3(3, event.point.name)
+                      }
+                  }.bind(this)
+              }
+        }
+        const ScrollTo = scroller()
+        ScrollTo('#Level2')
+        let pineChartLevel2 = this.$refs.pineChartLevel2
+        pineChartLevel2.delegateMethod('showLoading', 'Loading...')
+        pineChartLevel2.mergeOption(option)
+        setTimeout(() => {
+          pineChartLevel2.removeSeries()
+          pineChartLevel2.addSeries(asyncData)
+          pineChartLevel2.hideLoading()
+        }, 2000)
+      this.setNewToken(res.headers.authorization)
+      }).catch(() => {
+        this.$q.dialog({
+          color: 'negative',
+          message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+          icon: 'report_problem',
+          ok: 'ok'
+        }).then(() => {
+          this.$router.push({name: 'login'})
         })
+      })
     },
     loadLevel3 (level, abb) {
       this.Level1 = true
@@ -220,7 +278,11 @@ export default {
       this.Level4 = false
       let listdata = []
       let total = 0
-      this.$axios.get('manpower/' + level + '/' + abb)
+      this.$axios.get('manpower/' + level + '/' + abb,
+        {headers: {
+            'Authorization': `Bearer ${this.$store.state.token.token}`
+          }
+        })
         .then((res) => {
           let data = res.data.data
             for (let i = 0; i < data.length; i++) {
@@ -230,40 +292,50 @@ export default {
                 listdata.push([data[i].department_abb, parseInt(data[i].employee_count)])
                 total += parseInt(data[i].employee_count)
             }
-      let option = {
-        title: {
-          text: 'หน่วยงาน ' + abb
-        },
-        subtitle: {
-          text: 'จำนวน ' + total.toLocaleString() + ' คน'
-        }
-      }
-      let asyncData = {
-        type: 'pie',
-        allowPointSelect: true,
-        keys: ['name', 'y', 'selected', 'sliced'],
-        data: listdata,
-        showInLegend: true,
-        tooltip: {pointFormat: 'จำนวน : <b>{point.y:.f}</b>'},
-        events: {
-                click: function (event) {
-                    if (event.point.name !== 'ส่วนกลาง') {
-                    this.loadLevel4(4, event.point.name)
-                    }
-                }.bind(this)
+          let option = {
+            title: {
+              text: 'หน่วยงาน ' + abb
+            },
+            subtitle: {
+              text: 'จำนวน ' + total.toLocaleString() + ' คน'
             }
-      }
-      const ScrollTo = scroller()
-      ScrollTo('#Level3')
-      let pineChartLevel3 = this.$refs.pineChartLevel3
-      pineChartLevel3.delegateMethod('showLoading', 'Loading...')
-      pineChartLevel3.mergeOption(option)
-      setTimeout(() => {
-        pineChartLevel3.removeSeries()
-        pineChartLevel3.addSeries(asyncData)
-        pineChartLevel3.hideLoading()
-      }, 2000)
+          }
+          let asyncData = {
+          type: 'pie',
+          allowPointSelect: true,
+          keys: ['name', 'y', 'selected', 'sliced'],
+          data: listdata,
+          showInLegend: true,
+          tooltip: {pointFormat: 'จำนวน : <b>{point.y:.f}</b>'},
+          events: {
+                  click: function (event) {
+                      if (event.point.name !== 'ส่วนกลาง') {
+                      this.loadLevel4(4, event.point.name)
+                      }
+                  }.bind(this)
+              }
+          }
+        const ScrollTo = scroller()
+        ScrollTo('#Level3')
+        let pineChartLevel3 = this.$refs.pineChartLevel3
+        pineChartLevel3.delegateMethod('showLoading', 'Loading...')
+        pineChartLevel3.mergeOption(option)
+        setTimeout(() => {
+          pineChartLevel3.removeSeries()
+          pineChartLevel3.addSeries(asyncData)
+          pineChartLevel3.hideLoading()
+        }, 2000)
+        this.setNewToken(res.headers.authorization)
+      }).catch(() => {
+        this.$q.dialog({
+          color: 'negative',
+          message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+          icon: 'report_problem',
+          ok: 'ok'
+        }).then(() => {
+          this.$router.push({name: 'login'})
         })
+      })
     },
     loadLevel4 (level, abb) {
       this.Level1 = true
@@ -272,7 +344,11 @@ export default {
       this.Level4 = true
       let listdata = []
       let total = 0
-      this.$axios.get('manpower/' + level + '/' + abb)
+      this.$axios.get('manpower/' + level + '/' + abb,
+        {headers: {
+            'Authorization': `Bearer ${this.$store.state.token.token}`
+          }
+        })
         .then((res) => {
           let data = res.data.data
             for (let i = 0; i < data.length; i++) {
@@ -282,33 +358,43 @@ export default {
                 listdata.push([data[i].section_abb, parseInt(data[i].employee_count)])
                 total += parseInt(data[i].employee_count)
             }
-      let option = {
-        title: {
-          text: 'หน่วยงาน ' + abb
-        },
-        subtitle: {
-          text: 'จำนวน ' + total.toLocaleString() + ' คน'
+        let option = {
+          title: {
+            text: 'หน่วยงาน ' + abb
+          },
+          subtitle: {
+            text: 'จำนวน ' + total.toLocaleString() + ' คน'
+          }
         }
-      }
-      let asyncData = {
-        type: 'pie',
-        allowPointSelect: true,
-        keys: ['name', 'y', 'selected', 'sliced'],
-        data: listdata,
-        showInLegend: true,
-        tooltip: {pointFormat: 'จำนวน : <b>{point.y:.f}</b>'}
-      }
-      const ScrollTo = scroller()
-      ScrollTo('#Level4')
-      let pineChartLevel4 = this.$refs.pineChartLevel4
-      pineChartLevel4.delegateMethod('showLoading', 'Loading...')
-      pineChartLevel4.mergeOption(option)
-      setTimeout(() => {
-        pineChartLevel4.removeSeries()
-        pineChartLevel4.addSeries(asyncData)
-        pineChartLevel4.hideLoading()
-      }, 2000)
+        let asyncData = {
+          type: 'pie',
+          allowPointSelect: true,
+          keys: ['name', 'y', 'selected', 'sliced'],
+          data: listdata,
+          showInLegend: true,
+          tooltip: {pointFormat: 'จำนวน : <b>{point.y:.f}</b>'}
+        }
+        const ScrollTo = scroller()
+        ScrollTo('#Level4')
+        let pineChartLevel4 = this.$refs.pineChartLevel4
+        pineChartLevel4.delegateMethod('showLoading', 'Loading...')
+        pineChartLevel4.mergeOption(option)
+        setTimeout(() => {
+          pineChartLevel4.removeSeries()
+          pineChartLevel4.addSeries(asyncData)
+          pineChartLevel4.hideLoading()
+        }, 2000)
+        this.setNewToken(res.headers.authorization)
+      }).catch(() => {
+        this.$q.dialog({
+          color: 'negative',
+          message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+          icon: 'report_problem',
+          ok: 'ok'
+        }).then(() => {
+          this.$router.push({name: 'login'})
         })
+      })
     }
   }
 }

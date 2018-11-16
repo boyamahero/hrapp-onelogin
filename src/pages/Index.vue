@@ -2,58 +2,72 @@
   <q-page>
     <div class="row justify-center">
       <div class="col-md-9 col-xs-12">
-      <q-carousel
-          quick-nav
-          quick-nav-icon="stop"
-          >
-      <q-carousel-slide>
-        <q-card class="q-ma-xs justify-center personcard">
-      <q-card-main>
-        <p class="header">ข้อมูลทั่วไป</p>
-        <q-card-separator />
-        <p>หมายเลขประจำตัว : {{user.id}}</p>
-        <p>ตำแหน่ง : {{user.position_abb}}</p>
-        <p>สังกัด : {{user.org_path}}</p>
-      </q-card-main>
-      </q-card>
-      </q-carousel-slide>
-      <q-carousel-slide>
-        <q-card class="q-ma-xs justify-center personcard">
-      <q-card-main>
-        <p class="header">ข้อมูลการทำงาน</p>
-        <q-card-separator />
-        <p>ตำแหน่ง : {{user.position_abb}}</p>
-        <p>วันที่เปลี่ยนตำแหน่ง : {{convertEnToTHDate(user.old_dat)}}</p>
-        <p>อายุงานในตำแหน่ง : {{user.position_age}}</p>
-        <p>วันที่เลื่อนระดับ : {{convertEnToTHDate(user.old_dat)}}</p>
-        <p>อายุงานในระดับ : {{user.old_dat_age}}</p>
-      </q-card-main>
-      </q-card>
-      </q-carousel-slide>
-      <q-carousel-slide >
-        <q-card class="q-ma-xs justify-center personcard">
-      <q-card-main>
-        <p class="header">ข้อมูลการทำงาน</p>
-        <q-card-separator />
-        <p>วันที่เข้างาน : {{convertTHDate(user.entry_thai_date)}}</p>
-        <p>อายุงาน กฟผ. : {{user.agew}}</p>
-        <p>วันที่เกษียณ : {{convertTHDate(user.retire_thai_date)}}</p>
-        <p>อายุงานคงเหลือ: {{user.remain_work_age}}</p>
-      </q-card-main>
-      </q-card>
-      </q-carousel-slide>
-      <q-carousel-slide>
-        <q-card class="q-ma-xs justify-center personcard">
-      <q-card-main>
-        <p class="header">ข้อมูลสถานที่ทำงาน</p>
-        <q-card-separator />
-        <p>ตึกทำงาน : {{user.building}}</p>
-        <p>ห้องทำงาน : {{user.room}}</p>
-        <p>เบอร์โทร : {{user.phone}}</p>
-      </q-card-main>
-      </q-card>
-      </q-carousel-slide>
-    </q-carousel>
+        <q-carousel
+            quick-nav
+            quick-nav-icon="stop"
+            >
+          <q-carousel-slide>
+            <q-card class="q-ma-xs justify-center personcard">
+              <q-card-main>
+                <p class="header">ประวัติย่อ</p>
+                <q-card-separator />
+                <p>ประเภทผู้ปฏิบัติงาน : {{user.employee_group_name}}</p>
+                <p>หมายเลขประจำตัว : {{user.id}}</p>
+                <p>ตำแหน่ง : {{user.position_abb}}</p>
+                <p>สังกัด : {{user.org_path}}</p>
+              </q-card-main>
+            </q-card>
+          </q-carousel-slide>
+          <q-carousel-slide>
+            <q-card class="q-ma-xs justify-center personcard">
+              <q-card-main>
+                <p class="header">ข้อมูลตำแหน่งปัจจุบัน</p>
+                <q-card-separator />
+                <p>วันที่เปลี่ยนตำแหน่ง : {{convertTHDate(user.position_thai_date)}}</p>
+                <p>อายุงานในตำแหน่ง : {{user.position_age}}</p>
+                <p>วันที่เลื่อนระดับ : {{convertEnToTHDate(user.old_dat)}}</p>
+                <p>อายุงานในระดับ : {{user.old_dat_age}}</p>
+              </q-card-main>
+            </q-card>
+          </q-carousel-slide>
+          <q-carousel-slide>
+            <q-card class="q-ma-xs justify-center personcard">
+              <q-card-main>
+                <p class="header">ข้อมูลสังกัดปัจจุบัน</p>
+                <q-card-separator />
+                <p>{{user.deputy_full + ' (' + user.deputy_abb + ')'}}</p>
+                <p>{{user.assistant_full + ' (' + user.assistant_abb + ')'}}</p>
+                <p>{{user.division_full + ' (' + user.division_abb + ')'}}</p>
+                <p>{{user.department_full + ' (' + user.department_abb + ')'}}</p>
+                <p>{{user.section_full + ' (' + user.section_abb + ')'}}</p>
+              </q-card-main>
+            </q-card>
+          </q-carousel-slide>
+          <q-carousel-slide >
+            <q-card class="q-ma-xs justify-center personcard">
+              <q-card-main>
+                <p class="header">ข้อมูลการทำงาน</p>
+                <q-card-separator />
+                <p>วันเข้าทำงาน : {{convertTHDate(user.entry_thai_date)}}</p>
+                <p>อายุงาน กฟผ. : {{user.agew}}</p>
+                <p>วันบรรจุ : {{convertTHDate(user.assign_thai_date)}}</p>
+                <p>{{ (user.employee_group !== "1" && user.employee_group !== "2") ?'วันที่สิ้นสุดสัญญา':'วันเกษียณ' }} : {{convertTHDate(user.retire_thai_date)}}</p>
+                <p>อายุงานคงเหลือ: {{user.remain_work_age}}</p>
+              </q-card-main>
+            </q-card>
+          </q-carousel-slide>
+          <q-carousel-slide>
+            <q-card class="q-ma-xs justify-center personcard">
+              <q-card-main>
+                <p class="header">ข้อมูลสถานที่ทำงาน</p>
+                <q-card-separator />
+                <p>อาคาร : {{user.building}}</p>
+                <p>ห้อง : {{user.room}}</p>
+                <p>เบอร์โทร : {{user.phone}}</p>
+              </q-card-main>
+            </q-card>
+          </q-carousel-slide>
+        </q-carousel>
       </div>
     </div>
     <div class="row justify-center">

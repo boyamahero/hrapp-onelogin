@@ -21,13 +21,13 @@
         </q-btn>
 
         <q-toolbar-title>
-          <div class="row q-mr-md">
-          <div class="col-xs-9 col-lg-9 text-right self-center">
-          <div class="subtitle">EGAT HR APP</div>
-          <div class="title">{{user.name}}</div>
-          <div class="subtitle">{{ user.name_english }}</div>
+          <div class="row justify-center">
+          <div class="col-xs-7 col-lg-8 text-right self-center">
+            <div class="subtitle">EGAT HR APP</div>
+            <div class="title">{{user.name}}</div>
+            <div class="subtitle">{{ user.name_english }}</div>
           </div>
-          <div class="col-xs-3 col-lg-2 text-right">
+          <div class="col-xs-2 col-lg-1 text-right">
               <img :src="user.image_path" class="q-item-avatar self-center">
           </div>
           </div>
@@ -39,6 +39,17 @@
       :width="70"
     >
       <q-list
+        class="q-mt-md"
+        no-border
+        link
+        inset-delimiter
+      >
+        <q-item>
+           <q-icon name="menu" class="menu" @click.native="leftDrawerOpen = false"/>
+        </q-item>
+      </q-list>
+      <q-list
+        id="q-list-itemb"
         no-border
         link
         inset-delimiter
@@ -75,22 +86,22 @@
           <q-item-side icon="home"  @click.native="$router.push('/')" style="color:#14548a;font-size: 20px;"/>
           </q-btn>
           <q-btn flat>
-          <img src="statics/speedlogo.png" class="col-xs-9 col-lg-1 col-md-3">
+          <img src="statics/speedlogo.png" class="col-xs-9 col-lg-1 col-md-3" @click.native="show(value)">
           </q-btn>
           <q-btn flat>
             <q-item-side icon="horizontal_split" style="color:#14548a;font-size: 20px;"/>
             <q-popover>
                 <q-list link style="min-width: 200px;">
-                  <div class="subheader">เมนูอื่นๆ</div>
+                  <div class="subheader">ช่องทางติดต่อ</div>
                   <q-item>
-                    <q-item-main label="เกี่ยวกับองค์กร" />
+                    <q-item-main label="แจ้งเปลี่ยนแปลงข้อมูล" />
                   </q-item>
-                  <q-item>
+                  <!-- <q-item>
                     <q-item-main label="SPEED ค่านิยมองค์กร" />
                   </q-item>
                   <q-item>
                     <q-item-main label="โครงสายบังคับบัญชา" />
-                  </q-item>
+                  </q-item> -->
                 </q-list>
               </q-popover>
           </q-btn>
@@ -101,24 +112,29 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+// import 'vue-image-zoom/dist/vue-image-zoom.css'
+// import Vue from 'vue'
+// Vue.use(zoom)
 export default {
   name: 'MyLayout',
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      // leftDrawerOpen: this.$q.platform.is.desktop
+      leftDrawerOpen: false
     }
   },
   mounted () {
     this.setUser()
       .then()
       .catch(() => {
-        // this.$q.notify({
-        //   color: 'negative',
-        //   position: 'top',
-        //   message: 'Loading failed',
-        //   icon: 'report_problem'
-        // })
-        this.$router.push({name: 'login'})
+        this.$q.dialog({
+          color: 'negative',
+          message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+          icon: 'report_problem',
+          ok: 'ok'
+        }).then(() => {
+          this.$router.push({name: 'login'})
+        })
       })
   },
   computed: {

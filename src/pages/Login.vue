@@ -68,6 +68,10 @@ export default {
             this.showAlert = true
             this.error = 'รหัสผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง'
           }
+          if (e.message === 'Request failed with status code 403') {
+            this.showAlert = true
+            this.error = 'คุณยังไม่ได้รับอนุญาตให้ใช้งาน'
+          }
           if (e.message === 'Request failed with status code 500') {
             this.showAlert = true
             this.error = 'เครื่องแม่ข่ายเว็ปไซต์มีปัญหา'
