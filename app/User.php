@@ -62,6 +62,31 @@ class User extends Authenticatable implements JWTSubject
      */
     public function competencies()
     {
-        return $this->hasMany('App\Competency', 'EMPN', 'user_id');
+        return $this->hasMany('App\Competency', 'Empn', 'user_id');
     }
+
+     /**
+     * Get the kpis record associated with the user.
+     */
+    public function kpis()
+    {
+        return $this->hasMany('App\Kpi', 'EMPN06', 'user_id');
+    }
+
+     /**
+     * Get the bkpis record associated with the user.
+     */
+    public function bkpis()
+    {
+        return $this->hasMany('App\Bkpi', 'EMPN06', 'user_id');
+    }
+
+     /**
+     * Get the history_works record associated with the user.
+     */
+    public function portfolioInfo()
+    {
+        return $this->hasMany('App\PortfolioInfo', 'empn', 'user_id');
+    }
+
 }
