@@ -14,6 +14,18 @@ class EmployeesController extends Controller
         return $request->user()->employee()->first();
     }
 
+    public function images($id,$hash)
+    {
+        if ($hash !== base64_encode( substr(sprintf("%06d", $id),0,3) ).env('APP_SECRET','HrApP').base64_encode( substr(sprintf("%06d", $id),3,3) ) )
+            return null;
+
+        $emp = Employee::where('id',$id)
+        ->where('status','!=','0')
+        ->first();
+        header('Content-type: image/jpeg');
+        echo file_get_contents('http://10.20.56.21/IMAGE/WINFOMA/PERSON/DATA/DATA'.substr($emp->docuname,1,4).'/'.$emp->docuname.'.jpg');
+    }
+
     public function show($id)
     {
         return User::where('username',$id)->with('employee')->get();

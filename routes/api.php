@@ -36,6 +36,8 @@ Route::get('/competencies/{id}', function ($id) {
   ]);
 });
 
+Route::get('/images/{id}/{hash}', 'EmployeesController@images');
+
 Route::get('/employee/{id}', 'EmployeesController@show');
 
 Route::get('/info-categories', function () {
