@@ -37,8 +37,8 @@ class AuthController extends Controller
 
             $credentials = ['username' => $username , 'password' => $request->input('password')];
 
-            if((!$this->isAdmin($username)) && (!$this->isBossDevisionUp($username)))
-                return response()->json(['message' => 'คุณไม่ได้รับอนุญาตให้เข้าใช้งาน'], 401);            
+            // if((!$this->isAdmin($username)) && (!$this->isBossDevisionUp($username)))
+            //     return response()->json(['message' => 'คุณไม่ได้รับอนุญาตให้เข้าใช้งาน'], 403);            
                         
             $this->createUserNotExist($credentials);
 

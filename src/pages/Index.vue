@@ -23,7 +23,7 @@
               <q-card-main>
                 <p class="header">ข้อมูลตำแหน่งปัจจุบัน</p>
                 <q-card-separator />
-                <p>วันที่เปลี่ยนตำแหน่ง : {{convertEnToTHDate(user.old_dat)}}</p>
+                <p>วันที่เปลี่ยนตำแหน่ง : {{convertTHDate(user.position_thai_date)}}</p>
                 <p>อายุงานในตำแหน่ง : {{user.position_age}}</p>
                 <p>วันที่เลื่อนระดับ : {{convertEnToTHDate(user.old_dat)}}</p>
                 <p>อายุงานในระดับ : {{user.old_dat_age}}</p>
