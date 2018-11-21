@@ -1,5 +1,5 @@
 <?php
-
+use App\Education;
 use App\Kpi;
 use App\Bkpi;
 use App\User;
