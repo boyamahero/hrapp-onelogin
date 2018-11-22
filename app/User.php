@@ -89,4 +89,12 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\PortfolioInfo', 'empn', 'user_id');
     }
 
+     /**
+     * Get the education record associated with the user.
+     */
+    public function educations()
+    {
+        return $this->hasMany('App\Education', 'employee_id', 'user_id');
+    }
+
 }

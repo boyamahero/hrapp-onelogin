@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Education;
 use App\Bkpi;
+use App\Competency;
 use App\Vision;
 use App\Portfolio;
 use App\HistoryWork;
@@ -13,36 +15,125 @@ class PortfoliosController extends Controller
 {
     public function show($id)
     {
+        $yearnow = date("Y") + 543;
+
+        //------competency list-----
+        $cLists = array('C1','C2','C3','C4','C5','C6');
+	    $coreLists = array('การทำงานเป็นทีม', 'การวางแผน แก้ไขปัญหาและตัดสินใจเชิงรุก', 'คุณธรรมและธรรมาภิบาล', 'ความเชี่ยวชาญและความเป็นมืออาชีพ', 'ความคิดสร้างสรรค์และนวัตกรรม', 'การสื่อสารที่ดี');
+        $mLists = array('M1','M2','M3','M4','M5','M6');
+	    $managerialLists = array('ภาวะผู้นำ','วิสัยทัศน์และวางแผนเชิงยุทธศาสตร์', 'การสร้างความสัมพันธ์กับผู้เกี่ยวข้อง', 'การบริหารจัดการให้เกิดผลลัพธ์อย่างยั่งยืน','ศักยภาพเพื่อนำการเปลี่ยนแปลง','ความสามารถเชิงธุรกิจ');
+        //-----color code-----
+        $strength ='#00b050';
+        $acceptable ='#ffff00';
+        $growth ='#ff5050';
+
+       $Sdesc ='Strength หมายถึง ผู้รับการประเมินแสดงพฤติกรรมได้ สูงกว่า ค่าความคาดหวังในระดับ';
+       $Adesc ='A = Acceptable หมายถึง ผู้รับการประเมินแสดงพฤติกรรมได้ ตาม ค่าความคาดหวังในระดับ';
+       $Gdesc ='G = Growth Opportunity หมายถึง ผู้รับการประเมินแสดงพฤติกรรมได้ ต่ำกว่า ค่าความคาดหวังในระดับ';
+
+       $competency = DB::connection('HRDatabase')->table('TBP_CoreCompetency')
+       ->where('Empn',$id)
+       ->whereBetween('TEST_Year',[$yearnow-2,$yearnow])
+       ->get();
+
+       $expectCompetency = DB::connection('HRDatabase')->table('TBP_CoreCompetency')
+        ->where('Empn',$id)
+        ->whereBetween('TEST_Year',[$yearnow-2,$yearnow])
+        ->get()
+        ->groupBy('TEST_Year')
+        ->sortBy('TEST_Year'); 
+            $expectCompetency = $expectCompetency->map(function($year ,$key){
+            $level = $year->AVG('Zlevel');
+            if($level <= '4')
+            {
+                $expectC = '1';
+                $expectM = '-';
+            }
+            else if($level >= '5' && $level <= '7')
+            {	
+                $expectC = '2';
+                $expectM = '-';
+            }
+            else if($level == '8')
+            {	
+                $expectC = '3';
+                $expectM = '1';
+            }
+            else if($level >= '9' && $level <= '10')
+            {	
+                $expectC = '3';
+                $expectM = '2';
+            }
+            else if($level >= '11' && $level <= '12')
+            {	
+                $expectC = '4';
+                $expectM = '3';
+            }
+            else if($level == '13')
+            {	
+                $expectC = '5';
+                $expectM = '4';
+            }
+            else if($level == '14')
+            {	
+                $expectC = '5';
+                $expectM = '5';
+            }
+
+            return [
+            'level' => $level,
+            'expectC' => $expectC,
+            'expectM' => $expectM,
+            ];
+        });
+
+        $highest_degree = DB::connection('HRDatabase')->table('educations')
+            ->select('degree_id','degree_name')
+            ->where('employee_id',$id)->take(1)
+            ->orderBy('degree_id','asc')
+            ->get();
+
+        $education = Education::select('degree_name','certificate_name','branch_name','school_name')
+            ->where('employee_id',$id)
+            ->orderBy('graduated_year','desc')
+             ->get();
+
         $historyWorks = HistoryWork::select('works_date', 'works_dsc')
             ->where('emp_code',$id)->take(5)
             ->orderBy('works_no','desc')
             ->get();
+
         $vision = Vision::select('vision', 'cause', 'objective', 'empn_approver')
             ->where('Empn',$id)->take(1)
             ->where('id_approval','=','0')
             ->orderBy('id','desc')
             ->get();
+            
         $portfolio = Portfolio::select('achievement', 'finish_year', 'result')
+            ->leftJoin('TBP_pfo_ref_value_added_type', 'TBP_pfo_ref_value_added_type.id', '=', 'TBP_pfo_portfolio.value_added_type')
             ->where('empn',$id)
             ->where('id_approval','=','0')->take(5)
             ->orderBy('finish_year','desc')
             ->orderBy('is_favorite','desc')
             ->get();    
-        $yearnow = date("Y") + 543;
-        $year1 =  $yearnow - 1;
-        $year2 =  $yearnow - 2; 
+
         $avgKPIScore = DB::connection('HRDatabase')->table('TBP_KPI')
-            ->select(DB::raw('AVG(SCORE100) as avg_kpi_score, TEST_YR'))
             ->where('EMPN06',$id)
-            ->whereIn('TEST_YR',[$year2,$year1,$yearnow])
+            ->whereBetween('TEST_YR',[$yearnow-2,$yearnow])
+            ->get()
             ->groupBy('TEST_YR')
-            ->get();
+            ->sortBy('TEST_YR'); 
+            $avgKPIScore = $avgKPIScore->map(function($year ,$key){
+                $avgKPI = $year->AVG('SCORE100');   
+                return $avgKPI;
+            });
+
         $avgAllKPIScore = DB::connection('HRDatabase')->table('TBP_KPI')
             ->select(DB::raw('AVG(SCORE100) as avg_all_kpi_score'))
             ->where('EMPN06',$id)
-            ->whereIn('TEST_YR',[$year2,$year1,$yearnow])
+            ->whereBetween('TEST_YR',[$yearnow-2,$yearnow])
             ->get();
-
+        
         $softKpi = Bkpi::where('EMPN06',$id)
                 ->whereBetween('TEST_YR',[$yearnow-2, $yearnow])
                 ->get()
@@ -72,7 +163,6 @@ class PortfoliosController extends Controller
             'B50' => $B50,
             'total' => $B10 + $B20 + $B30 + $B40 + $B50
             ];
-
         });    
 
         return response()->json([
@@ -82,7 +172,12 @@ class PortfoliosController extends Controller
             'portfolios' => $portfolio,
             'kpi' => $avgKPIScore,
             'sum_kpi' => $avgAllKPIScore,
-            'soft_kpi' => $softKpi]
+            'soft_kpi' => $softKpi,
+            'education' => $education,
+            'highest_degree' => $highest_degree,
+            'competency' => $competency,
+            'expectCompetency' => $expectCompetency
+            ]
         ]);
     }
 }
