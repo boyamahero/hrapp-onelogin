@@ -32,15 +32,16 @@ Route::middleware(['jwt.verify'])->group(function () {
 
   Route::get('/manpower/{level?}/{abb?}', 'EmployeesController@manpower');
 
-
 });
+
+Route::get('/retire-next/{year?}/{abb?}', 'EmployeesController@retire');
 
 Route::get('/portfolioInfo/{id}', 'PortfoliosController@show');
 
 
 Route::get('/images/{id}/{hash}', 'EmployeesController@images');
 
-Route::get('/employee/{id}', 'EmployeesController@show');
+// Route::get('/employee/{id}', 'EmployeesController@show');
 
 Route::get('/info-categories', function () {
   return Category::all();

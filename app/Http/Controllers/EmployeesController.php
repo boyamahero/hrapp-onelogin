@@ -35,6 +35,7 @@ class EmployeesController extends Controller
     {
         return Employee::select('id','name','position_abb','org_path','building','room','phone','deputy_abb','assistant_abb','division_abb','department_abb','section_abb','status','employee_subgroup','senior')->whereLike(['name','id','deputy_abb','assistant_abb','division_abb','department_abb','section_abb'], $keyword)
                 ->where('status','!=','0')
+                ->whereIn('employee_group',[1,2,5,9])
                 ->orderBy('employee_subgroup','desc')
                 ->orderBy('senior')
                 ->paginate(50);
@@ -46,7 +47,7 @@ class EmployeesController extends Controller
             case "1":
               $orgs = DB::connection('HRDatabase')->table('Employees')
                         ->select(DB::raw('count(*) as employee_count, assistant_abb'))
-                        ->where('status','!=','0')->whereIn('employee_group',[1,2,5])
+                        ->where('status','!=','0')->whereIn('employee_group',[1,2,5,9])
                         ->where('deputy_abb',$abb)
                         ->groupBy('assistant_abb')
                         ->get();
@@ -54,7 +55,7 @@ class EmployeesController extends Controller
             case "2":
               $orgs = DB::connection('HRDatabase')->table('Employees')
                         ->select(DB::raw('count(*) as employee_count, division_abb'))
-                        ->where('status','!=','0')->whereIn('employee_group',[1,2,5])
+                        ->where('status','!=','0')->whereIn('employee_group',[1,2,5,9])
                         ->where('assistant_abb',$abb)
                         ->groupBy('division_abb')
                         ->get();
@@ -62,7 +63,7 @@ class EmployeesController extends Controller
             case "3":
               $orgs = DB::connection('HRDatabase')->table('Employees')
                         ->select(DB::raw('count(*) as employee_count, department_abb'))
-                        ->where('status','!=','0')->whereIn('employee_group',[1,2,5])
+                        ->where('status','!=','0')->whereIn('employee_group',[1,2,5,9])
                         ->where('division_abb',$abb)
                         ->groupBy('department_abb')
                         ->get();
@@ -70,7 +71,7 @@ class EmployeesController extends Controller
             case "4":
               $orgs = DB::connection('HRDatabase')->table('Employees')
                       ->select(DB::raw('count(*) as employee_count, section_abb'))
-                      ->where('status','!=','0')->whereIn('employee_group',[1,2,5])
+                      ->where('status','!=','0')->whereIn('employee_group',[1,2,5,9])
                       ->where('department_abb',$abb)
                       ->groupBy('section_abb')
                       ->get();
@@ -78,7 +79,7 @@ class EmployeesController extends Controller
             default:
                 $orgs = DB::connection('HRDatabase')->table('Employees')
                         ->select(DB::raw('count(*) as employee_count, deputy_abb'))
-                        ->where('status','!=','0')->whereIn('employee_group',[1,2,5])
+                        ->where('status','!=','0')->whereIn('employee_group',[1,2,5,9])
                         ->groupBy('deputy_abb')
                         ->get();
               }
@@ -86,5 +87,51 @@ class EmployeesController extends Controller
         return response()->json([
               'data' => $orgs
           ]);
+    }
+
+    /**
+     * Get the path the user should be redirected to when they are not authenticated.
+     *
+     * @param  integer  $year is year of thai date
+     * @return json object
+     */
+    public function retire($numberOfYear = 1, $abb = null)
+    {        
+        $years = [];
+        $year = date("m") >= 10 ? date("Y")+544 : date("Y")+543;
+        
+        for ($i = 0;$i < $numberOfYear;$i++) {
+            array_push($years,$year+$i);
+        }
+        
+        $currentCount = Employee::where('status','!=','0')->whereIn('employee_group',[1,2,5,9])->count();
+        $retireYears = Employee::query();
+
+        foreach($years as $year){
+            $retireYears->orWhere('retire_thai_date', 'LIKE', '%'.$year.'%')->where('status','!=','0')->whereIn('employee_group',[1,2,5,9]);
+        };
+        $retireYears = $retireYears->get();
+        $retireSum = $retireYears->count('id');
+
+        $retireYears = $retireYears->groupBy(function ($item, $key) {
+                return substr($item['retire_thai_date'], -4);
+            });
+        
+            
+        $retireYears = $retireYears->map(function($year){
+            $retireCount = $year->count('id');
+            return [
+                'count' => $retireCount,
+                'deputy_abb' => $year->groupBy('deputy_abb')->map(function($deputy) {
+                    return $deputy->count('id');
+                })
+            ];
+        });
+
+        return response()->json([
+            'current_count' => $currentCount,
+            'retire_total' => $retireSum,
+            'retire_years' => $retireYears,
+        ]);
     }
 }

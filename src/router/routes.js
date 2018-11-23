@@ -13,9 +13,25 @@ const routes = [
         }
       },
       {
-        path: 'stat',
-        name: 'stat',
-        component: () => import('pages/Stat.vue'),
+        path: 'statistic',
+        name: 'statistic',
+        component: () => import('pages/Statistic.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'manpower',
+        name: 'manpower',
+        component: () => import('pages/Manpower.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'retire',
+        name: 'retire',
+        component: () => import('pages/Retire.vue'),
         meta: {
           requiresAuth: true
         }

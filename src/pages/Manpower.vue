@@ -112,7 +112,7 @@ export default {
       })
       let option = {
         title: {
-          text: 'ข้อมูลสถิติและอัตรากำลัง'
+          text: 'จำนวนผู้ปฏิบัติงาน'
         },
         subtitle: {
           text: 'ภาพรวม กฟผ. จำนวน ' + total.toLocaleString() + ' คน'
