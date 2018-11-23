@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\DB;
 
 class PortfoliosController extends Controller
 {
-    public function show($id)
+    public function show()
     {
+        $id = auth()->user()->username;
         $yearnow = date("Y") + 543;
 
         //------competency list-----

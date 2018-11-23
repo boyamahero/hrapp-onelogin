@@ -31,7 +31,10 @@ export default {
           text: '5ปีถัดไป'
         },
         xAxis: {
-          categories: []
+          categories: [],
+          title: {
+            text: 'ปี'
+          }
         },
         yAxis: {
           title: {

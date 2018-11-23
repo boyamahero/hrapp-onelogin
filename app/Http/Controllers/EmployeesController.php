@@ -26,9 +26,13 @@ class EmployeesController extends Controller
         echo file_get_contents('http://10.20.56.21/IMAGE/WINFOMA/PERSON/DATA/DATA'.substr($emp->docuname,1,4).'/'.$emp->docuname.'.jpg');
     }
 
-    public function show($id)
+    public function show()
     {
-        return User::where('username',$id)->with('employee')->get();
+
+        $user = Employee::where('id',auth()->user()->username)->first();
+        return response()->json([
+            'data' => $user
+        ]);
     }
 
     public function search($keyword)
