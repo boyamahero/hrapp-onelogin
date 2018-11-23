@@ -20,6 +20,7 @@ class PortfoliosController extends Controller
         //------competency list-----
         $cLists = array('C1','C2','C3','C4','C5','C6');
 	    $coreLists = array('การทำงานเป็นทีม', 'การวางแผน แก้ไขปัญหาและตัดสินใจเชิงรุก', 'คุณธรรมและธรรมาภิบาล', 'ความเชี่ยวชาญและความเป็นมืออาชีพ', 'ความคิดสร้างสรรค์และนวัตกรรม', 'การสื่อสารที่ดี');
+         //------managerial competency list-----
         $mLists = array('M1','M2','M3','M4','M5','M6');
 	    $managerialLists = array('ภาวะผู้นำ','วิสัยทัศน์และวางแผนเชิงยุทธศาสตร์', 'การสร้างความสัมพันธ์กับผู้เกี่ยวข้อง', 'การบริหารจัดการให้เกิดผลลัพธ์อย่างยั่งยืน','ศักยภาพเพื่อนำการเปลี่ยนแปลง','ความสามารถเชิงธุรกิจ');
         //-----color code-----
@@ -27,21 +28,22 @@ class PortfoliosController extends Controller
         $acceptable ='#ffff00';
         $growth ='#ff5050';
 
-       $Sdesc ='Strength หมายถึง ผู้รับการประเมินแสดงพฤติกรรมได้ สูงกว่า ค่าความคาดหวังในระดับ';
-       $Adesc ='A = Acceptable หมายถึง ผู้รับการประเมินแสดงพฤติกรรมได้ ตาม ค่าความคาดหวังในระดับ';
-       $Gdesc ='G = Growth Opportunity หมายถึง ผู้รับการประเมินแสดงพฤติกรรมได้ ต่ำกว่า ค่าความคาดหวังในระดับ';
+        $Sdesc ='Strength หมายถึง ผู้รับการประเมินแสดงพฤติกรรมได้ สูงกว่า ค่าความคาดหวังในระดับ';
+        $Adesc ='A = Acceptable หมายถึง ผู้รับการประเมินแสดงพฤติกรรมได้ ตาม ค่าความคาดหวังในระดับ';
+        $Gdesc ='G = Growth Opportunity หมายถึง ผู้รับการประเมินแสดงพฤติกรรมได้ ต่ำกว่า ค่าความคาดหวังในระดับ';
 
-       $competency = DB::connection('HRDatabase')->table('TBP_CoreCompetency')
-       ->where('Empn',$id)
-       ->whereBetween('TEST_Year',[$yearnow-2,$yearnow])
-       ->get();
+        $competency = DB::connection('HRDatabase')->table('TBP_CoreCompetency')
+            ->where('Empn',$id)
+            ->whereBetween('TEST_Year',[$yearnow-2,$yearnow])
+            ->orderBy('Test_Type','desc')
+            ->get();
 
-       $expectCompetency = DB::connection('HRDatabase')->table('TBP_CoreCompetency')
-        ->where('Empn',$id)
-        ->whereBetween('TEST_Year',[$yearnow-2,$yearnow])
-        ->get()
-        ->groupBy('TEST_Year')
-        ->sortBy('TEST_Year'); 
+        $expectCompetency = DB::connection('HRDatabase')->table('TBP_CoreCompetency')
+            ->where('Empn',$id)
+            ->whereBetween('TEST_Year',[$yearnow-2,$yearnow])
+            ->get()
+            ->groupBy('TEST_Year')
+            ->sortBy('TEST_Year'); 
             $expectCompetency = $expectCompetency->map(function($year ,$key){
             $level = $year->AVG('Zlevel');
             if($level <= '4')
@@ -91,7 +93,7 @@ class PortfoliosController extends Controller
             ->select('degree_id','degree_name')
             ->where('employee_id',$id)->take(1)
             ->orderBy('degree_id','asc')
-            ->get();
+            ->first();
 
         $education = Education::select('degree_name','certificate_name','branch_name','school_name')
             ->where('employee_id',$id)
@@ -109,7 +111,7 @@ class PortfoliosController extends Controller
             ->orderBy('id','desc')
             ->get();
             
-        $portfolio = Portfolio::select('achievement', 'finish_year', 'result')
+        $portfolio = Portfolio::select('achievement', 'finish_year', 'result','category as category_type','value_added')
             ->leftJoin('TBP_pfo_ref_value_added_type', 'TBP_pfo_ref_value_added_type.id', '=', 'TBP_pfo_portfolio.value_added_type')
             ->where('empn',$id)
             ->where('id_approval','=','0')->take(5)
@@ -132,7 +134,7 @@ class PortfoliosController extends Controller
             ->select(DB::raw('AVG(SCORE100) as avg_all_kpi_score'))
             ->where('EMPN06',$id)
             ->whereBetween('TEST_YR',[$yearnow-2,$yearnow])
-            ->get();
+            ->first();
         
         $softKpi = Bkpi::where('EMPN06',$id)
                 ->whereBetween('TEST_YR',[$yearnow-2, $yearnow])
@@ -170,13 +172,13 @@ class PortfoliosController extends Controller
             'history_works' => $historyWorks, 
             'visions' => $vision, 
             'portfolios' => $portfolio,
-            'kpi' => $avgKPIScore,
+            'kpis' => $avgKPIScore,
             'sum_kpi' => $avgAllKPIScore,
-            'soft_kpi' => $softKpi,
-            'education' => $education,
+            'soft_kpis' => $softKpi,
+            'educations' => $education,
             'highest_degree' => $highest_degree,
-            'competency' => $competency,
-            'expectCompetency' => $expectCompetency
+            'competencies' => $competency,
+            'expectCompetencies' => $expectCompetency
             ]
         ]);
     }
