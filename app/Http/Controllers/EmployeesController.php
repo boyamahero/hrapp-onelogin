@@ -37,7 +37,7 @@ class EmployeesController extends Controller
                 ->where('status','!=','0')
                 ->orderBy('employee_subgroup','desc')
                 ->orderBy('senior')
-                ->paginate(10);
+                ->paginate(50);
     }
 
     public function manpower($level = null, $abb = null)

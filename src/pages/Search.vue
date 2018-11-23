@@ -39,7 +39,7 @@
         <q-card v-for="(employee, index) in employees" :key="index">
           <q-item>
             <q-item-side>
-            <img :src="employee.image_path" class="avatarList">
+            <img v-lazy="employee.image_path" class="avatarList">
           </q-item-side>
             <q-item-main>
               <q-item-tile class="q-body-1 text-weight-bold">{{ employee.name }} ({{ employee.id }})</q-item-tile>
@@ -92,6 +92,7 @@ export default {
       }
     },
     search () {
+      this.employees = []
       if ((this.searchText && this.searchText.length > 2) || (this.searchText.length === 0)) {
         this.$axios.get('search/' + this.searchText,
           {headers: {
