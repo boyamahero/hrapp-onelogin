@@ -35,11 +35,11 @@
               <q-card-main>
                 <p class="header">ข้อมูลสังกัดปัจจุบัน</p>
                 <q-card-separator />
-                <p>{{user.deputy_full + ' (' + user.deputy_abb + ')'}}</p>
-                <p>{{user.assistant_full + ' (' + user.assistant_abb + ')'}}</p>
-                <p>{{user.division_full + ' (' + user.division_abb + ')'}}</p>
-                <p>{{user.department_full + ' (' + user.department_abb + ')'}}</p>
-                <p>{{user.section_full + ' (' + user.section_abb + ')'}}</p>
+                <p v-if="user.deputy_full">{{user.deputy_full + ' (' + user.deputy_abb + ')'}}</p>
+                <p v-if="user.assistant_full">{{user.assistant_full + ' (' + user.assistant_abb + ')'}}</p>
+                <p v-if="user.division_full">{{user.division_full + ' (' + user.division_abb + ')'}}</p>
+                <p v-if="user.department_full">{{user.department_full + ' (' + user.department_abb + ')'}}</p>
+                <p v-if="user.section_full">{{user.section_full + ' (' + user.section_abb + ')'}}</p>
               </q-card-main>
             </q-card>
           </q-carousel-slide>
