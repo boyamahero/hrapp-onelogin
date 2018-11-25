@@ -45,7 +45,7 @@ class PortfoliosController extends Controller
             ->get()
             ->groupBy('TEST_Year')
             ->sortBy('TEST_Year'); 
-            $expectCompetency = $expectCompetency->map(function($year ,$key){
+        $expectCompetency = $expectCompetency->map(function($year ,$key){
             $level = $year->AVG('Zlevel');
             if($level <= '4')
             {
