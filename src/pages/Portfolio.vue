@@ -57,13 +57,8 @@
                     <div class="col-xs-9">
                       <div class="text-bold">{{portfolioInfo.achievement}}</div>
                       <div>{{portfolioInfo.result}}</div>
-<<<<<<< HEAD
                       <div>ผลงานด้าน {{portfolioInfo.category_type}}</div>
-                      <div>มูลค่า {{portfolioInfo.value_added}} บาท</div>
-=======
-                      <div>{{portfolioInfo.category_type}}</div>
                       <div v-if="portfolioInfo.value_added > 0">มูลค่า {{portfolioInfo.value_added}} บาท</div>
->>>>>>> 160e0e232d3079c92394de2c80e92f15c5781391
                     </div>
                   </div>
                 </q-card-main>
