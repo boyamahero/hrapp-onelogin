@@ -58,7 +58,7 @@
                     <div class="col-xs-9">
                       <div>{{portfolioInfo.achievement}}</div>
                       <div>{{portfolioInfo.result}}</div>
-                      <div>{{portfolioInfo.category_type}}</div>
+                      <div>ผลงานด้าน {{portfolioInfo.category_type}}</div>
                       <div>มูลค่า {{portfolioInfo.value_added}} บาท</div>
                     </div>
                   </div>
