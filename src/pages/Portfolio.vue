@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div class="row justify-center">
+    <div class="row justify-center" v-cloak>
       <div class="col-md-9 col-xs-12">
         <q-card class="q-ma-md q-pb-md">
           <q-card-main class="bg-light-blue-1">
@@ -31,8 +31,7 @@
                       <div class="col-3 q-pl-xs text-bold">
                         {{history_work.works_date | yearFromDate}}
                       </div>
-                      <div class="col-9">
-                        <div>{{history_work.works_dsc | replaceUnderscore}}</div>
+                      <div class="col-9" v-html="replaceUnderscore(history_work.works_dsc)">
                       </div>
                     </div>
                 </q-card-main>
@@ -53,13 +52,18 @@
                   </div>
                   <div class="row q-body-1 bg-white" v-for="(portfolioInfo, index) in portfolio.portfolios" :key="'portfolioInfo-'+index">
                     <div class="col-xs-3">
-                      <div>ผลงานปี {{portfolioInfo.finish_year}}</div>
+                      <div class="text-bold">ผลงานปี {{portfolioInfo.finish_year}}</div>
                     </div>
                     <div class="col-xs-9">
-                      <div>{{portfolioInfo.achievement}}</div>
+                      <div class="text-bold">{{portfolioInfo.achievement}}</div>
                       <div>{{portfolioInfo.result}}</div>
+<<<<<<< HEAD
                       <div>ผลงานด้าน {{portfolioInfo.category_type}}</div>
                       <div>มูลค่า {{portfolioInfo.value_added}} บาท</div>
+=======
+                      <div>{{portfolioInfo.category_type}}</div>
+                      <div v-if="portfolioInfo.value_added > 0">มูลค่า {{portfolioInfo.value_added}} บาท</div>
+>>>>>>> 160e0e232d3079c92394de2c80e92f15c5781391
                     </div>
                   </div>
                 </q-card-main>
@@ -208,7 +212,7 @@
                     <div class="col-1 bg-blue-2 text-center" v-if="index==9" v-for="(n, i) in (6 - row.length)" :key="i">
                     </div>
                     <div class="col-1 bg-blue-2 text-center" v-if="index==9" v-for="(n, i) in row" :key="'sum'+i">
-                      {{ parseInt(n).toFixed(1)}}
+                      {{ parseInt(n).toFixed(0)}}
                     </div>
 
                     <div class="col-6 bg-cyan-2 text-center" v-if="index==10 && parseInt(Math.max(...row)) > 7">
@@ -283,7 +287,7 @@
                     <div class="col-1 bg-cyan-2 text-center" v-if="index==17 && parseInt(Math.max(...row)) > 0" v-for="(n, i) in (6 - row.length)" :key="i">
                     </div>
                     <div class="col-1 bg-cyan-2 text-center" v-if="index==17 && parseInt(Math.max(...row)) > 0" v-for="(n, i) in row" :key="'Sum_Managerial'+i">
-                      {{ parseInt(n).toFixed(1)}}
+                      {{ parseInt(n).toFixed(0)}}
                     </div>
 
                   </div>
@@ -335,14 +339,8 @@ export default {
     yearFromDate (value) {
       return value.substring(0, 4)
     },
-    replaceUnderscore (value) {
-      return value.replace(/(?:_|_)/g, '\r\n')
-    },
     formatNumber (value) {
      return parseFloat(value).toFixed(2)
-    },
-    dateNow () {
-      // return
     },
     expectedCore (value) {
       if (value <= 4) {
@@ -418,6 +416,9 @@ export default {
         }
       }
       return false
+    },
+    replaceUnderscore (value) {
+      return value.replace(/(?:_|_)/g, '<br/>')
     },
     setNewToken (value) {
       if (value) {
