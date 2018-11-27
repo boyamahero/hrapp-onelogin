@@ -126,10 +126,14 @@ export default {
   mounted () {
     this.setUser()
       .then()
-      .catch(() => {
+      .catch((err) => {
+        let message = 'ไม่สามารถติดต่อฐานข้อมูลได้'
+        if (err.message === 'Request failed with status code 401') {
+          message = 'กรุณาเข้าระบบใหม่'
+        }
         this.$q.dialog({
           color: 'negative',
-          message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+          message: message,
           icon: 'report_problem',
           ok: 'ok'
         }).then(() => {

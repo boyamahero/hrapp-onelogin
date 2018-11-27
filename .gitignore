@@ -18,6 +18,7 @@ yarn-error.log
 /src-cordova/platforms
 /src-cordova/plugins
 /src-cordova/www
+/src-cordova
 yarn-debug.log*
 
 # Editor directories and files

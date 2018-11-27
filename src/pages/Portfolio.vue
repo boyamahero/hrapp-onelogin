@@ -2,10 +2,11 @@
   <q-page>
     <div class="row justify-center" v-cloak>
       <div class="col-md-9 col-xs-12">
-        <q-card class="q-ma-md q-pb-md">
-          <q-card-main class="bg-light-blue-1">
+        <q-card class="q-mx-md">
+          <q-card-main class="bg-blue-1">
             <p class="header text-bold">Portfolio พนักงาน กฟผ.</p>
           </q-card-main>
+        </q-card>
 
           <div class="row">
 
@@ -292,7 +293,7 @@
               <q-card class="q-ma-md">
                 <q-card-main>
                   <p class="q-caption text-bold">เกณฑ์ในการประเมินสมรรถนะความสามารถ (Competency)</p>
-                  <div class="row q-caption q-ml-xs">
+                  <div class="row q-ml-xs">
                     <div class="col-4">
                       S = Strength
                     </div>
@@ -300,7 +301,7 @@
                       หมายถึง ผู้รับการประเมินแสดงพฤติกรรมได้<span class="text-red">สูงกว่า</span>ค่าความคาดหวังในระดับ
                     </div>
                   </div>
-                  <div class="row q-caption q-ml-xs">
+                  <div class="row q-ml-xs">
                     <div class="col-4">
                       A = Acceptable
                     </div>
@@ -308,7 +309,7 @@
                       หมายถึง ผู้รับการประเมินแสดงพฤติกรรมได้<span class="text-red">ตาม</span>ค่าความคาดหวังในระดับ
                     </div>
                   </div>
-                  <div class="row q-caption q-ml-xs">
+                  <div class="row q-ml-xs">
                     <div class="col-4">
                       G = Growth Opportunity
                     </div>
@@ -323,7 +324,6 @@
 
           </div>
 
-        </q-card>
       </div>
     </div>
   </q-page>
@@ -434,8 +434,17 @@ export default {
           this.highest_degree = res.data.data.highest_degree.degree_name
           this.competencies = res.data.data.competencies
           this.setNewToken(res.headers.authorization)
-        }
-      )
+        }).catch(() => {
+            this.$q.dialog({
+              color: 'negative',
+              message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+              icon: 'report_problem',
+              ok: 'ok'
+            }).then(() => {
+              this.$store.commit('destroyToken')
+              this.$router.push({name: 'login'})
+            })
+        })
     }
   }
 }

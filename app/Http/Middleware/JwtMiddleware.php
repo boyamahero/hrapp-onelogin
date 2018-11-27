@@ -24,7 +24,7 @@ class JwtMiddleware extends BaseMiddleware
             // header('Authorization: Bearer ' . $refreshed); 
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
-                return response()->json(['status' => 'Token is Invalid']);
+                return response()->json(['status' => 'Token is Invalid'],401);
             }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
                 // If the token is expired, then it will be refreshed and added to the headers
                 try
@@ -35,10 +35,10 @@ class JwtMiddleware extends BaseMiddleware
                 }
                 catch (JWTException $e)
                 {
-                    return response()->json(['status' => 'Token is not refreshable ']);
+                    return response()->json(['status' => 'Token is not refreshable '],401);
                 }
             }else{
-                return response()->json(['status' => 'Authorization Token not found']);
+                return response()->json(['status' => 'Authorization Token not found'],403);
             }
         }
         return $next($request);
