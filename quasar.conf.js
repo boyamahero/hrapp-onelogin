@@ -118,7 +118,12 @@ module.exports = function (ctx) {
       plugins: [
         'Notify',
         'Dialog'
-      ]
+      ],
+      config: {
+        cordova: {
+          backButtonExit: false
+        }
+      }
       // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
       // i18n: 'de' // Quasar language
     },

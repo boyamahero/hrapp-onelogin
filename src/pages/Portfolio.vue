@@ -2,7 +2,7 @@
   <q-page>
     <div class="row justify-center" v-cloak>
       <div class="col-md-9 col-xs-12">
-        <q-card class="q-mx-md">
+        <q-card class="q-ma-md">
           <q-card-main class="bg-blue-1">
             <p class="header text-bold">Portfolio พนักงาน กฟผ.</p>
           </q-card-main>
@@ -11,7 +11,7 @@
           <div class="row">
 
             <div class="col-xs-12 col-lg-6">
-              <q-card class="q-ma-md">
+              <q-card class="q-mx-md q-mb-md">
                 <q-card-main class="bg-indigo-1">
                   <p class="header text-bold">การศึกษา : ระดับสูงสุด {{highest_degree}}</p>
                   <div class="row q-body-1 bg-white" v-for="(education, index) in portfolio.educations" :key="'education-'+index">
@@ -67,7 +67,7 @@
             </div>
 
             <div class="col-xs-12 col-lg-6">
-              <q-card class="q-ma-md">
+              <q-card class="q-mx-md q-mb-md">
                 <q-card-main class="bg-amber-5">
                   <p class="header text-bold text-black" >ผลการประเมินเฉลี่ย 3 ปี : {{avg_all_kpi_score | formatNumber}}</p>
                   <div class="row q-caption justify-center">

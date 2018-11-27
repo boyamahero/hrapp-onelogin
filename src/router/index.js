@@ -3,6 +3,14 @@ import VueRouter from 'vue-router'
 
 import routes from './routes'
 
+document.addEventListener('backbutton', function (evt) {
+  if (window.location.hash !== '#/login') {
+      window.history.back()
+  } else {
+      navigator.app.exitApp()
+  }
+}, false)
+
 Vue.use(VueRouter)
 
 /*
