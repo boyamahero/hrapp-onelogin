@@ -15,9 +15,9 @@
                 <q-card-main class="bg-indigo-1">
                   <p class="header text-bold">การศึกษา : ระดับสูงสุด {{highest_degree}}</p>
                   <div class="row q-body-1 bg-white" v-for="(education, index) in portfolio.educations" :key="'education-'+index">
-                    <div class="col-3 q-pl-xs text-bold">{{education.degree_name}}</div>
-                    <div class="col-9">
-                      <div class="col-12 text-bold">{{education.certificate_name}}</div>
+                    <div class="col-xs-4 col-md-3 q-pl-xs text-bold">{{education.degree_name}}</div>
+                    <div class="col-xs-8 col-md-9">
+                      <div class="col-12 text-bold" v-if="education.certificate_name!=='-'">{{education.certificate_name}}</div>
                       <div class="col-12">({{education.branch_name}})</div>
                       <div class="col-12">{{education.school_name}}</div>
                     </div>
