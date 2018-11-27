@@ -4,7 +4,7 @@
       <div class="col-md-9 col-xs-12">
       <q-card class="q-ma-md">
       <q-card-main>
-         <p class="header">ข้อมูลที่เป็นประโยชน์ด้านบุคคล</p>
+         <p class="header">ระเบียบและนโยบายด้านบุคคล</p>
          <div class="row q-my-md">
           <div v-for="value in dataCategories" :key="value.id" class="col-lg-2 col-md-3 col-xs-6">
             <div class="q-px-xs">
