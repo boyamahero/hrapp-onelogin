@@ -3,10 +3,12 @@
     <div class="row justify-center">
       <div class="col-md-9 col-xs-12">
         <q-card class="q-ma-md">
-          <q-card-main class="bg-light-blue-1">
+          <q-card-main class="bg-blue-1">
             <p class="header text-bold">ข้อมูลสถิติทางด้านสารสนเทศบุคคล</p>
           </q-card-main>
+        </q-card>
 
+        <q-card class="q-ma-md">
           <q-list highlight>
           <q-item v-for="(report , key) in reports" :key="key" link :to="report.path">
             <q-item-main :label="report.name"/>

@@ -2,9 +2,13 @@
   <q-page>
 <div class="row justify-center">
       <div class="col-md-9 col-xs-12 full-width">
-        <q-list
+        <q-card class="q-ma-md">
+          <q-card-main class="bg-blue-1">
+            <p class="header text-bold">{{this.$route.params.title}}</p>
+          </q-card-main>
+        </q-card>
+        <q-list class="q-mx-md"
         link>
-        <q-list-header>{{this.$route.params.title}}</q-list-header>
         <q-item v-for="value in infolist" :key="value.id"
         @click.native="show(value)"
         >
