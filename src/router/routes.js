@@ -67,6 +67,14 @@ const routes = [
         meta: {
           requiresAuth: true
         }
+      },
+      {
+        path: 'benefit',
+        name: 'benefit',
+        component: () => import('pages/Benefits.vue'),
+        meta: {
+          requiresAuth: true
+        }
       }
     ]
   },

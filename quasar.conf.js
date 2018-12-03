@@ -108,7 +108,8 @@ module.exports = function (ctx) {
         'QModal',
         'QSearch',
         'QInfiniteScroll',
-        'QSpinnerDots'
+        'QSpinnerDots',
+        'QSelect'
       ],
       directives: [
         'Ripple',
