@@ -19,7 +19,7 @@ class MedicalExpensesController extends Controller
                         ->where('STATUS','P')->get();
 
         return  response()->json([
-            'year' => $year+543,
+            'year' => (int)$year,
             'total' => $expenses->sum('REIMB'),
             'data' => $expenses
         ]);
