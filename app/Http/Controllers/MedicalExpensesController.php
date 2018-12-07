@@ -15,7 +15,8 @@ class MedicalExpensesController extends Controller
         $expenses = MedicalExpense::where('PERNR',$employee_id)
                         ->where('SUBTY','5')
                         ->where('SCKTO','LIKE',$year.'%')
-                        ->where('STATUS','P')->get();
+                        ->where('STATUS','P')
+                        ->orderBy('RCPTDT')->get();
 
         return  response()->json([
             'year' => (int)$year,
