@@ -9,8 +9,7 @@ class MedicalExpensesController extends Controller
 {
     public function show($year = null)
     {
-
-        $employee_id = '590006';
+        $employee_id = auth()->user()->username;
         $year = ($year)?:date("Y");
 
         $expenses = MedicalExpense::where('PERNR',$employee_id)

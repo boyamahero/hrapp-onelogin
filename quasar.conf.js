@@ -100,6 +100,7 @@ module.exports = function (ctx) {
         'QCarousel',
         'QCarouselSlide',
         'QCarouselControl',
+        'QCollapsible',
         'QLayoutFooter',
         'QPopover',
         'QBreadcrumbs',
@@ -118,7 +119,8 @@ module.exports = function (ctx) {
       // Quasar plugins
       plugins: [
         'Notify',
-        'Dialog'
+        'Dialog',
+        'Loading'
       ],
       config: {
         cordova: {
