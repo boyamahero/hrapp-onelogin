@@ -38,18 +38,18 @@
         <q-list class="q-ma-md" separator>
           <q-list-header class="text-bold">รายการเบิก</q-list-header>
           <q-item-separator />
-          <q-collapsible v-for="(expense, index) in expenses" :key="index" :label="expense.RCPTDT | dateFormatEnToTh" :sublabel="parseFloat(expense.REIMB) | formatNumber">
+          <q-collapsible v-for="(expense, index) in expenses" :key="index" :label="expense.RCPTDT | dateFormatEnToTh" :sublabel="parseFloat(expense.REIMB) | formatNumbeWithPrefix">
             <div class="row">
-              <div class="col-3 q-caption">ผู้ป่วย</div>
-              <div class="col-9 q-caption">{{ expense.FAMEM_NAME }}</div>
+              <div class="col-xs-3 col-lg-2 text-bold">ผู้ป่วย</div>
+              <div class="col-xs-9 col-lg-10">{{ expense.FAMEM_NAME }}</div>
             </div>
             <div class="row">
-              <div class="col-3 q-caption">โรค</div>
-              <div class="col-9 q-caption">{{ expense.DIAG_NAME }}</div>
+              <div class="col-xs-3 col-lg-2 text-bold">โรค</div>
+              <div class="col-xs-9 col-lg-10">{{ expense.DIAG_NAME }}</div>
             </div>
             <div class="row">
-              <div class="col-3 q-caption">สถานที่</div>
-              <div class="col-9 q-caption">{{ expense.HONAME }}</div>
+              <div class="col-xs-3 col-lg-2 text-bold">สถานที่</div>
+              <div class="col-xs-9 col-lg-10">{{ expense.HONAME }}</div>
             </div>
           </q-collapsible>
         </q-list>
@@ -66,6 +66,10 @@ export default {
     formatNumber (val) {
       let parts = val.toFixed(2).toString().split('.')
       return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (parts[1] ? '.' + parts[1] : '') + ' บาท'
+    },
+    formatNumbeWithPrefix (val) {
+      let parts = val.toFixed(2).toString().split('.')
+      return 'ยอดเบิก ' + parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (parts[1] ? '.' + parts[1] : '') + ' บาท'
     },
     dateFormatEnToTh (date) {
       let dd = (date || '').split('.')
@@ -108,7 +112,7 @@ export default {
           ThaiMonth = 'ธ.ค.'
           break
       }
-      return parseInt(dd[2]) + ' ' + ThaiMonth + ' ' + (parseInt(dd[0]) + 543)
+      return 'วันที่เบิก ' + parseInt(dd[2]) + ' ' + ThaiMonth + ' ' + (parseInt(dd[0]) + 543)
     }
   },
   created () {
