@@ -28,7 +28,7 @@
         <div class="col-md-9 col-xs-12 justify-between">
           <div class="row justify-between">
         <div v-if="total > 0" class="q-ma-md self-center">พบผลการค้นหาจำนวน {{ total }} ท่าน</div>
-        <div v-if="total > 0" class="q-ma-md"> <q-icon name="filter_list" size="1.5rem" @click.native="handle"/> </div>
+        <div v-if="total > 0 && true == false" class="q-ma-md"> <q-icon name="filter_list" size="1.5rem" @click.native="opened = true"/> </div>
       </div>
       </div>
       </div>
@@ -59,6 +59,41 @@
       </q-infinite-scroll>
       </div>
       </div>
+    <q-modal v-model="opened">
+      <div class="q-pa-md">
+      <h4>ตัวกรอง</h4>
+      <div class="row">
+        <div class="col-3">ระดับ</div>
+        <div class="col-9">
+          <q-range
+            v-model="rangeLevel"
+            :min="0"
+            :max="14"
+            :step="1"
+            label
+            snap
+            color="secondary"
+            label-always
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">ผบ.</div>
+        <div class="col-9">
+          <q-toggle v-model="bossChecked" color="secondary"/>
+        </div>
+      </div>
+      <div class="row q-mt-lg">
+        <div class="col-12">
+          <q-btn
+            color="primary"
+            @click="opened = false"
+            label="ค้นหา"
+          />
+        </div>
+      </div>
+      </div>
+    </q-modal>
   </q-page>
 </template>
 
@@ -72,15 +107,23 @@ export default {
   data () {
     return {
       searchText: '',
+      rangeLevel: {
+        min: 0,
+        max: 14
+      },
+      bossChecked: false,
       employees: [],
       total: 0,
       current_page: 0,
       last_page: 0,
-      next_page_url: null
-
+      next_page_url: null,
+      opened: false
     }
   },
   methods: {
+    notify (eventName) {
+      this.$q.notify(`Event "${eventName}" was triggered.`)
+    },
     handle () {
       console.log('toggle')
     },

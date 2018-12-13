@@ -107,10 +107,12 @@ module.exports = function (ctx) {
         'QBreadcrumbsEl',
         'QParallax',
         'QModal',
+        'QRange',
         'QSearch',
         'QInfiniteScroll',
         'QSpinnerDots',
-        'QSelect'
+        'QSelect',
+        'QToggle'
       ],
       directives: [
         'Ripple',
