@@ -51,10 +51,12 @@ class EmployeesController extends Controller
         }
         if ($onlyBoss) {
             $query->where('priority', '!='  ,"");
-        }      
+        }
         
         $query = $query->orderBy('org_egat_id')
                 ->orderBy('employee_type_priority')
+                ->orderBy('employee_subgroup','desc')
+                ->orderBy('priority','desc')
                 ->orderBy('senior');
 
         return new EmployeeCollection($query->paginate(50));
