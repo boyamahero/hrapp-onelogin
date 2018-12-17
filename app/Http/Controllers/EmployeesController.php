@@ -50,16 +50,19 @@ class EmployeesController extends Controller
             $query->whereBetween('employee_subgroup',  [$levelMin, $levelMax]);
         }
         if ($onlyBoss) {
-            $query->where('priority', '!='  ,"");
+            $query->whereNotIn('priority', ["","04","05"]);
         }
         
-        $query = $query->orderBy('org_egat_id')
+        $employees = $query->orderBy('org_egat_id')
                 ->orderBy('employee_type_priority')
                 ->orderBy('employee_subgroup','desc')
                 ->orderBy('priority','desc')
-                ->orderBy('senior');
+                ->orderBy('senior')
+                ->paginate(50);
 
-        return new EmployeeCollection($query->paginate(50));
+        $employees->appends(request()->query());
+
+        return new EmployeeCollection($employees);
     }
 
     public function manpower($level = null, $abb = null)
