@@ -26,7 +26,11 @@ class Employee extends JsonResource
             'phone' => $this->phone,
             'senior' => $this->senior,
             'image_path' => $this->image_path,
-            'mobile_number' => $this->when((Auth::user()->employee->id == $this->boss_id) || (Auth::user()->employee->id == $this->id) , $this->mobile_number),
+            'mobile_number' => $this->when(
+                    (Auth::user()->employee->id == $this->boss_id) || 
+                    (Auth::user()->employee->id == $this->id) || 
+                    (Auth::user()->hasRole('admin')
+                ) , $this->mobile_number),
         ];
     }
 }

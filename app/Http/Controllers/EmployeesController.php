@@ -6,6 +6,7 @@ use App\User;
 use App\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\EmployeeCollection;
 
 class EmployeesController extends Controller
 {
@@ -37,12 +38,13 @@ class EmployeesController extends Controller
 
     public function search($keyword)
     {
-        return Employee::select('id','name','position_abb','org_path','building','room','phone','deputy_abb','assistant_abb','division_abb','department_abb','section_abb','status','employee_subgroup','senior')->whereLike(['name','id','deputy_abb','assistant_abb','division_abb','department_abb','section_abb'], $keyword)
+        return new EmployeeCollection(Employee::whereLike(['name','id','deputy_abb','assistant_abb','division_abb','department_abb','section_abb'], $keyword)
                 ->where('status','!=','0')
                 ->whereIn('employee_group',[1,2,5,9])
-                ->orderBy('employee_subgroup','desc')
+                ->orderBy('org_egat_id')
+                ->orderBy('employee_type_priority')
                 ->orderBy('senior')
-                ->paginate(50);
+                ->paginate(50));
     }
 
     public function manpower($level = null, $abb = null)

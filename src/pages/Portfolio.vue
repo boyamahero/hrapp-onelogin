@@ -27,7 +27,7 @@
 
               <q-card class="q-ma-md">
                 <q-card-main class="bg-green-2">
-                  <p class="header text-bold">ประสบการณ์การทำงานและตำแหน่งงานที่คาดหวัง</p>
+                  <p class="header text-bold">ประสบการณ์การทำงาน</p>
                     <div class="row q-body-1 bg-white" v-for="(history_work, index) in portfolio.history_works" :key="'history_work-'+index">
                       <div class="col-3 q-pl-xs text-bold">
                         {{history_work.works_date | yearFromDate}}
@@ -329,6 +329,7 @@
   </q-page>
 </template>
 <script>
+import { QSpinnerGears } from 'quasar'
 export default {
   filters: {
     yearFromDate (value) {
@@ -423,6 +424,11 @@ export default {
       }
     },
     getDataAll () {
+      this.$q.loading.show({
+        spinner: QSpinnerGears,
+        spinnerColor: 'yellow',
+        spinnerSize: 140
+      })
       this.$axios.get('portfolioInfo',
         {headers: {
             'Authorization': `Bearer ${this.$store.state.token.token}`
@@ -434,7 +440,9 @@ export default {
           this.highest_degree = res.data.data.highest_degree.degree_name
           this.competencies = res.data.data.competencies
           this.setNewToken(res.headers.authorization)
+          this.$q.loading.hide()
         }).catch(() => {
+            this.$q.loading.hide()
             this.$q.dialog({
               color: 'negative',
               message: 'ไม่สามารถติดต่อฐานข้อมูลได้',

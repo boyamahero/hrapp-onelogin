@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { QSpinnerFacebook } from 'quasar'
+import { QSpinnerGears } from 'quasar'
 export default {
   filters: {
     formatNumber (val) {
@@ -148,8 +148,8 @@ export default {
     },
     getDataAll () {
       this.$q.loading.show({
-        spinner: QSpinnerFacebook,
-        spinnerColor: 'primary',
+        spinner: QSpinnerGears,
+        spinnerColor: 'yellow',
         spinnerSize: 140
       })
       this.$axios.get('medical-expenses/' + this.select)
@@ -157,9 +157,9 @@ export default {
           this.select = res.data.year
           this.used = res.data.total
           this.expenses = res.data.data
-          console.log(res.data)
           this.$q.loading.hide()
         }).catch(() => {
+            this.$q.loading.hide()
             this.$q.dialog({
               color: 'negative',
               message: 'ไม่สามารถติดต่อฐานข้อมูลได้',

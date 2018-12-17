@@ -12,8 +12,6 @@ use App\HistoryWork;
 use App\Infographic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Resources\EmployeeCollection;
-use App\Http\Resources\Employee as EmployeeResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,17 +28,7 @@ Route::middleware(['jwt.verify'])->group(function () {
 
   Route::get('/user', 'EmployeesController@user');
 
-  Route::get('/search/{keyword}', 'EmployeesController@search');
-
-  Route::get('/employees/{keyword}', function ($keyword) {
-    return new EmployeeCollection(Employee::whereLike(['name','id','deputy_abb','assistant_abb','division_abb','department_abb','section_abb'], $keyword)
-    ->where('status','!=','0')
-    ->whereIn('employee_group',[1,2,5,9])
-    ->orderBy('org_egat_id')
-    ->orderBy('employee_subgroup','desc')
-    ->orderBy('senior')
-    ->paginate(50));
-  });
+  Route::get('/employees/{keyword}', 'EmployeesController@search');
 
   Route::get('/manpower/{level?}/{abb?}', 'EmployeesController@manpower');
   
@@ -50,19 +38,10 @@ Route::middleware(['jwt.verify'])->group(function () {
   
   Route::get('/medical-expenses/{year?}', 'MedicalExpensesController@show');
 
-  
-  Route::get('/permission', function(){
-    auth()->user()->assignRole('admin');
-  });
-
 });
 
 
 Route::get('/retire-next/{year?}/{abb?}', 'EmployeesController@retire');
-
-Route::get('/employees/{id}', function ($id) {
-  return new EmployeeResource(Employee::find($id));
-});
 
 Route::get('/images/{id}/{hash}', 'EmployeesController@images');
 
