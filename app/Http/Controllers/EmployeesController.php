@@ -38,13 +38,26 @@ class EmployeesController extends Controller
 
     public function search($keyword)
     {
-        return new EmployeeCollection(Employee::whereLike(['name','id','deputy_abb','assistant_abb','division_abb','department_abb','section_abb'], $keyword)
-                ->where('status','!=','0')
-                ->whereIn('employee_group',[1,2,5,9])
-                ->orderBy('org_egat_id')
+        $levelMin = request()->query('levelMin');
+        $levelMax = request()->query('levelMax');
+        $onlyBoss = request()->query('onlyBoss');
+
+        $query = Employee::whereLike(['name','id','deputy_abb','assistant_abb','division_abb','department_abb','section_abb'], $keyword)
+                        ->where('status','!=','0')
+                        ->whereIn('employee_group',[1,2,5,9]);
+                             
+        if ($levelMin || $levelMax) {
+            $query->whereBetween('employee_subgroup',  [$levelMin, $levelMax]);
+        }
+        if ($onlyBoss) {
+            $query->where('priority', '!='  ,"");
+        }      
+        
+        $query = $query->orderBy('org_egat_id')
                 ->orderBy('employee_type_priority')
-                ->orderBy('senior')
-                ->paginate(50));
+                ->orderBy('senior');
+
+        return new EmployeeCollection($query->paginate(50));
     }
 
     public function manpower($level = null, $abb = null)

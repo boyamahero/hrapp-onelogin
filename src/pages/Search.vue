@@ -28,7 +28,7 @@
         <div class="col-md-9 col-xs-12 justify-between">
           <div class="row justify-between">
         <div v-if="total > 0" class="q-ma-md self-center">พบผลการค้นหาจำนวน {{ total }} ท่าน</div>
-        <div v-if="total > 0 && true == false" class="q-ma-md"> <q-icon name="filter_list" size="1.5rem" @click.native="opened = true"/> </div>
+        <div v-if="total > 0" class="q-ma-md"> <q-btn icon="filter_list" round no-shadow @click.native="opened = true"/></div>
       </div>
       </div>
       </div>
@@ -36,7 +36,7 @@
       <div class="row justify-center">
         <div class="col-md-9 col-xs-12 justify-between">
       <q-infinite-scroll :handler="loadMore" ref="infiniteScroll">
-        <q-card v-for="(employee, index) in employees" :key="index">
+        <q-card v-for="(employee, index) in employees" :key="index" :color="employee.is_boss?'blue-5':''">
           <q-item>
             <q-item-side>
             <img v-lazy="employee.image_path" class="avatarList">
@@ -67,7 +67,7 @@
         <div class="col-3">ระดับ</div>
         <div class="col-9">
           <q-range
-            v-model="rangeLevel"
+            v-model="filter.level"
             :min="0"
             :max="14"
             :step="1"
@@ -79,16 +79,16 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-3">ผบ.</div>
+        <div class="col-3">เฉพาะผบ.</div>
         <div class="col-9">
-          <q-toggle v-model="bossChecked" color="secondary"/>
+          <q-toggle v-model="filter.onlyBoss" color="secondary"/>
         </div>
       </div>
       <div class="row q-mt-lg">
         <div class="col-12">
           <q-btn
             color="primary"
-            @click="opened = false"
+            @click="search"
             label="ค้นหา"
           />
         </div>
@@ -108,11 +108,13 @@ export default {
   data () {
     return {
       searchText: '',
-      rangeLevel: {
-        min: 0,
-        max: 14
+      filter: {
+        level: {
+          min: 0,
+          max: 14
+        },
+        onlyBoss: false
       },
-      bossChecked: false,
       employees: [],
       total: 0,
       current_page: 0,
@@ -136,19 +138,35 @@ export default {
       }
     },
     search () {
+      this.opened = false
       this.employees = []
-      if ((this.searchText && this.searchText.length > 2) || (this.searchText.length === 0)) {
-        this.$axios.get('employees/' + this.searchText,
+      if (this.searchText.length === 0) {
+        this.total = 0
+        this.current_page = 0
+        this.last_page = 0
+        this.next_page_url = null
+      }
+      if (this.searchText && this.searchText.length > 2) {
+        let query = ''
+        if (this.filter.level.min !== 0 || this.filter.level.max !== 14) {
+          query += 'levelMin=' + this.filter.level.min + '&levelMax=' + this.filter.level.max
+        }
+        if (this.filter.onlyBoss) {
+          query += (query === '' ? 'onlyBoss=' : '&onlyBoss=') + this.filter.onlyBoss
+        }
+        this.$axios.get('employees/' + this.searchText + (query !== '' ? '?' + query : ''),
           {headers: {
               'Authorization': `Bearer ${this.$store.state.token.token}`
             }
           })
           .then((res) => {
-            this.employees = res.data.data
-            this.total = res.data.meta.total
-            this.current_page = res.data.meta.current_page
-            this.last_page = res.data.meta.last_page
-            this.next_page_url = res.data.links.next
+            if (res.data.data) {
+              this.employees = res.data.data
+              this.total = res.data.meta.total
+              this.current_page = res.data.meta.current_page
+              this.last_page = res.data.meta.last_page
+              this.next_page_url = res.data.links.next
+            }
             this.setNewToken(res.headers.authorization)
           }).catch((e) => {
             this.$q.dialog({
