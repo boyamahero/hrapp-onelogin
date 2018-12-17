@@ -47,6 +47,7 @@
               <q-item-tile class="q-body-1"><q-icon name="business" /> {{ employee.org_path }}</q-item-tile>
               <q-item-tile class="q-body-1" v-if="employee.building.trim() !== '-' || employee.room !== '-'"><q-icon name="room" /> {{ employee.building }} <span v-if="employee.room &&  employee.room!='-'">ห้อง {{employee.room.replace('ห้อง','')}} </span></q-item-tile>
               <q-item-tile class="q-body-1" v-if="employee.phone &&  employee.phone!='-'"><q-icon name="call" /> {{ employee.phone }}</q-item-tile>
+              <q-item-tile class="q-body-1" v-if="employee.mobile_number"><q-icon name="smartphone" /> {{ employee.mobile_number }}</q-item-tile>
             </q-item-main>
           </q-item>
         </q-card>
@@ -137,22 +138,22 @@ export default {
     search () {
       this.employees = []
       if ((this.searchText && this.searchText.length > 2) || (this.searchText.length === 0)) {
-        this.$axios.get('search/' + this.searchText,
+        this.$axios.get('employees/' + this.searchText,
           {headers: {
               'Authorization': `Bearer ${this.$store.state.token.token}`
             }
           })
           .then((res) => {
             this.employees = res.data.data
-            this.total = res.data.total
-            this.current_page = res.data.current_page
-            this.last_page = res.data.last_page
-            this.next_page_url = res.data.next_page_url
+            this.total = res.data.meta.total
+            this.current_page = res.data.meta.current_page
+            this.last_page = res.data.meta.last_page
+            this.next_page_url = res.data.links.next
             this.setNewToken(res.headers.authorization)
-          }).catch(() => {
+          }).catch((e) => {
             this.$q.dialog({
               color: 'negative',
-              message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+              message: e.message,
               icon: 'report_problem',
               ok: 'ok'
             }).then(() => {
@@ -172,8 +173,8 @@ export default {
             .then((res) => {
               console.log('loadmore')
               this.employees = this.employees.concat(res.data.data)
-              this.current_page = res.data.current_page
-              this.next_page_url = res.data.next_page_url
+              this.current_page = res.data.meta.current_page
+              this.next_page_url = res.data.links.next
               this.setNewToken(res.headers.authorization)
             }).catch(() => {
               this.$q.dialog({

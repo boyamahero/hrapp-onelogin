@@ -28,7 +28,7 @@ Route::middleware(['jwt.verify'])->group(function () {
 
   Route::get('/user', 'EmployeesController@user');
 
-  Route::get('/search/{keyword}', 'EmployeesController@search');
+  Route::get('/employees/{keyword}', 'EmployeesController@search');
 
   Route::get('/manpower/{level?}/{abb?}', 'EmployeesController@manpower');
   
@@ -37,11 +37,11 @@ Route::middleware(['jwt.verify'])->group(function () {
   Route::get('/employee', 'EmployeesController@show');
   
   Route::get('/medical-expenses/{year?}', 'MedicalExpensesController@show');
+
 });
 
+
 Route::get('/retire-next/{year?}/{abb?}', 'EmployeesController@retire');
-
-
 
 Route::get('/images/{id}/{hash}', 'EmployeesController@images');
 
