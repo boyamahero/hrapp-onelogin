@@ -6,18 +6,12 @@
         inverted
         color="white"
       >
-        <q-btn v-if="this.$route.name==='index'"
+        <q-btn
           flat
           @click="leftDrawerOpen = !leftDrawerOpen"
           aria-label="Menu"
         >
           <q-icon name="menu" class="menu"/>
-        </q-btn>
-        <q-btn v-else
-          flat
-          @click="$router.go(-1)"
-        >
-          <q-icon name="fas fa-arrow-alt-circle-left" class="menu"/>
         </q-btn>
 
         <q-toolbar-title>
@@ -88,23 +82,12 @@
           <q-btn flat>
           <img src="statics/speedlogo.png" class="col-xs-9 col-lg-1 col-md-3" @click.native="show(value)">
           </q-btn>
-          <q-btn flat>
-            <q-item-side icon="horizontal_split" style="color:#14548a;font-size: 20px;"/>
-            <q-popover>
-                <q-list link style="min-width: 200px;">
-                  <div class="subheader">ช่องทางติดต่อ</div>
-                  <q-item>
-                    <q-item-main label="แจ้งเปลี่ยนแปลงข้อมูล" />
-                  </q-item>
-                  <!-- <q-item>
-                    <q-item-main label="SPEED ค่านิยมองค์กร" />
-                  </q-item>
-                  <q-item>
-                    <q-item-main label="โครงสายบังคับบัญชา" />
-                  </q-item> -->
-                </q-list>
-              </q-popover>
-          </q-btn>
+          <q-btn
+          flat
+          @click="$router.go(-1)"
+        >
+          <q-icon name="reply" color="primary" class="menu"/>
+        </q-btn>
         </q-item>
   </q-layout-footer>
   </q-layout>
