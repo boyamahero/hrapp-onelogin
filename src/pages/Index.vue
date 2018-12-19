@@ -59,11 +59,15 @@
           <q-carousel-slide>
             <q-card class="q-ma-xs justify-center personcard">
               <q-card-main>
-                <p class="header">ข้อมูลสถานที่ทำงาน</p>
-                <q-card-separator />
+                <div class="row justify-between">
+                  <p class="header">ข้อมูลสถานที่ทำงาน</p>
+                  <q-btn color="primary" icon="edit" :label="$q.platform.is.desktop?'แก้ไข':''"/>
+                </div>
+                <q-card-separator class="q-mt-xs"/>
                 <p>อาคาร : {{user.building}}</p>
                 <p>ห้อง : {{user.room}}</p>
-                <p>เบอร์โทร : {{user.phone}}</p>
+                <p>เบอร์ติดต่อภายใน : {{user.phone}}</p>
+                <p>เบอร์ติดต่อมือถือ : {{user.mobile_number}}</p>
               </q-card-main>
             </q-card>
           </q-carousel-slide>
@@ -85,7 +89,7 @@
       </q-card-main>
     </q-card>
     </div>
-     </div>
+    </div>
   </q-page>
 </template>
 
