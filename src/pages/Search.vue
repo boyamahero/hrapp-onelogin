@@ -28,7 +28,7 @@
         <div class="col-md-9 col-xs-12 justify-between">
           <div class="row justify-between">
         <div v-if="total > 0" class="q-ma-md self-center">พบผลการค้นหาจำนวน {{ total }} ท่าน</div>
-        <div v-if="total > 0" class="q-ma-md"> <q-btn icon="filter_list" round no-shadow @click.native="opened = true"/></div>
+        <div v-if="total > 0" class="q-ma-md"> <q-btn icon="filter_list" round no-shadow @click.native="opened = true" :color=" isFiltered ? 'primary':''" /></div>
       </div>
       </div>
       </div>
@@ -91,6 +91,10 @@
             @click="search"
             label="ค้นหา"
           />
+          <q-btn class="q-ml-sm"
+            @click="clearFilter"
+            label="ลบตัวกรอง"
+          />
         </div>
       </div>
       </div>
@@ -123,7 +127,17 @@ export default {
       opened: false
     }
   },
+  computed: {
+    isFiltered: function () {
+      return this.filter.level.min !== 0 || this.filter.level.max !== 14 || this.filter.onlyBoss
+    }
+  },
   methods: {
+    clearFilter () {
+      this.filter.level.min = 0
+      this.filter.level.max = 14
+      this.filter.onlyBoss = false
+    },
     notify (eventName) {
       this.$q.notify(`Event "${eventName}" was triggered.`)
     },
