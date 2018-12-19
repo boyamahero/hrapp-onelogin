@@ -61,7 +61,7 @@
               <q-card-main>
                 <div class="row justify-between">
                   <p class="header">ข้อมูลสถานที่ทำงาน</p>
-                  <q-btn color="primary" icon="edit" :label="$q.platform.is.desktop?'แก้ไข':''"/>
+                  <q-btn color="primary" icon="edit" :label="$q.platform.is.desktop?'แก้ไข':''" v-if="false"/>
                 </div>
                 <q-card-separator class="q-mt-xs"/>
                 <p>อาคาร : {{user.building}}</p>
