@@ -35,6 +35,8 @@ Route::middleware(['jwt.verify'])->group(function () {
   Route::get('/portfolioInfo', 'PortfoliosController@show');
 
   Route::get('/employee', 'EmployeesController@show');
+
+  Route::get('/salary', 'EmployeesController@salary');
   
   Route::get('/medical-expenses/{year?}', 'MedicalExpensesController@show');
 

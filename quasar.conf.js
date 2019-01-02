@@ -103,6 +103,7 @@ module.exports = function (ctx) {
         'QCollapsible',
         'QLayoutFooter',
         'QPopover',
+        'QPagination',
         'QBreadcrumbs',
         'QBreadcrumbsEl',
         'QParallax',

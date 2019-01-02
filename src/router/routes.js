@@ -75,6 +75,14 @@ const routes = [
         meta: {
           requiresAuth: true
         }
+      },
+      {
+        path: 'salary',
+        name: 'salary',
+        component: () => import('pages/Salary.vue'),
+        meta: {
+          requiresAuth: true
+        }
       }
     ]
   },

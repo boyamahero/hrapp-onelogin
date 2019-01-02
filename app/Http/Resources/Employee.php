@@ -26,7 +26,8 @@ class Employee extends JsonResource
             'phone' => $this->phone,
             'senior' => $this->senior,
             'image_path' => $this->image_path,
-            'is_boss' => $this->priority !== '' && $this->priority !== '04' && $this->priority !== '05',
+            'level' => $this->employee_subgroup,
+            'is_boss' => ($this->priority !== '' && $this->priority !== '04' && $this->priority !== '05') || $this->employee_group == 9,
             'mobile_number' => $this->when(
                     (Auth::user()->employee->id == $this->boss_id) || 
                     (Auth::user()->employee->id == $this->id) || 

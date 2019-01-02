@@ -10,6 +10,11 @@ use App\Http\Resources\EmployeeCollection;
 
 class EmployeesController extends Controller
 {
+    public function salary(Request $request)
+    {
+        return $request->user()->salaries()->paginate(5);
+    }
+    
     public function user(Request $request)
     {
         return $request->user()->employee()->first();

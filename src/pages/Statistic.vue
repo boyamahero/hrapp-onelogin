@@ -27,7 +27,7 @@ export default {
     return {
       reports: [
         {name: 'จำนวนผู้ปฏิบัติงาน ณ ปัจจุบัน', path: '/manpower'},
-        {name: 'จำนวนผู้เกษียณ 5 ปีข้างหน้า', path: '/retire'}
+        {name: 'ประมาณจำนวนผู้เกษียณ 5 ปีข้างหน้า', path: '/retire'}
       ]
     }
   },

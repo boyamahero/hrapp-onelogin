@@ -70,7 +70,7 @@
               <q-card class="q-mx-md q-mb-md">
                 <q-card-main class="bg-amber-5">
                   <p class="header text-bold text-black" >ผลการประเมินเฉลี่ย 3 ปี : {{avg_all_kpi_score | formatNumber}}</p>
-                  <div class="row q-caption justify-center">
+                  <div class="row q-caption">
                       <div class="col-xs-6 bg-amber-4"><center>ปีที่ประเมิน</center></div>
                       <div class="col-xs-2 bg-amber-4 text-center" v-for="(kpi, index) in portfolio.kpis" :key="'kpi-'+index">
                         {{index}}

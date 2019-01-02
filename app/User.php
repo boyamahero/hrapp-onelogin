@@ -98,4 +98,13 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\Education', 'employee_id', 'user_id');
     }
 
+     /**
+     * Get the salary record associated with the user.
+     */
+    public function salaries()
+    {
+        $year = (intval(date("Y")) +543);
+        return $this->hasMany('App\Salary', 'emp_code', 'user_id')->orderBy('salary_date', 'desc')->orderBy('salary_no', 'desc');
+    }
+
 }

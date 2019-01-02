@@ -49,6 +49,8 @@
               <q-item-tile class="q-body-1" v-if="employee.phone &&  employee.phone!='-'"><q-icon name="call" /> {{ employee.phone }}</q-item-tile>
               <q-item-tile class="q-body-1" v-if="employee.mobile_number"><q-icon name="smartphone" /> {{ employee.mobile_number }}</q-item-tile>
             </q-item-main>
+            <q-item-side class="bg-yellow text-center" v-if="employee.level >=13 || employee.position_abb === 'ผวก.'">
+            </q-item-side>
           </q-item>
         </q-card>
         <back-to-top bottom="100px" right="10px">

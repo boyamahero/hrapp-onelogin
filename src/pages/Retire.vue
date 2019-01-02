@@ -25,10 +25,10 @@ export default {
           type: 'spline'
         },
         title: {
-          text: 'จำนวนผู้ปฏิบัติงานเกษียณอายุ'
+          text: 'ประมาณจำนวนผู้ปฏิบัติงานเกษียณอายุ'
         },
         subtitle: {
-          text: '5ปีถัดไป'
+          text: '5ปีข้างหน้า'
         },
         xAxis: {
           categories: [],
@@ -78,7 +78,7 @@ export default {
     },
     setAsyncData (years) {
       let retireData = {
-        name: 'ผู้เกษียณ',
+        name: 'เกษียณ',
         tooltip: {pointFormat: 'เกษียณ: <b>{point.y:.f}</b> '},
         data: []
       }
