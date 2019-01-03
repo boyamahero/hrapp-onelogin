@@ -103,7 +103,6 @@ class User extends Authenticatable implements JWTSubject
      */
     public function salaries()
     {
-        $year = (intval(date("Y")) +543);
         return $this->hasMany('App\Salary', 'emp_code', 'user_id')->orderBy('salary_date', 'desc')->orderBy('salary_no', 'desc');
     }
 
