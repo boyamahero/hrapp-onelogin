@@ -1,10 +1,10 @@
 {
   "name": "egat-hr",
-  "version": "1.0.0",
-  "description": "A Quasar Framework app",
+  "version": "2.0.0",
+  "description": "Mobile Apllication For HR EGAT",
   "productName": "EGAT HR",
-  "cordovaId": "org.cordova.quasar.app",
-  "author": "Your Author",
+  "cordovaId": "org.cordova.hrapp.egat.co.th",
+  "author": "Thanakorn Jato <thanakorn.j@egat.co.th>; Siripen Baramee <siripen.b@egat.co.th>; Boonrit Boonlue <boonrit.b@egat.co.th>",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
