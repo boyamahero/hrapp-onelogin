@@ -58,7 +58,7 @@ class EmployeesController extends Controller
             $query->whereNotIn('priority', ["","04","05"]);
         }
         
-        $employees = $query->orderBy('org_egat_id')
+        $employees = $query->orderBy('cost_code')
                 ->orderBy('employee_type_priority')
                 ->orderBy('employee_subgroup','desc')
                 ->orderBy('priority','desc')
