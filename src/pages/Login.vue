@@ -4,7 +4,7 @@
       <q-page padding>
           <div class="full-width">
             <div class="row justify-center text-center">
-              <div class="col-xs-9 col-lg-2">
+              <div class="col-xs-9 col-lg-3">
              <img alt="EGAT HR Mobile Application" src="statics/egathr-logo-full.png" width="100%">
              <br><br>
             <!-- <img alt="EGAT HR Mobile Application" src="~assets/egathr-logo-full.svg"> -->
@@ -12,7 +12,7 @@
             <br>
             <q-input class="login-input" v-model="password" placeholder="รหัสผ่าน" color="secondary" type="password"/>
             <br>
-            <q-btn color="primary" size="3vh" label="ลงชื่อเข้าใช้" :loading="loading" @click="login"/>
+            <q-btn color="primary" label="ลงชื่อเข้าใช้" :loading="loading" @click="login"/>
             <br>
             <br>
             <q-alert
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+
 import { QInput, QAlert } from 'quasar'
 
 export default {
