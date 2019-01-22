@@ -38,18 +38,18 @@
         <q-list class="q-ma-md" separator>
           <q-list-header class="text-bold">รายการเบิก</q-list-header>
           <q-item-separator />
-          <q-collapsible v-for="(expense, index) in expenses" :key="index" :label="expense.RCPTDT | dateFormatEnToTh" :sublabel="parseFloat(expense.REIMB) | formatNumbeWithPrefix">
+          <q-collapsible v-for="(expense, index) in expenses" :key="index" :label="expense.Claim_Date | dateFormatEnToTh" :sublabel="parseFloat(expense.Reimburse) | formatNumbeWithPrefix">
             <div class="row">
               <div class="col-xs-3 col-lg-2 text-bold">ผู้ป่วย</div>
-              <div class="col-xs-9 col-lg-10">{{ expense.FAMEM_NAME }}</div>
+              <div class="col-xs-9 col-lg-10">{{ expense.family_type }}</div>
             </div>
             <div class="row">
               <div class="col-xs-3 col-lg-2 text-bold">โรค</div>
-              <div class="col-xs-9 col-lg-10">{{ expense.DIAG_NAME }}</div>
+              <div class="col-xs-9 col-lg-10">{{ expense.diagnosis_name }}</div>
             </div>
             <div class="row">
               <div class="col-xs-3 col-lg-2 text-bold">สถานที่</div>
-              <div class="col-xs-9 col-lg-10">{{ expense.HONAME }}</div>
+              <div class="col-xs-9 col-lg-10">{{ expense.Hospital_name }}</div>
             </div>
           </q-collapsible>
         </q-list>
@@ -112,7 +112,7 @@ export default {
           ThaiMonth = 'ธ.ค.'
           break
       }
-      return 'วันที่เบิก ' + parseInt(dd[2]) + ' ' + ThaiMonth + ' ' + (parseInt(dd[0]) + 543)
+      return 'วันที่เบิก ' + parseInt(dd[0]) + ' ' + ThaiMonth + ' ' + (parseInt(dd[2]) + 543)
     }
   },
   created () {

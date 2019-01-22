@@ -12,15 +12,13 @@ class MedicalExpensesController extends Controller
         $employee_id = auth()->user()->username;
         $year = ($year)?:date("Y");
 
-        $expenses = MedicalExpense::where('PERNR',$employee_id)
-                        ->where('SUBTY','5')
-                        ->where('SCKTO','LIKE',$year.'%')
-                        ->where('STATUS','P')
-                        ->orderBy('RCPTDT')->get();
+        $expenses = MedicalExpense::where('PersNo',$employee_id)
+                        ->where('SickDateTo','LIKE','%'.$year)
+                        ->orderByRaw('SUBSTRING(SickDateTo,7,4)+SUBSTRING(SickDateTo,4,2)+SUBSTRING(SickDateTo,1,2) DESC')->get();
 
         return  response()->json([
             'year' => (int)$year,
-            'total' => $expenses->sum('REIMB'),
+            'total' => $expenses->sum('Reimburse'),
             'data' => $expenses
         ]);
 
