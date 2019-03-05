@@ -1,0 +1,8 @@
+{
+  "realm": "EGAT",
+  "auth-server-url": "https://ssolb.egat.co.th/auth",
+  "ssl-required": "all",
+  "resource": "hrapp",
+  "public-client": true,
+  "confidential-port": 0
+}

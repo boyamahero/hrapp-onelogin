@@ -9,6 +9,7 @@ module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
     plugins: [
+      'keycloak',
       'i18n',
       'axios',
       'VueLazyload'

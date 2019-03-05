@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import store from '@rockt/vue-keycloak'
+import security from '@rockt/vue-keycloak/security'
+
 import routes from './routes'
 
 document.addEventListener('backbutton', function (evt) {
@@ -18,7 +21,7 @@ Vue.use(VueRouter)
  * directly export the Router instantiation
  */
 
-export default function ({ store }) {
+export default function () {
   const Router = new VueRouter({
     scrollBehavior: () => ({ y: 0 }),
     routes,
@@ -30,27 +33,22 @@ export default function ({ store }) {
   })
 
   Router.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-      // this route requires auth, check if logged in
-      // if not, redirect to login page.
-      if (!store.getters.loggedIn) {
-        next({
-          name: 'login'
-        })
+    if (to.meta.requiresAuth) {
+      const auth = store.state.security.auth
+      if (!auth.authenticated) {
+        security.init(next, to.meta.roles)
       } else {
-        next()
+        if (to.meta.roles) {
+          if (security.roles(to.meta.roles[0])) {
+            next()
+          } else {
+            next({ name: 'unauthorized' })
+          }
+        } else {
+          next()
+        }
       }
     } else {
-      next() // make sure to always call next()!
-    }
-    if (to.matched.some(record => record.meta.requiresVisitor)) {
-      // this route requires auth, check if logged in
-      // if not, redirect to login page.
-      if (store.getters.loggedIn) {
-        next({
-          name: 'index'
-        })
-      }
       next()
     }
   })
