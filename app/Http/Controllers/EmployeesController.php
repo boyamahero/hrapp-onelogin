@@ -47,7 +47,7 @@ class EmployeesController extends Controller
         $levelMax = request()->query('levelMax');
         $onlyBoss = request()->query('onlyBoss');
 
-        $query = Employee::whereLike(['name','id','deputy_abb','assistant_abb','division_abb','department_abb','section_abb'], $keyword)
+        $query = Employee::whereLike(['name','employee_code','deputy_abb','assistant_abb','division_abb','department_abb','section_abb'], $keyword)
                         ->where('status','!=','0')
                         ->whereIn('employee_group',[1,2,5,9]);
                              
