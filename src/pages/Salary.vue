@@ -21,7 +21,6 @@
       <div class="col-md-9 col-xs-12 text-center" v-if="salaries.length != 0">
         <q-pagination
           class="justify-center"
-          input
           v-model="page"
           :min="minPage"
           :max="maxPage"

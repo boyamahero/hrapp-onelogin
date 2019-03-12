@@ -66,20 +66,9 @@ export default {
     this.getDataAll()
   },
   methods: {
-    setNewToken (value) {
-      if (value) {
-        this.$axios.defaults.headers.common['Authorization'] = value
-        localStorage.setItem('access_token', (value).replace('Bearer ', ''))
-        this.$store.commit('retrieveToken', (value).replace('Bearer ', ''), { root: true })
-      }
-    },
     getDataAll () {
       let listdata = []
-      this.$axios.get('manpower',
-        {headers: {
-            'Authorization': `Bearer ${this.$store.state.token.token}`
-          }
-        })
+      this.$axios.get('manpower')
         .then((res) => {
           let data = res.data.data
           for (let i = 0; i < data.length; i++) {
@@ -89,7 +78,6 @@ export default {
             listdata.push([data[i].deputy_abb, parseInt(data[i].employee_count)])
           }
           this.loadChart(listdata)
-          this.setNewToken(res.headers.authorization)
         }).catch(() => {
         this.$q.dialog({
           color: 'negative',
@@ -146,11 +134,7 @@ export default {
       this.Level4 = false
       let listdata = []
       let total = 0
-      this.$axios.get('manpower/' + level + '/' + abb,
-        {headers: {
-            'Authorization': `Bearer ${this.$store.state.token.token}`
-          }
-        })
+      this.$axios.get('manpower/' + level + '/' + abb)
         .then((res) => {
           let data = res.data.data
           for (let i = 0; i < data.length; i++) {
@@ -193,7 +177,6 @@ export default {
             pineChartLevel1.addSeries(asyncData)
             pineChartLevel1.hideLoading()
           }, 2000)
-          this.setNewToken(res.headers.authorization)
         }).catch(() => {
         this.$q.dialog({
           color: 'negative',
@@ -212,11 +195,7 @@ export default {
       this.Level4 = false
       let listdata = []
       let total = 0
-      this.$axios.get('manpower/' + level + '/' + abb,
-        {headers: {
-            'Authorization': `Bearer ${this.$store.state.token.token}`
-          }
-        })
+      this.$axios.get('manpower/' + level + '/' + abb)
         .then((res) => {
           let data = res.data.data
             for (let i = 0; i < data.length; i++) {
@@ -259,7 +238,6 @@ export default {
           pineChartLevel2.addSeries(asyncData)
           pineChartLevel2.hideLoading()
         }, 2000)
-      this.setNewToken(res.headers.authorization)
       }).catch(() => {
         this.$q.dialog({
           color: 'negative',
@@ -278,11 +256,7 @@ export default {
       this.Level4 = false
       let listdata = []
       let total = 0
-      this.$axios.get('manpower/' + level + '/' + abb,
-        {headers: {
-            'Authorization': `Bearer ${this.$store.state.token.token}`
-          }
-        })
+      this.$axios.get('manpower/' + level + '/' + abb)
         .then((res) => {
           let data = res.data.data
             for (let i = 0; i < data.length; i++) {
@@ -325,7 +299,6 @@ export default {
           pineChartLevel3.addSeries(asyncData)
           pineChartLevel3.hideLoading()
         }, 2000)
-        this.setNewToken(res.headers.authorization)
       }).catch(() => {
         this.$q.dialog({
           color: 'negative',
@@ -344,11 +317,7 @@ export default {
       this.Level4 = true
       let listdata = []
       let total = 0
-      this.$axios.get('manpower/' + level + '/' + abb,
-        {headers: {
-            'Authorization': `Bearer ${this.$store.state.token.token}`
-          }
-        })
+      this.$axios.get('manpower/' + level + '/' + abb)
         .then((res) => {
           let data = res.data.data
             for (let i = 0; i < data.length; i++) {
@@ -384,7 +353,6 @@ export default {
           pineChartLevel4.addSeries(asyncData)
           pineChartLevel4.hideLoading()
         }, 2000)
-        this.setNewToken(res.headers.authorization)
       }).catch(() => {
         this.$q.dialog({
           color: 'negative',

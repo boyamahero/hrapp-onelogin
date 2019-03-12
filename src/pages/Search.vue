@@ -146,13 +146,6 @@ export default {
     handle () {
       console.log('toggle')
     },
-    setNewToken (value) {
-      if (value) {
-        this.$axios.defaults.headers.common['Authorization'] = value
-        localStorage.setItem('access_token', (value).replace('Bearer ', ''))
-        this.$store.commit('retrieveToken', (value).replace('Bearer ', ''), { root: true })
-      }
-    },
     search () {
       this.opened = false
       this.employees = []
@@ -170,11 +163,7 @@ export default {
         if (this.filter.onlyBoss) {
           query += (query === '' ? 'onlyBoss=' : '&onlyBoss=') + this.filter.onlyBoss
         }
-        this.$axios.get('employees/' + this.searchText + (query !== '' ? '?' + query : ''),
-          {headers: {
-              'Authorization': `Bearer ${this.$store.state.token.token}`
-            }
-          })
+        this.$axios.get('employees/' + this.searchText + (query !== '' ? '?' + query : ''))
           .then((res) => {
             if (res.data.data) {
               this.employees = res.data.data
@@ -183,7 +172,6 @@ export default {
               this.last_page = res.data.meta.last_page
               this.next_page_url = res.data.links.next
             }
-            this.setNewToken(res.headers.authorization)
           }).catch((e) => {
             this.$q.dialog({
               color: 'negative',
@@ -199,17 +187,12 @@ export default {
     loadMore (index, done) {
       setTimeout(() => {
         if ((this.next_page_url)) {
-          this.$axios.get(this.next_page_url,
-            {headers: {
-                'Authorization': `Bearer ${this.$store.state.token.token}`
-              }
-            })
+          this.$axios.get(this.next_page_url)
             .then((res) => {
               console.log('loadmore')
               this.employees = this.employees.concat(res.data.data)
               this.current_page = res.data.meta.current_page
               this.next_page_url = res.data.links.next
-              this.setNewToken(res.headers.authorization)
             }).catch(() => {
               this.$q.dialog({
                 color: 'negative',

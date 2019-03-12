@@ -27,3 +27,5 @@ yarn-debug.log*
 *.njsproj
 *.sln
 *.sublime-workspace
+src/statics/keycloak.json
+/src/statics/keycloak.json

@@ -15,8 +15,8 @@
                 <q-card-main class="bg-indigo-1">
                   <p class="header text-bold">การศึกษา : ระดับสูงสุด {{highest_degree}}</p>
                   <div class="row q-body-1 bg-white" v-for="(education, index) in portfolio.educations" :key="'education-'+index">
-                    <div class="col-xs-4 col-md-3 q-pl-xs text-bold">{{education.degree_name}}</div>
-                    <div class="col-xs-8 col-md-9">
+                    <div class="col-3 q-pl-xs text-bold">{{education.degree_name}}</div>
+                    <div class="col-8 col-md-9">
                       <div class="col-12 text-bold" v-if="education.certificate_name!=='-'">{{education.certificate_name}}</div>
                       <div class="col-12">({{education.branch_name}})</div>
                       <div class="col-12">{{education.school_name}}</div>
@@ -43,12 +43,11 @@
                   <p class="header text-bold">วิสัยทัศน์และผลงานที่โดดเด่นย้อนหลัง 5 ปี</p>
                   <div class="row q-body-1 bg-white" v-for="(vision, index) in portfolio.visions" :key="'vision-'+index">
                     <div class="col-xs-3">
-                      วิสัยทัศน์
+                      <div class="text-bold">วิสัยทัศน์</div>
                     </div>
                     <div class="col-xs-9">
                       <div>{{vision.vision}}</div>
                       <div>{{vision.objective}}</div>
-                      <div> approved by : {{vision.empn_approver}}</div>
                     </div>
                   </div>
                   <div class="row q-body-1 bg-white" v-for="(portfolioInfo, index) in portfolio.portfolios" :key="'portfolioInfo-'+index">
@@ -58,7 +57,7 @@
                     <div class="col-xs-9">
                       <div class="text-bold">{{portfolioInfo.achievement}}</div>
                       <div>{{portfolioInfo.result}}</div>
-                      <div>ผลงานด้าน {{portfolioInfo.category_type}}</div>
+                      <div class="text-italic">ผลงานด้าน {{portfolioInfo.category_type}}</div>
                       <div v-if="portfolioInfo.value_added > 0">มูลค่า {{portfolioInfo.value_added}} บาท</div>
                     </div>
                   </div>
@@ -429,11 +428,7 @@ export default {
         spinnerColor: 'yellow',
         spinnerSize: 140
       })
-      this.$axios.get('portfolioInfo',
-        {headers: {
-            'Authorization': `Bearer ${this.$store.state.token.token}`
-          }
-        })
+      this.$axios.get('portfolioInfo')
         .then((res) => {
           this.portfolio = res.data.data
           this.avg_all_kpi_score = res.data.data.sum_kpi.avg_all_kpi_score

@@ -104,7 +104,7 @@ class PortfoliosController extends Controller
         $historyWorks = HistoryWork::select('works_date', 'works_dsc')
             ->where('emp_code',$id)->take(5)
             ->orderBy('works_no','desc')
-            ->get();
+            ->get();            
 
         $vision = Vision::select('vision', 'cause', 'objective', 'empn_approver')
             ->where('Empn',$id)->take(1)
@@ -115,7 +115,7 @@ class PortfoliosController extends Controller
         $portfolio = Portfolio::select('achievement', 'finish_year', 'result','category as category_type','value_added')
             ->leftJoin('TBP_pfo_ref_value_added_type', 'TBP_pfo_ref_value_added_type.id', '=', 'TBP_pfo_portfolio.value_added_type')
             ->where('empn',$id)
-            ->where('id_approval','=','0')->take(5)
+            ->where('id_approval','=','1')->take(5)
             ->orderBy('finish_year','desc')
             ->orderBy('is_favorite','desc')
             ->get();    

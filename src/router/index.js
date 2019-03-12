@@ -1,18 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import store from '@rockt/vue-keycloak'
-import security from '@rockt/vue-keycloak/security'
+// import security from '@rockt/security-vue-keycloak'
+import Keycloak from 'keycloak-js'
+let keycloakAuth = new Keycloak('/statics/keycloak.json')
+// console.log(keycloakAuth)
 
 import routes from './routes'
-
-document.addEventListener('backbutton', function (evt) {
-  if (window.location.hash !== '#/login') {
-      window.history.back()
-  } else {
-      navigator.app.exitApp()
-  }
-}, false)
 
 Vue.use(VueRouter)
 
@@ -21,7 +15,7 @@ Vue.use(VueRouter)
  * directly export the Router instantiation
  */
 
-export default function () {
+export default function ({ store }) {
   const Router = new VueRouter({
     scrollBehavior: () => ({ y: 0 }),
     routes,
@@ -36,17 +30,28 @@ export default function () {
     if (to.meta.requiresAuth) {
       const auth = store.state.security.auth
       if (!auth.authenticated) {
-        security.init(next, to.meta.roles)
-      } else {
-        if (to.meta.roles) {
-          if (security.roles(to.meta.roles[0])) {
-            next()
-          } else {
-            next({ name: 'unauthorized' })
+        keycloakAuth.init({ onLoad: 'login-required' }).success(function (authenticated) {
+          if (!authenticated) {
+            window.location.reload()
           }
-        } else {
+          // alert(authenticated ? 'authenticated' : 'not authenticated')
+          store.dispatch('authLogin', keycloakAuth)
           next()
-        }
+          setInterval(function () {
+            keycloakAuth.updateToken(70)
+              .success((refreshed) => {
+                if (refreshed) {
+                  store.dispatch('authLogin', keycloakAuth)
+                } else {
+                  console.log('Token not refreshed, valid for ' + Math.round(keycloakAuth.tokenParsed.exp + keycloakAuth.timeSkew - new Date().getTime() / 1000) + ' seconds')
+                }
+            })
+          }, 60000)
+        }).error(function () {
+          alert('failed to login')
+        })
+      } else {
+        next()
       }
     } else {
       next()

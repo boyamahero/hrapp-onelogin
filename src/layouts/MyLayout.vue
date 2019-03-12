@@ -43,6 +43,16 @@
         </q-item>
       </q-list>
       <q-list
+        class="q-mt-md"
+        no-border
+        link
+        inset-delimiter
+        >
+        <q-item clickable tag="a" href="https://smartlife.egat.co.th">
+          <q-item-side icon="smartphone"/>
+        </q-item>
+      </q-list>
+      <q-list
         id="q-list-itemb"
         no-border
         link
@@ -131,22 +141,10 @@ export default {
     ...mapActions('user', ['setUser']),
     logout () {
       this.logoutloading = true
-      this.$store.dispatch('destroyToken')
-        .then(response => {
-          this.logoutloading = false
-          this.$router.push({name: 'login'})
-        })
-        .catch(e => {
-          this.logoutloading = false
-          if (e.message === 'Request failed with status code 500') {
-            this.showAlert = true
-            this.error = 'เครื่องแม่ข่ายเว็ปไซต์มีปัญหา'
-          }
-          if (e.message === 'Network Error') {
-            this.showAlert = true
-            this.error = 'เครื่องแม่ข่ายมีปัญหา'
-          }
-        })
+
+      var keycloakAuth = this.$store.getters.SECURITY_AUTH
+      keycloakAuth.logout()
+      this.$store.dispatch('authLogout')
     }
   }
 }
