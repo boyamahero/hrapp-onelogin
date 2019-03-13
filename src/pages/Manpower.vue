@@ -85,7 +85,7 @@ export default {
           icon: 'report_problem',
           ok: 'ok'
         }).then(() => {
-          this.$router.push({name: 'login'})
+          // this.$router.push({name: 'login'})
         })
       })
     },
@@ -184,7 +184,7 @@ export default {
           icon: 'report_problem',
           ok: 'ok'
         }).then(() => {
-          this.$router.push({name: 'login'})
+          // this.$router.push({name: 'login'})
         })
       })
     },
@@ -245,7 +245,7 @@ export default {
           icon: 'report_problem',
           ok: 'ok'
         }).then(() => {
-          this.$router.push({name: 'login'})
+          // this.$router.push({name: 'login'})
         })
       })
     },
@@ -306,7 +306,7 @@ export default {
           icon: 'report_problem',
           ok: 'ok'
         }).then(() => {
-          this.$router.push({name: 'login'})
+          // this.$router.push({name: 'login'})
         })
       })
     },
@@ -360,7 +360,7 @@ export default {
           icon: 'report_problem',
           ok: 'ok'
         }).then(() => {
-          this.$router.push({name: 'login'})
+          // this.$router.push({name: 'login'})
         })
       })
     }

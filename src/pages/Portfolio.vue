@@ -445,7 +445,7 @@ export default {
               ok: 'ok'
             }).then(() => {
               this.$store.commit('destroyToken')
-              this.$router.push({name: 'login'})
+              // this.$router.push({name: 'login'})
             })
         })
     }
