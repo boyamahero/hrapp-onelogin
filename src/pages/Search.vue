@@ -175,6 +175,7 @@ export default {
         this.current_page = 0
         this.last_page = 0
         this.next_page_url = null
+        this.showResult = false
       }
       if (this.searchText && this.searchText.length > 2) {
         let query = ''

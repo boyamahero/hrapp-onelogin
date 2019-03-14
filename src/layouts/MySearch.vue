@@ -17,7 +17,7 @@
 
         <q-toolbar-title class="q-ml-md">
           HR Search
-          <div slot="subtitle">สอบถามข้อมูลบุคคลและหมายเลขโทรศัพท์</div>
+          <div slot="subtitle" class="q-subheading">สอบถามข้อมูลบุคคลและหมายเลขโทรศัพท์</div>
         </q-toolbar-title>
       </q-toolbar>
     </q-layout-header>
