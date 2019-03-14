@@ -46,6 +46,7 @@ class EmployeesController extends Controller
         $levelMin = request()->query('levelMin');
         $levelMax = request()->query('levelMax');
         $onlyBoss = request()->query('onlyBoss');
+        $orderBySenior = request()->query('orderBySenior');
 
         $query = Employee::whereLike(['name','employee_code','deputy_abb','assistant_abb','division_abb','department_abb','section_abb'], $keyword)
                         ->where('status','!=','0')
@@ -57,13 +58,19 @@ class EmployeesController extends Controller
         if ($onlyBoss) {
             $query->whereNotIn('priority', ["","04","05"]);
         }
-        
-        $employees = $query->orderBy('cost_code')
+        if ($orderBySenior) {
+            $employees = $query->orderBy('employee_type_priority')
+                ->orderBy('employee_subgroup','desc')
+                ->orderBy('senior')
+                ->paginate(50);            
+        } else {
+            $employees = $query->orderBy('cost_code')
                 ->orderBy('employee_type_priority')
                 ->orderBy('employee_subgroup','desc')
                 ->orderBy('priority','desc')
                 ->orderBy('senior')
                 ->paginate(50);
+        }
 
         $employees->appends(request()->query());
 

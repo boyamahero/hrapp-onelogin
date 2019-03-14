@@ -1,6 +1,25 @@
 
 const routes = [
   {
+    path: '/smartlife',
+    name: 'smartlife',
+    beforeEnter () { location.href = 'http://smartlife.egat.co.th' }
+  },
+  {
+    path: '/search',
+    component: () => import('layouts/MySearch.vue'),
+    children: [
+      {
+        path: '',
+        name: 'search',
+        component: () => import('pages/Search.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      }
+    ]
+  },
+  {
     path: '/',
     component: () => import('layouts/MyLayout.vue'),
     children: [
@@ -48,14 +67,6 @@ const routes = [
         path: 'infographic_list',
         name: 'infographic_list',
         component: () => import('pages/InfographicList.vue'),
-        meta: {
-          requiresAuth: true
-        }
-      },
-      {
-        path: 'search',
-        name: 'search',
-        component: () => import('pages/Search.vue'),
         meta: {
           requiresAuth: true
         }
