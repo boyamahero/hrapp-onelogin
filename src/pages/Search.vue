@@ -108,12 +108,12 @@
           />
           <q-btn class="q-ml-sm"
             @click="clearFilter"
-            label="ลบตัวกรอง"
+            label="ล้างค่า"
           />
           <q-btn class="q-ml-sm"
             color="red"
             @click="opened = false"
-            label="ปิดตัวกรอง"
+            label="ปิด"
           />
         </div>
       </div>

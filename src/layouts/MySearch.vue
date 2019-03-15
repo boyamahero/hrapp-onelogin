@@ -28,6 +28,7 @@
       <q-list
         separator
         border
+        link
         inset-delimiter
       >
         <q-list-header class="text-weight-bolder text-center uppercase">
@@ -84,7 +85,7 @@ export default {
           icon: 'report_problem',
           ok: 'ok'
         }).then(() => {
-          this.$router.push({name: 'login'})
+          // this.$router.push({name: 'search'})
         })
       })
   },
@@ -98,10 +99,9 @@ export default {
     },
     logout () {
       this.logoutloading = true
-
       var keycloakAuth = this.$store.getters.SECURITY_AUTH
-      keycloakAuth.logout()
       this.$store.dispatch('authLogout')
+      keycloakAuth.logout()
     }
   }
 }
