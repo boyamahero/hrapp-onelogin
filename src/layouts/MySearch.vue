@@ -50,7 +50,7 @@
         </q-item>
         <q-item @click.native="logout" dark>
           <q-item-side icon="power_settings_new" color="red" inverted/>
-          <q-item-main label="Sing Out" sublabel="Single Sign Out" class="text-left text-bold"/>
+          <q-item-main label="Sign Out" sublabel="Single Sign Out" class="text-left text-bold"/>
         </q-item>
       </q-list>
     </q-layout-drawer>
