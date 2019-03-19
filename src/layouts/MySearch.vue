@@ -47,11 +47,11 @@
         <q-item-separator />
         <q-item @click.native="smartlife" dark>
           <q-item-side icon="smartphone" color="yellow" inverted />
-          <q-item-main label="ESL" sublabel="EGAT Smart Life" class="text-left text-bold"/>
+          <q-item-main label="SMART LIFE" class="text-left text-bold"/>
         </q-item>
         <q-item @click.native="logout" dark>
-          <q-item-side icon="power_settings_new" color="red" inverted/>
-          <q-item-main label="Sign Out" sublabel="Single Sign Out" class="text-left text-bold"/>
+          <q-item-side icon="power_settings_new" color="red" inverted-light/>
+          <q-item-main label="ออกจากระบบ" class="text-left text-bold"/>
         </q-item>
       </q-list>
     </q-layout-drawer>
@@ -96,6 +96,9 @@ export default {
     ...mapActions('user', ['setUser']),
     smartlife () {
       this.$router.push({name: 'smartlife'})
+    },
+    index () {
+      this.$router.push({name: 'index'})
     },
     logout () {
       this.logoutloading = true

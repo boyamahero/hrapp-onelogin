@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="row justify-center">
-      <div class="col-md-9 col-xs-12">
+      <div class="col-12">
         <q-card class="q-ma-md">
           <q-card-main class="bg-blue-1">
             <p class="header text-bold">ระเบียบและนโยบายด้านบุคคล</p>

@@ -1,14 +1,14 @@
 <template>
   <q-page>
     <div class="row justify-center">
-      <div class="col-md-9 col-xs-12">
+      <div class="col-12">
         <q-card class="q-ma-md">
           <q-card-main class="bg-blue-1">
             <p class="header text-bold">ข้อมูลเงินเดือนค่าจ้าง</p>
           </q-card-main>
         </q-card>
       </div>
-      <div class="col-md-9 col-xs-12" v-if="salaries.length != 0">
+      <div class="col-12" v-if="salaries.length != 0">
         <q-list class="q-ma-md" separator>
           <q-item v-for="(salary, index) in salaries" :key="index" >
             <div class="row">
@@ -18,7 +18,7 @@
           </q-item>
         </q-list>
       </div>
-      <div class="col-md-9 col-xs-12 text-center" v-if="salaries.length != 0">
+      <div class="col-12 text-center" v-if="salaries.length != 0">
         <q-pagination
           class="justify-center"
           v-model="page"

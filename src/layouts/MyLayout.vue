@@ -1,36 +1,37 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-layout-header>
-    </q-layout-header>
-    <q-toolbar
-        inverted
-        color="white"
-      >
-        <q-btn
-          flat
-          @click="leftDrawerOpen = !leftDrawerOpen"
-          aria-label="Menu"
+    <q-layout-header reveal>
+      <q-toolbar
+          inverted
+          color="white"
         >
-          <q-icon name="menu" class="menu"/>
-        </q-btn>
+          <q-btn
+            round
+            flat
+            @click="leftDrawerOpen = !leftDrawerOpen"
+            aria-label="Menu"
+          >
+            <q-icon name="menu" class="menu"/>
+          </q-btn>
 
-        <q-toolbar-title>
-          <div class="row justify-center">
-          <div class="col-xs-7 col-lg-8 text-right self-center">
-            <div class="subtitle">EGAT HR APP</div>
-            <div class="title">{{user.name}}</div>
-            <div class="subtitle">{{ user.name_english }}</div>
-          </div>
-          <div class="col-xs-2 col-lg-1 text-right">
-              <img :src="user.image_path" class="q-item-avatar self-center">
-          </div>
-          </div>
-        </q-toolbar-title>
-      </q-toolbar>
+          <q-toolbar-title>
+            <div class="row justify-center">
+            <div class="col-xs-7 col-lg-10 text-right self-center">
+              <div class="title">{{user.name}}</div>
+              <div class="subtitle">{{ user.name_english }}</div>
+              <div class="subtitle">{{ user.position_abb }}</div>
+              <div class="subtitle">{{ user.org_path }}</div>
+            </div>
+            <div class="col-xs-2 col-lg-1 text-right self-center">
+                <img :src="user.image_path" class="q-item-avatar self-center">
+            </div>
+            </div>
+          </q-toolbar-title>
+        </q-toolbar>
+    </q-layout-header>
     <q-layout-drawer
       v-model="leftDrawerOpen"
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
-      :width="70"
     >
       <q-list
         class="q-mt-md"
@@ -38,45 +39,24 @@
         link
         inset-delimiter
       >
-        <q-item>
-           <q-icon name="menu" class="menu" @click.native="leftDrawerOpen = false"/>
+        <q-item class="justify-center">
+           เมนู
         </q-item>
       </q-list>
       <q-list
         class="q-mt-md"
-        no-border
+        border
+        separator
         link
         inset-delimiter
         >
-        <q-item clickable tag="a" href="https://smartlife.egat.co.th">
-          <q-item-side icon="smartphone"/>
+        <q-item @click.native="smartlife" dark>
+          <q-item-side icon="smartphone" color="yellow" inverted />
+          <q-item-main label="SMART LIFE" class="text-left text-bold"/>
         </q-item>
-      </q-list>
-      <q-list
-        id="q-list-itemb"
-        no-border
-        link
-        inset-delimiter
-      >
-        <q-item>
-          <q-item-side icon="contact_support"/>
-                <q-popover>
-                <q-list style="min-width: 200px">
-                  <div class="subheader">เกี่ยวกับแอพ</div>
-                  <q-item>
-                    <q-item-main label="จัดทำโดย" />
-                  </q-item>
-                  <q-item>
-                    <q-item-main label="กองเทคโนโลยีสารสนเทศสายงานบริหาร" />
-                  </q-item>
-                  <q-item>
-                    <q-item-main label="โทร 65323" />
-                  </q-item>
-                </q-list>
-              </q-popover>
-        </q-item>
-        <q-item @click.native="logout">
-          <q-item-side icon="power_settings_new" color="red" />
+        <q-item @click.native="logout" dark>
+          <q-item-side icon="power_settings_new" color="red" inverted-light/>
+          <q-item-main label="ออกจากระบบ" class="text-left text-bold"/>
         </q-item>
       </q-list>
     </q-layout-drawer>
@@ -151,4 +131,9 @@ export default {
 </script>
 
 <style>
+.q-layout-header {
+-webkit-box-shadow: none;
+-moz-box-shadow: none;
+box-shadow: none;
+}
 </style>

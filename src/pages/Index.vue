@@ -1,7 +1,7 @@
 <template>
-  <q-page>
+  <q-page padding>
     <div class="row justify-center">
-      <div class="col-md-9 col-xs-12">
+      <div class="col-12">
         <q-carousel
             quick-nav
             quick-nav-icon="stop"
@@ -75,7 +75,7 @@
       </div>
     </div>
     <div class="row justify-center">
-      <div class="col-md-9 col-xs-12">
+      <div class="col-12">
       <q-card class="q-ma-md">
       <q-card-main>
          <p class="header">เมนู</p>

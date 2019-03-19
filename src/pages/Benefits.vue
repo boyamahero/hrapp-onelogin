@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="row justify-center">
-      <div class="col-md-9 col-xs-12">
+      <div class="col-12">
         <q-card class="q-ma-md">
           <q-card-main class="bg-blue-1">
             <p class="header text-bold">เงินช่วยเหลือค่ารักษาพยาบาลของโรงพยาบาลและคลินิกเอกชน (3,600)</p>
@@ -20,7 +20,7 @@
           </q-card-main>
         </q-card>
       </div>
-      <div class="col-md-9 col-xs-12">
+      <div class="col-12">
         <div class="row q-ma-md q-px-lg">
           <div class="col-6 bg-light-blue-4 q-pa-xs text-white">สิทธิรวมทั้งปี</div>
           <div class="col-6 text-right q-pa-xs shadow-1">3,600.00 บาท</div>
@@ -34,7 +34,7 @@
           <div class="col-6 text-right q-pa-xs shadow-1">{{ remain | formatNumber }}</div>
         </div>
       </div>
-      <div class="col-md-9 col-xs-12" v-if="expenses.length != 0">
+      <div class="col-12" v-if="expenses.length != 0">
         <q-list class="q-ma-md" separator>
           <q-list-header class="text-bold">รายการเบิก</q-list-header>
           <q-item-separator />
