@@ -27,12 +27,33 @@ class Employee extends JsonResource
             'senior' => $this->senior,
             'image_path' => $this->image_path,
             'level' => $this->employee_subgroup,
-            'is_boss' => ($this->priority !== '' && $this->priority !== '04' && $this->priority !== '05' && $this->priority !== '06') || $this->employee_group == 9,
+            'is_boss' => $this->is_boss,
             'mobile_number' => $this->when(
-                    (Auth::user()->employee->id == $this->boss_id) || 
-                    (Auth::user()->employee->id == $this->id) || 
-                    (Auth::user()->hasRole('admin')
-                ) , $this->mobile_number),
+                    Auth::user()->hasRole('admin') ||
+                    ( 
+                        Auth::user()->employee->is_boss && 
+                        $this->isOwnerDataLevel(Auth::user()) 
+                    ) || 
+                    Auth::user()->username == $this->id
+                , $this->mobile_number),
         ];
+    }
+
+    public function isOwnerDataLevel($user)
+    {
+        if ($user->employee->employee_group == 9) {
+            return true;
+        } else if ($user->employee->org->org_level == 5) {
+            return $user->employee->section_abb == $this->section_abb;
+        } else if ($user->employee->org->org_level == 4) {
+            return $user->employee->department_abb == $this->department_abb;
+        } else if ($user->employee->org->org_level == 3) {
+            return $user->employee->division_abb == $this->division_abb;
+        } else if ($user->employee->org->org_level == 2) {
+            return $user->employee->assistant_abb == $this->assistant_abb;
+        } else if ($user->employee->org->org_level == 1) {
+            return $user->employee->deputy_abb == $this->deputy_abb;
+        }
+        
     }
 }

@@ -43,6 +43,7 @@ class EmployeesController extends Controller
 
     public function search($keyword)
     {
+        // return auth()->user()->employee;
         $levelMin = request()->query('levelMin');
         $levelMax = request()->query('levelMax');
         $onlyBoss = request()->query('onlyBoss');

@@ -10,7 +10,7 @@ class Employee extends Model
 
     protected $table = 'employees';
 
-    protected $appends = ['image_path'];
+    protected $appends = ['image_path','is_boss'];
 
     protected $hidden = ['birth_date','birth_thai_date','birth_year','birth_month','birth_day','age','idcard_number','weight','weight_ratio','height','height_ratio','blood_group'];
 
@@ -19,5 +19,15 @@ class Employee extends Model
     {
         // return 'https://pmsp.egat.co.th/EGAT-PMSP-IMAGE-DI/viewImage?PersonCode='. sprintf("%06d", $this->id) .'&pfdrid_c=true';
         return '/api/images/'. sprintf("%06d", $this->id).'/'.base64_encode( substr(sprintf("%06d", $this->id),0,3) ).env('APP_SECRET','HrApP').base64_encode( substr(sprintf("%06d", $this->id),3,3) );
+    }
+
+    public function getIsBossAttribute()
+    {
+        return ($this->priority !== '' && $this->priority !== '04' && $this->priority !== '05' && $this->priority !== '06') || $this->employee_group == 9;
+    }
+
+    public function org()
+    {
+        return $this->hasOne('App\Organization', 'org_egat_id', 'org_egat_id');
     }
 }
