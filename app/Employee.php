@@ -30,4 +30,9 @@ class Employee extends Model
     {
         return $this->hasOne('App\Organization', 'org_egat_id', 'org_egat_id');
     }
+
+    public function boss()
+    {
+        return $this->hasOne('App\Employee', 'id', 'boss_id');
+    }
 }

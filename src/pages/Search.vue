@@ -35,88 +35,148 @@
           <span v-if="filter.orderBySenior"> <span v-if="filter.level.min !== 0 || filter.level.max !==14 || filter.onlyBoss"> , </span>เรียงลำดับอาวุโส</span>
         </div>
       </div>
-      <div v-if="total > 0" class="text-right self-center"> <q-btn icon="filter_list" round no-shadow @click.native="opened = true" :color=" isFiltered ? 'primary':''" /></div>
+      <div v-if="total > 0" class="text-right self-center"> <q-btn icon="filter_list" round no-shadow @click.native="filterOpened = true" :color=" isFiltered ? 'primary':''" /></div>
     </div>
 
     <!-- <q-item-separator /> -->
 
     <div class="row justify-center">
       <div class="col-12 justify-between">
-      <q-infinite-scroll :handler="loadMore" ref="infiniteScroll">
-        <q-card v-for="(employee, index) in employees" :key="index" :color="employee.is_boss?'blue-5':''">
-          <q-item>
-            <q-item-side>
-              <img v-lazy="employee.image_path" class="avatarList">
-            </q-item-side>
-            <q-item-main>
-              <q-item-tile class="q-body-1 text-weight-bold">{{ employee.name }} ({{ employee.id }})</q-item-tile>
-              <q-item-tile class="q-body-1"><q-icon name="work" /> {{ employee.position_abb }}</q-item-tile>
-              <q-item-tile class="q-body-1"><q-icon name="business" /> {{ employee.org_path }}</q-item-tile>
-              <q-item-tile class="q-body-1" v-if="employee.building.trim() !== '-' || employee.room !== '-'"><q-icon name="room" /> {{ employee.building }} <span v-if="employee.room &&  employee.room!='-'">ห้อง {{employee.room.replace('ห้อง','')}} </span></q-item-tile>
-              <q-item-tile class="q-body-1" v-if="employee.phone &&  employee.phone!='-'"><q-icon name="call" /> {{ employee.phone }}</q-item-tile>
-              <q-item-tile class="q-body-1" v-if="employee.mobile_number"><q-icon name="smartphone" /> {{ employee.mobile_number }}</q-item-tile>
-            </q-item-main>
-            <q-item-side class="bg-yellow text-center" v-if="employee.level >=13 || employee.position_abb === 'ผวก.'">
-            </q-item-side>
-          </q-item>
-        </q-card>
-        <back-to-top bottom="100px" right="10px">
-          <button type="button" class="btn btn-info btn-to-top"><i class="fa fa-chevron-up"></i></button>
-        </back-to-top>
-        <div class="row justify-center" style="margin-bottom: 20px;" v-if="next_page_url">
-          <q-spinner-dots slot="message" :size="40" />
-        </div>
-      </q-infinite-scroll>
+        <q-infinite-scroll :handler="loadMore" ref="infiniteScroll">
+          <q-card v-for="(employee, index) in employees" :key="index" :color="employee.is_boss?'blue-5':''" @click.native="itemClicked(employee)">
+            <q-item>
+              <q-item-side>
+                <img v-lazy="employee.image_path" class="avatarList">
+              </q-item-side>
+              <q-item-main>
+                <q-item-tile class="q-body-1 text-weight-bold">{{ employee.name }} ({{ employee.id }})</q-item-tile>
+                <q-item-tile class="q-body-1"><q-icon name="work" /> {{ employee.position_abb }}</q-item-tile>
+                <q-item-tile class="q-body-1"><q-icon name="business" /> {{ employee.org_path }}</q-item-tile>
+                <q-item-tile class="q-body-1" v-if="employee.building.trim() !== '-' || employee.room !== '-'"><q-icon name="room" /> {{ employee.building }} <span v-if="employee.room &&  employee.room!='-'">ห้อง {{employee.room.replace('ห้อง','')}} </span></q-item-tile>
+                <q-item-tile class="q-body-1" v-if="employee.phone &&  employee.phone!='-'"><q-icon name="call" /> {{ employee.phone }}</q-item-tile>
+                <q-item-tile class="q-body-1" v-if="employee.mobile_number"><q-icon name="smartphone" /> {{ employee.mobile_number }}</q-item-tile>
+              </q-item-main>
+              <q-item-side class="bg-yellow text-center" v-if="employee.level >=13 || employee.position_abb === 'ผวก.'">
+              </q-item-side>
+            </q-item>
+          </q-card>
+          <back-to-top bottom="100px" right="10px">
+            <button type="button" class="btn btn-info btn-to-top"><i class="fa fa-chevron-up"></i></button>
+          </back-to-top>
+          <div class="row justify-center" style="margin-bottom: 20px;" v-if="next_page_url">
+            <q-spinner-dots slot="message" :size="40" />
+          </div>
+        </q-infinite-scroll>
+      </div>
     </div>
-  </div>
-    <q-modal v-model="opened">
-      <div class="q-pa-md">
-      <h4>ตัวกรอง</h4>
-      <div class="row">
-        <div class="col-3">ระดับ</div>
-        <div class="col-9">
-          <q-range
-            v-model="filter.level"
-            :min="0"
-            :max="14"
-            :step="1"
-            label
-            snap
-            color="secondary"
-            label-always
-          />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-6">เฉพาะผบ.</div>
-        <div class="col-6">
-          <q-toggle v-model="filter.onlyBoss" color="secondary"/>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-6">เรียงลำดับอาวุโส</div>
-        <div class="col-6">
-          <q-toggle v-model="filter.orderBySenior" color="secondary"/>
-        </div>
-      </div>
-      <div class="row q-mt-lg">
-        <div class="col-12">
+
+    <q-modal v-model="maximizedModal" maximized v-if="employee.can_open">
+      <q-modal-layout>
+        <q-toolbar slot="header">
+          <q-toolbar-title>
+            ข้อมูลบุคคล
+          </q-toolbar-title>
           <q-btn
-            color="primary"
-            @click="search"
-            label="ค้นหา"
+            flat
+            round
+            dense
+            @click="maximizedModal = false"
+            icon="close"
           />
-          <q-btn class="q-ml-sm"
-            @click="clearFilter"
-            label="ล้างค่า"
-          />
-          <q-btn class="q-ml-sm"
-            color="red"
-            @click="opened = false"
-            label="ปิด"
-          />
+        </q-toolbar>
+        <div class="layout-padding">
+          <q-card>
+            <q-card-media>
+              <img :src="employee.image_path" class="q-pa-lg">
+            </q-card-media>
+            <q-card-title class="q-pa-xs">
+              {{ employee.name }}
+              <span slot="subtitle" class="text-black">
+                <div class="row justify-center">
+                  <div class="col-3 q-caption self-end">เลขประจำตัว</div>
+                  <div class="col-9">{{ employee.id }}</div>
+                  <div class="col-3 q-caption self-end">ตำแหน่ง</div>
+                  <div class="col-9">{{ employee.position_abb }}</div>
+                  <div class="col-3 q-caption self-end">สังกัด</div>
+                  <div class="col-9">{{ employee.org_path }}</div>
+                  <div class="col-3 q-caption self-end">ศาสนา</div>
+                  <div class="col-9">{{ employee.religion }}</div>
+                  <div class="col-3 q-caption self-end">วันเกิด</div>
+                  <div class="col-9">{{ employee.birth_date }}</div>
+                  <div class="col-3 q-caption self-end">อายุตัว</div>
+                  <div class="col-9">{{ employee.age }} ปี</div>
+                  <div class="col-3 q-caption self-end">วันเข้างาน</div>
+                  <div class="col-9">{{ employee.entry_date }}</div>
+                  <div class="col-3 q-caption self-end">อายุงาน</div>
+                  <div class="col-9">{{ employee.work_age }}</div>
+                  <div class="col-3 q-caption self-end">วันเกษียณ</div>
+                  <div class="col-9">{{ employee.retire_date }}</div>
+                  <div class="col-3 q-caption self-end">อายุงานคงเหลือ</div>
+                  <div class="col-9">{{ employee.remain_work_age }}</div>
+                  <div class="col-3 q-caption self-end">วันที่เลื่อนระดับ</div>
+                  <div class="col-9">{{ employee.level_date }}</div>
+                  <div class="col-3 q-caption self-end">อายุงานในระดับ</div>
+                  <div class="col-9">{{ employee.level_work_age }}</div>
+                  <div class="col-3 q-caption self-end">วุฒิหลัก</div>
+                  <div class="col-9">{{ employee.main_education }}</div>
+                  <div class="col-3 q-caption self-end">ผู้บังคับบัญชา</div>
+                  <div class="col-9">{{ `${employee.boss_name} (${employee.boss_position})` }}</div>
+                </div>
+              </span>
+          </q-card-title>
+          </q-card>
         </div>
-      </div>
+      </q-modal-layout>
+    </q-modal>
+
+    <q-modal v-model="filterOpened">
+      <div class="q-pa-md">
+        <h4>ตัวกรอง</h4>
+        <div class="row">
+          <div class="col-3">ระดับ</div>
+          <div class="col-9">
+            <q-range
+              v-model="filter.level"
+              :min="0"
+              :max="14"
+              :step="1"
+              label
+              snap
+              color="secondary"
+              label-always
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">เฉพาะผบ.</div>
+          <div class="col-6">
+            <q-toggle v-model="filter.onlyBoss" color="secondary"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">เรียงลำดับอาวุโส</div>
+          <div class="col-6">
+            <q-toggle v-model="filter.orderBySenior" color="secondary"/>
+          </div>
+        </div>
+        <div class="row q-mt-lg">
+          <div class="col-12">
+            <q-btn
+              color="primary"
+              @click="search"
+              label="ค้นหา"
+            />
+            <q-btn class="q-ml-sm"
+              @click="clearFilter"
+              label="ล้างค่า"
+            />
+            <q-btn class="q-ml-sm"
+              color="red"
+              @click="filterOpened = false"
+              label="ปิด"
+            />
+          </div>
+        </div>
       </div>
     </q-modal>
   </q-page>
@@ -124,9 +184,11 @@
 
 <script>
 import BackToTop from 'vue-backtotop'
+import { QModalLayout } from 'quasar'
 export default {
   components: {
-    BackToTop
+    BackToTop,
+    QModalLayout
   },
   // name: 'PageName',
   data () {
@@ -145,8 +207,10 @@ export default {
       current_page: 0,
       last_page: 0,
       next_page_url: null,
-      opened: false,
-      showResult: false
+      filterOpened: false,
+      maximizedModal: false,
+      showResult: false,
+      employee: {}
     }
   },
   computed: {
@@ -155,6 +219,10 @@ export default {
     }
   },
   methods: {
+    itemClicked (item) {
+      this.employee = item
+      this.maximizedModal = true
+    },
     clearFilter () {
       this.filter.level.min = 0
       this.filter.level.max = 14
@@ -168,7 +236,7 @@ export default {
       console.log('toggle')
     },
     search () {
-      this.opened = false
+      this.filterOpened = false
       this.employees = []
       if (this.searchText.length === 0) {
         this.total = 0

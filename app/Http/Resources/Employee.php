@@ -36,6 +36,21 @@ class Employee extends JsonResource
                     ) || 
                     Auth::user()->username == $this->id
                 , $this->mobile_number),
+            $this->mergeWhen(Auth::user()->hasRole('admin'), [
+                'religion' => $this->religion_name,
+                'birth_date' => $this->birth_thai_date,
+                'age' => $this->age,
+                'entry_date' => $this->entry_thai_date,
+                'work_age' => $this->agew,
+                'retire_date' => $this->retire_thai_date,
+                'remain_work_age' => $this->remain_work_age,
+                'level_date' => $this->retire_thai_date,
+                'level_work_age' => $this->old_dat_age,
+                'main_education' => $this->main_educa,
+                'boss_name' => $this->boss->name,
+                'boss_position' => $this->boss->position_abb,
+                'can_open' => true
+            ]),
         ];
     }
 
