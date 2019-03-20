@@ -119,6 +119,9 @@ export default {
   },
   methods: {
     ...mapActions('user', ['setUser']),
+    smartlife () {
+      this.$router.push({name: 'smartlife'})
+    },
     logout () {
       this.logoutloading = true
 
