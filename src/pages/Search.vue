@@ -84,47 +84,49 @@
             icon="close"
           />
         </q-toolbar>
-        <div class="layout-padding">
-          <q-card>
-            <q-card-media>
-              <img :src="employee.image_path" class="q-pa-lg">
-            </q-card-media>
-            <q-card-title class="q-pa-xs">
-              {{ employee.name }}
-              <span slot="subtitle" class="text-black">
-                <div class="row justify-center">
-                  <div class="col-3 q-caption self-end">เลขประจำตัว</div>
-                  <div class="col-9">{{ employee.id }}</div>
-                  <div class="col-3 q-caption self-end">ตำแหน่ง</div>
-                  <div class="col-9">{{ employee.position_abb }}</div>
-                  <div class="col-3 q-caption self-end">สังกัด</div>
-                  <div class="col-9">{{ employee.org_path }}</div>
-                  <div class="col-3 q-caption self-end">ศาสนา</div>
-                  <div class="col-9">{{ employee.religion }}</div>
-                  <div class="col-3 q-caption self-end">วันเกิด</div>
-                  <div class="col-9">{{ employee.birth_date }}</div>
-                  <div class="col-3 q-caption self-end">อายุตัว</div>
-                  <div class="col-9">{{ employee.age }} ปี</div>
-                  <div class="col-3 q-caption self-end">วันเข้างาน</div>
-                  <div class="col-9">{{ employee.entry_date }}</div>
-                  <div class="col-3 q-caption self-end">อายุงาน</div>
-                  <div class="col-9">{{ employee.work_age }}</div>
-                  <div class="col-3 q-caption self-end">วันเกษียณ</div>
-                  <div class="col-9">{{ employee.retire_date }}</div>
-                  <div class="col-3 q-caption self-end">อายุงานคงเหลือ</div>
-                  <div class="col-9">{{ employee.remain_work_age }}</div>
-                  <div class="col-3 q-caption self-end">วันที่เลื่อนระดับ</div>
-                  <div class="col-9">{{ employee.level_date }}</div>
-                  <div class="col-3 q-caption self-end">อายุงานในระดับ</div>
-                  <div class="col-9">{{ employee.level_work_age }}</div>
-                  <div class="col-3 q-caption self-end">วุฒิหลัก</div>
-                  <div class="col-9">{{ employee.main_education }}</div>
-                  <div class="col-3 q-caption self-end">ผู้บังคับบัญชา</div>
-                  <div class="col-9">{{ `${employee.boss_name} (${employee.boss_position})` }}</div>
-                </div>
-              </span>
-          </q-card-title>
-          </q-card>
+        <div class="row">
+          <div class="layout-padding col-lg-6 col-md-8 col-xs-12">
+            <q-card>
+              <q-card-media>
+                <img :src="employee.image_path" class="q-pa-lg">
+              </q-card-media>
+              <q-card-title class="q-pa-xs">
+                {{ employee.name }}
+                <span slot="subtitle" class="text-black">
+                  <div class="row justify-center">
+                    <div class="col-3 q-caption self-end">เลขประจำตัว</div>
+                    <div class="col-9">{{ employee.id }}</div>
+                    <div class="col-3 q-caption self-end">ตำแหน่ง</div>
+                    <div class="col-9">{{ employee.position_abb }}</div>
+                    <div class="col-3 q-caption self-end">สังกัด</div>
+                    <div class="col-9">{{ employee.org_path }}</div>
+                    <div class="col-3 q-caption self-end">ศาสนา</div>
+                    <div class="col-9">{{ employee.religion }}</div>
+                    <div class="col-3 q-caption self-end">วันเกิด</div>
+                    <div class="col-9">{{ employee.birth_date }}</div>
+                    <div class="col-3 q-caption self-end">อายุตัว</div>
+                    <div class="col-9">{{ employee.age }} ปี</div>
+                    <div class="col-3 q-caption self-end">วันเข้างาน</div>
+                    <div class="col-9">{{ employee.entry_date }}</div>
+                    <div class="col-3 q-caption self-end">อายุงาน</div>
+                    <div class="col-9">{{ employee.work_age }}</div>
+                    <div class="col-3 q-caption self-end">วันเกษียณ</div>
+                    <div class="col-9">{{ employee.retire_date }}</div>
+                    <div class="col-3 q-caption self-end">อายุงานคงเหลือ</div>
+                    <div class="col-9">{{ employee.remain_work_age }}</div>
+                    <div class="col-3 q-caption self-end">วันที่เลื่อนระดับ</div>
+                    <div class="col-9">{{ employee.level_date }}</div>
+                    <div class="col-3 q-caption self-end">อายุงานในระดับ</div>
+                    <div class="col-9">{{ employee.level_work_age }}</div>
+                    <div class="col-3 q-caption self-end">วุฒิหลัก</div>
+                    <div class="col-9">{{ employee.main_education }}</div>
+                    <div class="col-3 q-caption self-end">ผู้บังคับบัญชา</div>
+                    <div class="col-9">{{ `${employee.boss_name} (${employee.boss_position})` }}</div>
+                  </div>
+                </span>
+            </q-card-title>
+            </q-card>
+          </div>
         </div>
       </q-modal-layout>
     </q-modal>
