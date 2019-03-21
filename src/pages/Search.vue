@@ -30,7 +30,7 @@
           <div v-else>ไม่พบผลการค้นหา</div>
         </div>
         <div class="subtitle">
-          <span v-if="filter.level.min !== 0 || filter.level.max !==14">ระดับ {{filter.level.min}} ถึง {{filter.level.max}} {{filter.level.max===14?'ขึ้นไป':''}}</span>
+          <span v-if="filter.level.min !== 0 || filter.level.max !==14">ระดับ {{filter.level.min}} {{filter.level.min===filter.level.max?'':'ถึง '+filter.level.max}}</span>
           <span v-if="filter.onlyBoss"> <span v-if="filter.level.min !== 0 || filter.level.max !==14"> , </span>ผบ.เท่านั้น</span>
           <span v-if="filter.orderBySenior"> <span v-if="filter.level.min !== 0 || filter.level.max !==14 || filter.onlyBoss"> , </span>เรียงลำดับอาวุโส</span>
         </div>
@@ -114,10 +114,10 @@
                     <div class="col-9">{{ employee.retire_date | dateFormatTh }}</div>
                     <div class="col-3 q-caption self-end">อายุงานคงเหลือ</div>
                     <div class="col-9">{{ employee.remain_work_age }}</div>
-                    <div class="col-3 q-caption self-end">เลื่อนระดับ</div>
-                    <div class="col-9">{{ employee.level_date | dateFormatEnToTh }}</div>
-                    <div class="col-3 q-caption self-end">อายุงานในระดับ</div>
-                    <div class="col-9">{{ employee.level_work_age }}</div>
+                    <div class="col-3 q-caption self-end" v-if="employee.level_date">เลื่อนระดับ</div>
+                    <div class="col-9" v-if="employee.level_date">{{ employee.level_date | dateFormatEnToTh }}</div>
+                    <div class="col-3 q-caption self-end" v-if="employee.level_date">อายุงานในระดับ</div>
+                    <div class="col-9" v-if="employee.level_date">{{ employee.level_work_age }}</div>
                     <div class="col-3 q-caption self-end">วุฒิหลัก</div>
                     <div class="col-9">{{ employee.main_education }}</div>
                     <div class="col-3 q-caption self-end">ผู้บังคับบัญชา</div>

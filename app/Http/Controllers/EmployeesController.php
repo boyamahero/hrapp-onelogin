@@ -60,16 +60,21 @@ class EmployeesController extends Controller
 
         if ($levelMin || $levelMax) {
             $query->where(function ($query) use ($levelMin, $levelMax) {
-                if ($levelMax == 14 ) {
-                    $query->whereBetween('employee_subgroup',  [$levelMin, $levelMax])
-                        ->orWhere('employee_group', '=', '9');
-                } else {
-                    $query->whereBetween('employee_subgroup',  [$levelMin, $levelMax]);
-                }
+                $query->whereBetween('employee_subgroup',  [$levelMin, $levelMax]);
+                // if ($levelMax == 14 ) {
+                //     $query->whereBetween('employee_subgroup',  [$levelMin, $levelMax])
+                //         ->orWhere('employee_group', '=', '9');
+                // } else {
+                //     $query->whereBetween('employee_subgroup',  [$levelMin, $levelMax]);
+                // }
             });
         }
         if ($onlyBoss) {
-            $query->whereIsBoss(['priority', 'employee_group']);
+            // $query->whereIsBoss(['priority', 'employee_group']);
+            $query->where(function ($query) {
+                $query->whereNotIn('priority',  ['','04','05','06'])
+                    ->orWhere('employee_group', '9');
+            });
         }
         if ($orderBySenior) {
             $employees = $query->orderBy('employee_type_priority')
