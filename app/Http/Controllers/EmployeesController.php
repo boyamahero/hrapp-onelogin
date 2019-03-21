@@ -49,15 +49,27 @@ class EmployeesController extends Controller
         $onlyBoss = request()->query('onlyBoss');
         $orderBySenior = request()->query('orderBySenior');
 
-        $query = Employee::whereLike(['name','employee_code','deputy_abb','assistant_abb','division_abb','department_abb','section_abb'], $keyword)
+        if ($keyword == 'กฟผ.') {
+            $query = Employee::where('status','!=','0')
+                        ->whereIn('employee_group',[1,2,5,9]);
+        } else {
+            $query = Employee::whereLike(['name','name_english','email','employee_code','deputy_abb','assistant_abb','division_abb','department_abb','section_abb'], $keyword)
                         ->where('status','!=','0')
                         ->whereIn('employee_group',[1,2,5,9]);
-                             
+        }
+
         if ($levelMin || $levelMax) {
-            $query->whereBetween('employee_subgroup',  [$levelMin, $levelMax]);
+            $query->where(function ($query) use ($levelMin, $levelMax) {
+                if ($levelMax == 14 ) {
+                    $query->whereBetween('employee_subgroup',  [$levelMin, $levelMax])
+                        ->orWhere('employee_group', '=', '9');
+                } else {
+                    $query->whereBetween('employee_subgroup',  [$levelMin, $levelMax]);
+                }
+            });
         }
         if ($onlyBoss) {
-            $query->whereNotIn('priority', ["","04","05"]);
+            $query->whereIsBoss(['priority', 'employee_group']);
         }
         if ($orderBySenior) {
             $employees = $query->orderBy('employee_type_priority')

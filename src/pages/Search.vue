@@ -30,12 +30,12 @@
           <div v-else>ไม่พบผลการค้นหา</div>
         </div>
         <div class="subtitle">
-          <span v-if="filter.level.min !== 0 || filter.level.max !==14">ระดับ {{filter.level.min}} ถึง {{filter.level.max}}</span>
+          <span v-if="filter.level.min !== 0 || filter.level.max !==14">ระดับ {{filter.level.min}} ถึง {{filter.level.max}} {{filter.level.max===14?'ขึ้นไป':''}}</span>
           <span v-if="filter.onlyBoss"> <span v-if="filter.level.min !== 0 || filter.level.max !==14"> , </span>ผบ.เท่านั้น</span>
           <span v-if="filter.orderBySenior"> <span v-if="filter.level.min !== 0 || filter.level.max !==14 || filter.onlyBoss"> , </span>เรียงลำดับอาวุโส</span>
         </div>
       </div>
-      <div v-if="total > 0" class="text-right self-center"> <q-btn icon="filter_list" round no-shadow @click.native="filterOpened = true" :color=" isFiltered ? 'primary':''" /></div>
+      <div class="text-right self-center"> <q-btn icon="filter_list" round no-shadow @click.native="filterOpened = true" :color=" isFiltered ? 'primary':''" /></div>
     </div>
 
     <!-- <q-item-separator /> -->

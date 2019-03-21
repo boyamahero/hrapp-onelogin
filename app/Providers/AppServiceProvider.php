@@ -25,6 +25,20 @@ class AppServiceProvider extends ServiceProvider
             return $this;
         });
 
+        Builder::macro('whereIsBoss', function ($attributes) {
+            $this->where(function (Builder $query) use ($attributes) {
+                foreach (array_wrap($attributes) as $attribute) {
+                    if ($attribute === 'priority') {
+                        $query->orWhereNotIn($attribute,['','04','05','06']);
+                    } elseif ($attribute === 'employee_group') {
+                        $query->orWhere($attribute,'9');
+                    }
+                }
+            });
+        
+            return $this;
+        });
+
         Resource::withoutWrapping();
     }
 
