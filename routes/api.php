@@ -28,7 +28,7 @@ Route::middleware(['jwt.verify'])->group(function () {
 
   Route::get('/user', 'EmployeesController@user');
 
-  Route::get('/employees/{keyword}', 'EmployeesController@search');
+  Route::get('/employees/{keyword}', 'EmployeesController@search')->where('keyword', '(.*)');;
 
   Route::get('/manpower/{level?}/{abb?}', 'EmployeesController@manpower');
   
