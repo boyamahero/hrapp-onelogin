@@ -81,7 +81,7 @@ export default {
         }).catch(() => {
         this.$q.dialog({
           color: 'negative',
-          message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+          message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
           icon: 'report_problem',
           ok: 'ok'
         }).then(() => {
@@ -180,7 +180,7 @@ export default {
         }).catch(() => {
         this.$q.dialog({
           color: 'negative',
-          message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+          message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
           icon: 'report_problem',
           ok: 'ok'
         }).then(() => {
@@ -241,7 +241,7 @@ export default {
       }).catch(() => {
         this.$q.dialog({
           color: 'negative',
-          message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+          message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
           icon: 'report_problem',
           ok: 'ok'
         }).then(() => {
@@ -302,7 +302,7 @@ export default {
       }).catch(() => {
         this.$q.dialog({
           color: 'negative',
-          message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+          message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
           icon: 'report_problem',
           ok: 'ok'
         }).then(() => {
@@ -356,7 +356,7 @@ export default {
       }).catch(() => {
         this.$q.dialog({
           color: 'negative',
-          message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+          message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
           icon: 'report_problem',
           ok: 'ok'
         }).then(() => {

@@ -116,7 +116,7 @@ export default {
             this.$q.loading.hide()
             this.$q.dialog({
               color: 'negative',
-              message: 'ไม่สามารถติดต่อฐานข้อมูลได้',
+              message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
               icon: 'report_problem',
               ok: 'ok'
             })

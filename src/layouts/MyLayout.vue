@@ -100,7 +100,7 @@ export default {
     this.setUser()
       .then()
       .catch((err) => {
-        let message = 'ไม่สามารถติดต่อฐานข้อมูลได้'
+        let message = 'ไม่พบข้อมูลผู้ปฏิบัติงาน'
         if (err.message === 'Request failed with status code 401') {
           message = 'กรุณาเข้าระบบใหม่'
         }
@@ -110,7 +110,7 @@ export default {
           icon: 'report_problem',
           ok: 'ok'
         }).then(() => {
-          this.$router.push({name: 'login'})
+          this.$router.push({name: 'smartlife'})
         })
       })
   },
