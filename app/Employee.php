@@ -31,6 +31,16 @@ class Employee extends Model
         return $this->hasOne('App\Organization', 'org_egat_id', 'org_egat_id');
     }
 
+    public function positions()
+    {
+        return $this->hasMany('App\Position', 'employee_code', 'id');
+    }
+
+    public function educations()
+    {
+        return $this->hasMany('App\Education', 'employee_id', 'id');
+    }
+
     public function boss()
     {
         return $this->hasOne('App\Employee', 'id', 'boss_id');

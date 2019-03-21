@@ -84,47 +84,77 @@
             icon="close"
           />
         </q-toolbar>
-        <div class="row">
-          <div class="layout-padding col-lg-6 col-md-8 col-xs-12">
+        <div class="row justify-center gutter-sm q-pa-sm">
+          <div class="col-xs-10 col-md-4 col-lg-2 text-center">
             <q-card>
-              <q-card-media>
-                <img :src="employee.image_path" class="q-pa-lg">
+              <q-card-media class="q-py-md q-px-md">
+                <img :src="employee.image_path">
               </q-card-media>
-              <q-card-title class="q-pa-xs">
-                {{ employee.name }}
-                <span slot="subtitle" class="text-black">
-                  <div class="row justify-center">
-                    <div class="col-3 q-caption self-end">เลขประจำตัว</div>
-                    <div class="col-9">{{ employee.id }}</div>
-                    <div class="col-3 q-caption self-end">ตำแหน่ง</div>
-                    <div class="col-9">{{ employee.position_abb }}</div>
-                    <div class="col-3 q-caption self-end">สังกัด</div>
-                    <div class="col-9">{{ employee.org_path }}</div>
-                    <div class="col-3 q-caption self-end">ศาสนา</div>
-                    <div class="col-9">{{ employee.religion }}</div>
-                    <div class="col-3 q-caption self-end">วันเกิด</div>
-                    <div class="col-9">{{ employee.birth_date | dateFormatTh }}</div>
-                    <div class="col-3 q-caption self-end">อายุตัว</div>
-                    <div class="col-9">{{ employee.age }} ปี</div>
-                    <div class="col-3 q-caption self-end">เข้างาน</div>
-                    <div class="col-9">{{ employee.entry_date | dateFormatTh }}</div>
-                    <div class="col-3 q-caption self-end">อายุงาน</div>
-                    <div class="col-9">{{ employee.work_age }}</div>
-                    <div class="col-3 q-caption self-end">เกษียณ</div>
-                    <div class="col-9">{{ employee.retire_date | dateFormatTh }}</div>
-                    <div class="col-3 q-caption self-end">อายุงานคงเหลือ</div>
-                    <div class="col-9">{{ employee.remain_work_age }}</div>
-                    <div class="col-3 q-caption self-end" v-if="employee.level_date">เลื่อนระดับ</div>
-                    <div class="col-9" v-if="employee.level_date">{{ employee.level_date | dateFormatEnToTh }}</div>
-                    <div class="col-3 q-caption self-end" v-if="employee.level_date">อายุงานในระดับ</div>
-                    <div class="col-9" v-if="employee.level_date">{{ employee.level_work_age }}</div>
-                    <div class="col-3 q-caption self-end">วุฒิหลัก</div>
-                    <div class="col-9">{{ employee.main_education }}</div>
-                    <div class="col-3 q-caption self-end">ผู้บังคับบัญชา</div>
-                    <div class="col-9">{{ `${employee.boss_name} (${employee.boss_position})` }}</div>
-                  </div>
-                </span>
-            </q-card-title>
+            </q-card>
+          </div>
+          <div class="col-xs-10 col-md-4 col-lg-4 text-center">
+            <q-card>
+              <q-card-title class="bg-primary text-white">
+                {{ employee.employee_group_name }}
+              </q-card-title>
+              <q-card-main class="text-left">
+                <p class="text-faded no-margin">หมายเลขประจำตัว</p>
+                <p class="no-margin q-pl-xs">{{ employee.id }}</p>
+                <p class="text-faded no-margin">ชื่อ-สกุล</p>
+                <p class="no-margin q-pl-xs">{{ employee.name }}</p>
+                <p class="text-faded no-margin">ชื่อ-สกุล (ภาษาอังกฤษ)</p>
+                <p class="no-margin q-pl-xs">{{ employee.name_english }}</p>
+                <p class="text-faded no-margin">ศาสนา</p>
+                <p class="no-margin q-pl-xs">{{ employee.religion }}</p>
+                <p class="text-faded no-margin">กลุ่มเลือด</p>
+                <p class="no-margin q-pl-xs">{{ employee.blood_group }}</p>
+              </q-card-main>
+            </q-card>
+          </div>
+          <div class="col-xs-10 col-md-4 col-lg-4 text-center">
+            <q-card>
+              <q-card-title class="bg-primary text-white">
+                ข้อมูลวันที่ต่างๆ
+              </q-card-title>
+              <q-card-main class="text-left">
+                <p class="text-faded no-margin">วันเกิด (อายุตัว)</p>
+                <p class="no-margin q-pl-xs">{{ employee.birth_date | dateFormatTh }} ({{ employee.age }} ปี)</p>
+                <p class="text-faded no-margin">วันเข้าทำงาน (อายุงาน)</p>
+                <p class="no-margin q-pl-xs">{{ employee.entry_date | dateFormatTh }} ({{ employee.work_age }})</p>
+                <p class="text-faded no-margin">วันบรรจุ</p>
+                <p class="no-margin q-pl-xs">{{ employee.assign_date }}</p>
+                <p class="text-faded no-margin">วันเกษียณอายุ (อายุงานคงเหลือ)</p>
+                <p class="no-margin q-pl-xs">{{ employee.retire_date }}  ({{employee.remain_work_age }})</p>
+                <p class="text-faded no-margin">วันที่เลื่อนระดับ (อายุงานในระดับ)</p>
+                <p class="no-margin q-pl-xs">{{ employee.level_date }} ({{ employee.level_work_age }})</p>
+              </q-card-main>
+            </q-card>
+          </div>
+          <div class="col-xs-10 col-md-12 col-lg-10 text-center">
+            <q-card>
+              <q-card-title class="bg-primary text-white">
+                ตำแหน่ง
+              </q-card-title>
+              <q-card-main class="text-left" v-if="employee.positions">
+                <q-list v-for="(position, index) in employee.positions" :key="index" no-border separator>
+                  <q-item>
+                    {{position.position_abb}} <br>
+                    {{position.org_path}}
+                  </q-item>
+                </q-list>
+              </q-card-main>
+            </q-card>
+          </div>
+          <div class="col-xs-10 col-md-12 col-lg-10 text-center">
+            <q-card>
+              <q-card-title class="bg-primary text-white">
+                การศึกษา
+              </q-card-title>
+              <q-card-main class="text-left" v-if="employee.educations">
+                <q-list v-for="(education, index) in employee.educations" :key="index" no-border separator>
+                  <q-item>{{ education.degree_name + ' ' + education.certificate_name }} {{ education.school_name }}  GPA.= {{ education.grade }} (ปีจบการศึกษา {{ education.graduated_year | convertToThaiYear}})</q-item>
+                </q-list>
+              </q-card-main>
             </q-card>
           </div>
         </div>
@@ -193,6 +223,9 @@ export default {
     QModalLayout
   },
   filters: {
+    convertToThaiYear (year) {
+      return parseInt(year) + 543
+    },
     dateFormatEnToTh (date) {
       let dd = (date || '').split('.')
       let ThaiMonth = ''
