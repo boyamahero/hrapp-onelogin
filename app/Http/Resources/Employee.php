@@ -44,7 +44,7 @@ class Employee extends JsonResource
                 'work_age' => $this->agew,
                 'retire_date' => $this->retire_thai_date,
                 'remain_work_age' => $this->remain_work_age,
-                'level_date' => $this->retire_thai_date,
+                'level_date' => $this->old_dat,
                 'level_work_age' => $this->old_dat_age,
                 'main_education' => $this->main_educa,
                 'boss_name' => $this->boss->name,

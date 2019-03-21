@@ -103,19 +103,19 @@
                     <div class="col-3 q-caption self-end">ศาสนา</div>
                     <div class="col-9">{{ employee.religion }}</div>
                     <div class="col-3 q-caption self-end">วันเกิด</div>
-                    <div class="col-9">{{ employee.birth_date }}</div>
+                    <div class="col-9">{{ employee.birth_date | dateFormatTh }}</div>
                     <div class="col-3 q-caption self-end">อายุตัว</div>
                     <div class="col-9">{{ employee.age }} ปี</div>
-                    <div class="col-3 q-caption self-end">วันเข้างาน</div>
-                    <div class="col-9">{{ employee.entry_date }}</div>
+                    <div class="col-3 q-caption self-end">เข้างาน</div>
+                    <div class="col-9">{{ employee.entry_date | dateFormatTh }}</div>
                     <div class="col-3 q-caption self-end">อายุงาน</div>
                     <div class="col-9">{{ employee.work_age }}</div>
-                    <div class="col-3 q-caption self-end">วันเกษียณ</div>
-                    <div class="col-9">{{ employee.retire_date }}</div>
+                    <div class="col-3 q-caption self-end">เกษียณ</div>
+                    <div class="col-9">{{ employee.retire_date | dateFormatTh }}</div>
                     <div class="col-3 q-caption self-end">อายุงานคงเหลือ</div>
                     <div class="col-9">{{ employee.remain_work_age }}</div>
-                    <div class="col-3 q-caption self-end">วันที่เลื่อนระดับ</div>
-                    <div class="col-9">{{ employee.level_date }}</div>
+                    <div class="col-3 q-caption self-end">เลื่อนระดับ</div>
+                    <div class="col-9">{{ employee.level_date | dateFormatEnToTh }}</div>
                     <div class="col-3 q-caption self-end">อายุงานในระดับ</div>
                     <div class="col-9">{{ employee.level_work_age }}</div>
                     <div class="col-3 q-caption self-end">วุฒิหลัก</div>
@@ -191,6 +191,94 @@ export default {
   components: {
     BackToTop,
     QModalLayout
+  },
+  filters: {
+    dateFormatEnToTh (date) {
+      let dd = (date || '').split('.')
+      let ThaiMonth = ''
+      switch (dd[1]) {
+        case '01':
+          ThaiMonth = 'ม.ค.'
+          break
+        case '02':
+          ThaiMonth = 'ก.พ.'
+          break
+        case '03':
+          ThaiMonth = 'มี.ค.'
+          break
+        case '04':
+          ThaiMonth = 'เม.ย.'
+          break
+        case '05':
+          ThaiMonth = 'พ.ค.'
+          break
+        case '06':
+          ThaiMonth = 'มิ.ย.'
+          break
+        case '07':
+          ThaiMonth = 'ก.ค.'
+          break
+        case '08':
+          ThaiMonth = 'ส.ค.'
+          break
+        case '09':
+          ThaiMonth = 'ก.ย.'
+          break
+        case '10':
+          ThaiMonth = 'ต.ค.'
+          break
+        case '11':
+          ThaiMonth = 'พ.ย.'
+          break
+        case '12':
+          ThaiMonth = 'ธ.ค.'
+          break
+      }
+      return parseInt(dd[0]) + ' ' + ThaiMonth + ' ' + (parseInt(dd[2]) + 543)
+    },
+    dateFormatTh (date) {
+      let dd = (date || '').split('.')
+      let ThaiMonth = ''
+      switch (dd[1]) {
+        case '01':
+          ThaiMonth = 'ม.ค.'
+          break
+        case '02':
+          ThaiMonth = 'ก.พ.'
+          break
+        case '03':
+          ThaiMonth = 'มี.ค.'
+          break
+        case '04':
+          ThaiMonth = 'เม.ย.'
+          break
+        case '05':
+          ThaiMonth = 'พ.ค.'
+          break
+        case '06':
+          ThaiMonth = 'มิ.ย.'
+          break
+        case '07':
+          ThaiMonth = 'ก.ค.'
+          break
+        case '08':
+          ThaiMonth = 'ส.ค.'
+          break
+        case '09':
+          ThaiMonth = 'ก.ย.'
+          break
+        case '10':
+          ThaiMonth = 'ต.ค.'
+          break
+        case '11':
+          ThaiMonth = 'พ.ย.'
+          break
+        case '12':
+          ThaiMonth = 'ธ.ค.'
+          break
+      }
+      return parseInt(dd[0]) + ' ' + ThaiMonth + ' ' + parseInt(dd[2])
+    }
   },
   // name: 'PageName',
   data () {
