@@ -46,8 +46,14 @@
           <q-card v-for="(employee, index) in employees" :key="index" :color="employee.is_boss?'blue-5':''">
             <q-item>
               <q-item-side>
-                <img v-lazy="employee.image_path" class="avatarList">
-                <i class="fas fa-search-plus" v-if="employee.can_open" @click="itemClicked(employee)"></i>
+                <div class="row no-margin text-center">
+                  <div class="col-12">
+                    <img v-lazy="employee.image_path" style="width: 75px;"><br>
+                  </div>
+                  <div class="col-12" v-if="employee.can_open" >
+                    <q-icon name="fas fa-search-plus" @click.native="itemClicked(employee)" :color="employee.is_boss?'white':'primary'"/>
+                  </div>
+                </div>
               </q-item-side>
               <q-item-main>
                 <q-item-tile class="q-body-1 text-weight-bold">{{ employee.name }} ({{ employee.id }})</q-item-tile>
