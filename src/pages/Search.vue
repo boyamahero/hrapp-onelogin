@@ -43,10 +43,11 @@
     <div class="row justify-center">
       <div class="col-12 justify-between">
         <q-infinite-scroll :handler="loadMore" ref="infiniteScroll">
-          <q-card v-for="(employee, index) in employees" :key="index" :color="employee.is_boss?'blue-5':''" @click.native="itemClicked(employee)">
+          <q-card v-for="(employee, index) in employees" :key="index" :color="employee.is_boss?'blue-5':''">
             <q-item>
               <q-item-side>
                 <img v-lazy="employee.image_path" class="avatarList">
+                <i class="fas fa-search-plus" v-if="employee.can_open" @click="itemClicked(employee)"></i>
               </q-item-side>
               <q-item-main>
                 <q-item-tile class="q-body-1 text-weight-bold">{{ employee.name }} ({{ employee.id }})</q-item-tile>
@@ -56,8 +57,6 @@
                 <q-item-tile class="q-body-1" v-if="employee.phone &&  employee.phone!='-'"><q-icon name="call" /> {{ employee.phone }}</q-item-tile>
                 <q-item-tile class="q-body-1" v-if="employee.mobile_number"><q-icon name="smartphone" /> {{ employee.mobile_number }}</q-item-tile>
               </q-item-main>
-              <q-item-side class="bg-yellow text-center" v-if="employee.level >=13 || employee.position_abb === 'ผวก.'">
-              </q-item-side>
             </q-item>
           </q-card>
           <back-to-top bottom="100px" right="10px">

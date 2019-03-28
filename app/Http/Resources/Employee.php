@@ -29,12 +29,12 @@ class Employee extends JsonResource
             'level' => $this->employee_subgroup,
             'is_boss' => $this->is_boss,
             'mobile_number' => $this->when(
-                    Auth::user()->hasRole('admin') ||
-                    ( 
-                        Auth::user()->employee->is_boss && 
-                        $this->isOwnerDataLevel(Auth::user()) 
-                    ) || 
-                    Auth::user()->username == $this->id
+                Auth::user()->hasRole('admin') ||
+                (
+                    Auth::user()->employee->is_boss && 
+                    Auth::user()->username != $this->id && 
+                    $this->isOwnerDataLevel(Auth::user()) 
+                )
                 , $this->mobile_number),
             $this->mergeWhen(Auth::user()->hasRole('admin'), [
                 'name_english' => $this->name_english,
