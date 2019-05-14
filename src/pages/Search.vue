@@ -56,7 +56,7 @@
                 </div>
               </q-item-side>
               <q-item-main>
-                <q-item-tile class="q-body-1 text-weight-bold">{{ employee.name }} ({{ employee.id }})</q-item-tile>
+                <q-item-tile class="q-body-1 text-weight-bold">{{ employee.name }} ({{ employee.code }})</q-item-tile>
                 <q-item-tile class="q-body-1"><q-icon name="work" /> {{ employee.position_abb }}</q-item-tile>
                 <q-item-tile class="q-body-1"><q-icon name="business" /> {{ employee.org_path }}</q-item-tile>
                 <q-item-tile class="q-body-1" v-if="employee.building.trim() !== '-' || employee.room !== '-'"><q-icon name="room" /> {{ employee.building }} <span v-if="employee.room &&  employee.room!='-'">ห้อง {{employee.room.replace('ห้อง','')}} </span></q-item-tile>
@@ -104,7 +104,7 @@
               </q-card-title>
               <q-card-main class="text-left">
                 <p class="text-faded no-margin">หมายเลขประจำตัว</p>
-                <p class="no-margin q-pl-xs">{{ employee.id }}</p>
+                <p class="no-margin q-pl-xs">{{ employee.code }}</p>
                 <p class="text-faded no-margin">ชื่อ-สกุล</p>
                 <p class="no-margin q-pl-xs">{{ employee.name }}</p>
                 <p class="text-faded no-margin">ชื่อ-สกุล (ภาษาอังกฤษ)</p>
