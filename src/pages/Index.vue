@@ -9,6 +9,22 @@
           <q-carousel-slide>
             <q-card class="q-ma-xs justify-center personcard">
               <q-card-main>
+                <div class="row justify-between">
+                  <p class="header">ข้อมูลสถานที่ทำงาน</p>
+                  <q-btn flat style="color: #f96160" label="แก้ไขข้อมูล" icon="edit" @click="$router.push('/editwl')"/>
+                </div>
+                <q-card-separator class="q-mt-xs"/>
+                <p>สถานที่ทำงาน : {{user.person.location.PWAH_Name}}</p>
+                <p>ห้อง : {{user.person.location.PWAH_Room}}</p>
+                <p>อาคารและชั้น : {{user.person.location.PWAH_Building}}</p>
+                <p>เบอร์ติดต่อภายใน : {{user.person.location.PWAH_PhoneNumber}}</p>
+                <p>เบอร์ติดต่อมือถือ : {{user.person.PS_MobilePhoneNumber}}</p>
+              </q-card-main>
+            </q-card>
+          </q-carousel-slide>
+          <q-carousel-slide>
+            <q-card class="q-ma-xs justify-center personcard">
+              <q-card-main>
                 <p class="header">ประวัติย่อ</p>
                 <q-card-separator />
                 <p>ประเภทผู้ปฏิบัติงาน : {{user.employee_group_name}}</p>
@@ -53,22 +69,6 @@
                 <p>วันบรรจุ : {{convertTHDate(user.assign_thai_date)}}</p>
                 <p>{{ (user.employee_group !== "1" && user.employee_group !== "2") ?'วันที่สิ้นสุดสัญญา':'วันเกษียณ' }} : {{convertTHDate(user.retire_thai_date)}}</p>
                 <p>อายุงานคงเหลือ: {{user.remain_work_age}}</p>
-              </q-card-main>
-            </q-card>
-          </q-carousel-slide>
-          <q-carousel-slide>
-            <q-card class="q-ma-xs justify-center personcard">
-              <q-card-main>
-                <div class="row justify-between">
-                  <p class="header">ข้อมูลสถานที่ทำงาน</p>
-                  <q-btn flat style="color: #f96160" label="แก้ไขข้อมูล" icon="edit" @click="$router.push('/editwl')"/>
-                </div>
-                <q-card-separator class="q-mt-xs"/>
-                <p>สถานที่ทำงาน : {{user.person.location.PWAH_Name}}</p>
-                <p>ห้อง : {{user.person.location.PWAH_Room}}</p>
-                <p>อาคารและชั้น : {{user.person.location.PWAH_Building}}</p>
-                <p>เบอร์ติดต่อภายใน : {{user.person.location.PWAH_PhoneNumber}}</p>
-                <p>เบอร์ติดต่อมือถือ : {{user.person.PS_MobilePhoneNumber}}</p>
               </q-card-main>
             </q-card>
           </q-carousel-slide>

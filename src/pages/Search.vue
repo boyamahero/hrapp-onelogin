@@ -60,7 +60,7 @@
                 <q-item-tile class="q-body-1"><q-icon name="work" /> {{ employee.position_abb }}</q-item-tile>
                 <q-item-tile class="q-body-1"><q-icon name="business" /> {{ employee.org_path }}</q-item-tile>
                 <q-item-tile class="q-body-1"><q-icon name="room" /> {{ employee.person_location.PWAH_Name }}</q-item-tile>
-                <q-item-tile class="q-body-1" v-if="employee.person_location.PWAH_Building.trim() !== '-' || employee.person_location.PWAH_Room !== '-'"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ employee.person_location.PWAH_Building }} <span v-if="employee.person_location.PWAH_Room &&  employee.person_location.PWAH_Room!='-'">ห้อง {{employee.person_location.PWAH_Room.replace('ห้อง','')}} </span></q-item-tile>
+                <q-item-tile class="q-body-1" v-if="employee.person_location.PWAH_Building !==  null || employee.person_location.PWAH_Room !== null"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ employee.person_location.PWAH_Building }} <span v-if="employee.person_location.PWAH_Room &&  employee.person_location.PWAH_Room!= null">ห้อง {{employee.person_location.PWAH_Room.replace('ห้อง','')}} </span></q-item-tile>
                 <q-item-tile class="q-body-1" v-if="employee.person_location.PWAH_PhoneNumber &&  employee.person_location.PWAH_PhoneNumber!='-'"><q-icon name="call" /> {{ employee.person_location.PWAH_PhoneNumber }}</q-item-tile>
                 <q-item-tile class="q-body-1" v-if="employee.mobile_number"><q-icon name="smartphone" /> {{ employee.mobile_number }}</q-item-tile>
               </q-item-main>
