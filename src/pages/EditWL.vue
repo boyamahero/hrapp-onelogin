@@ -79,7 +79,7 @@
       </q-card>
       <div class="row justify-center">
       <q-btn class="q-ma-lg center" label="บันทึกการปรับปรุง" color="secondary" @click="checkForm"/>
-      <q-btn class="q-ma-lg center" label="คืนค่าเริ่มต้น" color="warning" @click="getWldata"/>
+      <q-btn class="q-ma-lg center" label="คืนค่าเริ่มต้น" color="warning" @click="getTempWL"/>
       </div>
       </div>
     </div>
@@ -95,6 +95,7 @@ export default {
       SL_WL_Type: [],
       SL_WL_Name: [],
       WL_Data: [],
+      listtempdata: [],
       WL_Province: '',
       WL_District: '',
       WL_SubDistrict: '',
@@ -110,8 +111,8 @@ export default {
     ...mapState('user', ['user'])
   },
   created () {
+    this.getTempWL()
     this.getWLType()
-    this.getWldata()
   },
   methods: {
     checkForm: function (e) {
@@ -166,6 +167,28 @@ export default {
       }
       e.preventDefault()
     },
+    getTempWL () {
+      this.$q.loading.show({
+        spinner: QSpinnerGears,
+        spinnerColor: 'yellow',
+        spinnerSize: 140
+      })
+      this.$axios.get('gettempwl')
+        .then((res) => {
+          this.WL_Type = res.data.tempdata.type_code
+          this.getWLList()
+          this.WL_Name = res.data.tempdata.ZZCODE
+          this.getWLdetail()
+          this.PS_MobilePhoneNumber = res.data.tempdata.ZZMOBL
+          this.PWAH_Building = res.data.tempdata.ZZFLBLD
+          this.PWAH_PhoneNumber = res.data.tempdata.ZZOFTEL
+          this.PWAH_Room = res.data.tempdata.ZZROMNO
+          this.$q.loading.hide()
+         this.listtempdata = res.data
+      }).catch(() => {
+    this.getWldata()
+      })
+    },
     saveData () {
       const fd = new FormData()
       fd.append('WL_Type', this.WL_Type)
@@ -182,7 +205,7 @@ export default {
              position: 'center',
              icon: 'done'
             })
-          this.getWldata()
+          this.getTempWL()
       }).catch(() => {
         this.$q.dialog({
           color: 'negative',

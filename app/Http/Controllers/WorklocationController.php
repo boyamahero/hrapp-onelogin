@@ -14,7 +14,18 @@ class WorklocationController extends Controller
     public function getwltype() {
    return WLtype::selectRaw('text as label,code as value')->get();
  }
- 
+
+ public function gettempwl() {
+   $tempdata = WLSavedata::where('PERNR',auth()->user()->username)->first();
+   if($tempdata){
+   $wlname = Worklocation::where('WL_Code',$tempdata->ZZCODE)->pluck('WL_Name')->first();
+   return [
+    'tempdata' => $tempdata,
+    'wlname' => $wlname,
+    ];
+  }
+}
+
  public function getwllist($type) {
    $type = $type.'%';
    return Worklocation::selectRaw('WL_Name as label,WL_Code as value')
@@ -41,7 +52,7 @@ class WorklocationController extends Controller
    ]);
  
  if($WLSAVE){
-   return 'บันทึกการเปลี่ยนแปลงแล้ว ข้อมูลจะมีผลในวันถัดไป';
+   return 'บันทึกการเปลี่ยนแปลงแล้ว';
  }else{
    exit();
  }

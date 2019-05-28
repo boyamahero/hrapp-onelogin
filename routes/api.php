@@ -43,6 +43,8 @@ Route::middleware(['jwt.verify'])->group(function () {
 
   Route::get('/getwltype', 'WorklocationController@getwltype');
 
+  Route::get('/gettempwl', 'WorklocationController@gettempwl');
+
   Route::get('/getwllist/{type}', 'WorklocationController@getwllist');
 
   Route::get('/getwladdress/{wlcode}', 'WorklocationController@getwladdress');
