@@ -17,7 +17,7 @@ class EmployeesController extends Controller
     
     public function user(Request $request)
     {
-        return $request->user()->employee()->first();
+        return $request->user()->employee()->with('person.location')->first();
     }
 
     public function images($id,$hash)

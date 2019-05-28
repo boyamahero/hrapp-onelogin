@@ -61,13 +61,14 @@
               <q-card-main>
                 <div class="row justify-between">
                   <p class="header">ข้อมูลสถานที่ทำงาน</p>
-                  <q-btn color="primary" icon="edit" :label="$q.platform.is.desktop?'แก้ไข':''" v-if="false"/>
+                  <q-btn flat style="color: #f96160" label="แก้ไขข้อมูล" icon="edit" @click="$router.push('/editwl')"/>
                 </div>
                 <q-card-separator class="q-mt-xs"/>
-                <p>อาคาร : {{user.building}}</p>
-                <p>ห้อง : {{user.room}}</p>
-                <p>เบอร์ติดต่อภายใน : {{user.phone}}</p>
-                <p>เบอร์ติดต่อมือถือ : {{user.mobile_number}}</p>
+                <p>สถานที่ทำงาน : {{user.person.location.PWAH_Name}}</p>
+                <p>ห้อง : {{user.person.location.PWAH_Room}}</p>
+                <p>อาคารและชั้น : {{user.person.location.PWAH_Building}}</p>
+                <p>เบอร์ติดต่อภายใน : {{user.person.location.PWAH_PhoneNumber}}</p>
+                <p>เบอร์ติดต่อมือถือ : {{user.person.PS_MobilePhoneNumber}}</p>
               </q-card-main>
             </q-card>
           </q-carousel-slide>

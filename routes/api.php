@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\DB;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::middleware(['jwt.verify'])->group(function () {
 
   Route::get('/user', 'EmployeesController@user');
@@ -39,6 +38,18 @@ Route::middleware(['jwt.verify'])->group(function () {
   Route::get('/salary', 'EmployeesController@salary');
   
   Route::get('/medical-expenses/{year?}', 'MedicalExpensesController@show');
+
+  //worklocation 
+
+  Route::get('/getwltype', 'WorklocationController@getwltype');
+
+  Route::get('/getwllist/{type}', 'WorklocationController@getwllist');
+
+  Route::get('/getwladdress/{wlcode}', 'WorklocationController@getwladdress');
+
+  Route::post('/saveWlupdate', 'WorklocationController@saveWlupdate');
+
+//worklocation
 
 });
 

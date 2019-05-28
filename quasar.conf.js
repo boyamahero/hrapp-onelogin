@@ -115,7 +115,8 @@ module.exports = function (ctx) {
         'QInfiniteScroll',
         'QSpinnerDots',
         'QSelect',
-        'QToggle'
+        'QToggle',
+        'QInput'
       ],
       directives: [
         'Ripple',

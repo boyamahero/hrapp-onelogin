@@ -94,6 +94,14 @@ const routes = [
         meta: {
           requiresAuth: true
         }
+      },
+      {
+        path: 'editwl',
+        name: 'editwl',
+        component: () => import('pages/EditWL.vue'),
+        meta: {
+          requiresAuth: true
+        }
       }
     ]
   },

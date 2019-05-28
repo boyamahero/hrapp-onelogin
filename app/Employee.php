@@ -26,6 +26,11 @@ class Employee extends Model
         return ($this->priority !== '' && $this->priority !== '04' && $this->priority !== '05' && $this->priority !== '06') || $this->employee_group == 9;
     }
 
+    public function getEmployeePsCodeAttribute()
+    {
+        return '00'.$this->employee_code;
+    }
+
     public function org()
     {
         return $this->hasOne('App\Organization', 'org_egat_id', 'org_egat_id');
@@ -45,4 +50,10 @@ class Employee extends Model
     {
         return $this->hasOne('App\Employee', 'id', 'boss_id');
     }
+
+    public function person()
+    {
+        return $this->hasOne('App\WLPerdata', 'PS_Code', 'employee_ps_code');
+    }
+
 }

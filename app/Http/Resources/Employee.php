@@ -29,6 +29,7 @@ class Employee extends JsonResource
             'image_path' => $this->image_path,
             'level' => $this->employee_subgroup,
             'is_boss' => $this->is_boss,
+            'person_location' => $this->person->location,
             'mobile_number' => $this->when(
                 Auth::user()->hasRole('admin') ||
                 (

@@ -100,6 +100,17 @@ return [
             'prefix' => '',
         ],
 
+        'WorkLocationDB' => [
+            'driver' => 'sqlsrv',
+            'host' => env('DBWL_HOST', 'localhost'),
+            'port' => env('DBWL_PORT', '1433'),
+            'database' => env('DBWL_DATABASE', 'forge'),
+            'username' => env('DBWL_USERNAME', 'forge'),
+            'password' => env('DBWL_PASSWORD', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+        ],
+
     ],
 
     /*
