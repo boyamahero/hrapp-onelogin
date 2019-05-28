@@ -37,7 +37,7 @@ class Employee extends JsonResource
                     Auth::user()->username != $this->id && 
                     $this->isOwnerDataLevel(Auth::user()) 
                 )
-                , $this->mobile_number),
+                , $this->person->PS_MobilePhoneNumber),
             $this->mergeWhen(Auth::user()->hasRole('admin'), [
                 'name_english' => $this->name_english,
                 'blood_group' => $this->blood_group,
