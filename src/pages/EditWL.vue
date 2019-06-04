@@ -74,7 +74,7 @@
         </q-card-title>
         <q-card-separator />
       <q-card-main>
-        <p><q-input type="text"  v-model="PS_MobilePhoneNumber" clearable/></p>
+        <p><q-input type="text"  v-model="PWAH_MobilePhoneNumber" clearable/></p>
       </q-card-main>
       </q-card>
       <div class="row justify-center">
@@ -101,7 +101,7 @@ export default {
       WL_SubDistrict: '',
       WL_Name: null,
       WL_Type: null,
-      PS_MobilePhoneNumber: null,
+      PWAH_MobilePhoneNumber: null,
       PWAH_Building: null,
       PWAH_PhoneNumber: null,
       PWAH_Room: null
@@ -117,7 +117,7 @@ export default {
   methods: {
     checkForm: function (e) {
       this.errors = []
-      if (!this.PS_MobilePhoneNumber) {
+      if (!this.PWAH_MobilePhoneNumber) {
         this.errors.push('ไม่ได้กรอกข้อมูลมือถือ')
         this.$q.dialog({
               color: 'negative',
@@ -179,7 +179,7 @@ export default {
           this.getWLList()
           this.WL_Name = res.data.tempdata.ZZCODE
           this.getWLdetail()
-          this.PS_MobilePhoneNumber = res.data.tempdata.ZZMOBL
+          this.PWAH_MobilePhoneNumber = res.data.tempdata.ZZMOBL
           this.PWAH_Building = res.data.tempdata.ZZFLBLD
           this.PWAH_PhoneNumber = res.data.tempdata.ZZOFTEL
           this.PWAH_Room = res.data.tempdata.ZZROMNO
@@ -193,7 +193,7 @@ export default {
       const fd = new FormData()
       fd.append('WL_Type', this.WL_Type)
       fd.append('WL_Name', this.WL_Name)
-      fd.append('PS_MobilePhoneNumber', this.PS_MobilePhoneNumber)
+      fd.append('PWAH_MobilePhoneNumber', this.PWAH_MobilePhoneNumber)
       fd.append('PWAH_Building', this.PWAH_Building)
       fd.append('PWAH_PhoneNumber', this.PWAH_PhoneNumber)
       fd.append('PWAH_Room', this.PWAH_Room)
@@ -277,7 +277,7 @@ export default {
           this.getWLList()
           this.WL_Name = this.user.person.location.PWAH_WorkLocationCode
           this.getWLdetail()
-          this.PS_MobilePhoneNumber = this.user.person.PS_MobilePhoneNumber
+          this.PWAH_MobilePhoneNumber = this.user.person.location.PWAH_MobilePhoneNumber
           this.PWAH_Building = this.user.person.location.PWAH_Building
           this.PWAH_PhoneNumber = this.user.person.location.PWAH_PhoneNumber
           this.PWAH_Room = this.user.person.location.PWAH_Room

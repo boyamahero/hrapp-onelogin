@@ -9,7 +9,7 @@ class WLPersonWorkAddressHistory extends Model
     protected $connection = 'WorkLocationDB';
     protected $table = 'PersonWorkAddressHistory';
 
-    protected $visible = ['PWAH_WorkLocationCode', 'PWAH_Name','PWAH_Address','PWAH_Room','PWAH_Building','PWAH_PhoneNumber'];
+    protected $visible = ['PWAH_WorkLocationCode', 'PWAH_Name','PWAH_Address','PWAH_Room','PWAH_Building','PWAH_PhoneNumber','PWAH_MobilePhoneNumber'];
 
     //
 }

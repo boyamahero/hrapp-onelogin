@@ -12,7 +12,7 @@ class WLPerdata extends Model
 
     protected $appends = ['employee_code'];
 
-    protected $visible = ['PS_MobilePhoneNumber','location'];
+    protected $visible = ['location'];
 
     public function location()
     {
