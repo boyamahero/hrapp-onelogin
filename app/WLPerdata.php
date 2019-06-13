@@ -16,11 +16,27 @@ class WLPerdata extends Model
 
     public function location()
     {
-        return $this->hasOne('App\WLPersonWorkAddressHistory', 'PWAH_PersonID', 'PersonID');
+        return $this->hasMany('App\WLPersonWorkAddressHistory', 'PWAH_PersonID', 'PersonID')
+        ->select(array('PWAH_Address','PWAH_Name','PWAH_PhoneNumber','PWAH_Room','PWAH_WorkLocationCode'))
+        ->orderBy('PWAH_DataValidEndDate','desc');
+    }
+
+    public function mobilephonenumber()
+    {
+        return $this->hasMany('App\WLPersonWorkAddressHistory', 'PWAH_PersonID', 'PersonID')
+        ->select('PWAH_MobilePhoneNumber')->orderBy('PWAH_DataValidEndDate','desc');
     }
 
     public function getEmployeeCodeAttribute()
     {
         return substr($this->PS_Code,2,6);
+    }
+
+    public function getFirstLocationAttribute() {
+        return $this->location()->first();
+    }
+
+    public function getMobilePhoneNumberAttribute() {
+        return $this->mobilephonenumber()->pluck('PWAH_MobilePhoneNumber')->first();
     }
 }

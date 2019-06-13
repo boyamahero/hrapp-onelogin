@@ -29,7 +29,7 @@ class Employee extends JsonResource
             'image_path' => $this->image_path,
             'level' => $this->employee_subgroup,
             'is_boss' => $this->is_boss,
-            'person_location' => $this->person->location,
+            'person_location' => $this->person->FirstLocation,
             'mobile_number' => $this->when(
                 Auth::user()->hasRole('admin') ||
                 (
@@ -37,7 +37,7 @@ class Employee extends JsonResource
                     Auth::user()->username != $this->id && 
                     $this->isOwnerDataLevel(Auth::user()) 
                 )
-                , $this->person->PS_MobilePhoneNumber),
+                , $this->person->MobilePhoneNumber),
             $this->mergeWhen(Auth::user()->hasRole('admin'), [
                 'name_english' => $this->name_english,
                 'blood_group' => $this->blood_group,
