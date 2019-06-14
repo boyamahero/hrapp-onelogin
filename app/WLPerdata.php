@@ -17,7 +17,7 @@ class WLPerdata extends Model
     public function location()
     {
         return $this->hasMany('App\WLPersonWorkAddressHistory', 'PWAH_PersonID', 'PersonID')
-        ->select(array('PWAH_Address','PWAH_Name','PWAH_PhoneNumber','PWAH_Room','PWAH_WorkLocationCode'))
+        ->select(array('PWAH_Address','PWAH_Name','PWAH_Building','PWAH_PhoneNumber','PWAH_Room','PWAH_WorkLocationCode'))
         ->orderBy('PWAH_DataValidEndDate','desc');
     }
 
