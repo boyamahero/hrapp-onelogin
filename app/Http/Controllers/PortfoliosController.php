@@ -101,9 +101,10 @@ class PortfoliosController extends Controller
             ->orderBy('graduated_year','desc')
              ->get();
 
-        $historyWorks = HistoryWork::select('works_date', 'works_dsc')
+        $historyWorks = HistoryWork::select(DB::raw('emp_code, MIN(works_date) AS works_date, CAST(works_dsc AS NVARCHAR(255)) AS works_dsc'))
             ->where('emp_code',$id)->take(5)
-            ->orderBy('works_no','desc')
+            ->groupBy(DB::raw('emp_code, CAST(works_dsc AS NVARCHAR(255))'))
+            ->orderBy('works_date','desc')
             ->get();            
 
         $vision = Vision::select('vision', 'cause', 'objective', 'empn_approver')
