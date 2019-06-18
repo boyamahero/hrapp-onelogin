@@ -77,6 +77,11 @@ export default {
         })
     },
     setAsyncData (years) {
+      let beforeRetire = {
+        name: 'ก่อนเกษียณ',
+        tooltip: {pointFormat: 'ก่อน: <b>{point.y:.f}</b> '},
+        data: []
+      }
       let retireData = {
         name: 'เกษียณ',
         tooltip: {pointFormat: 'เกษียณ: <b>{point.y:.f}</b> '},
@@ -87,6 +92,7 @@ export default {
         tooltip: {pointFormat: 'คงเหลือ: <b>{point.y:.f}</b> '},
         data: []
       }
+      let before = []
       let retire = []
       let remain = []
       let remainAllYear = this.currentCount
@@ -97,14 +103,17 @@ export default {
           }
           var obj = years[year]
           this.options.xAxis.categories.push(year)
+          before.push(remainAllYear)
           retire.push(obj['count'])
           remain.push(remainAllYear = remainAllYear - obj['count'])
       }
+      beforeRetire.data = before
       retireData.data = retire
       remainData.data = remain
       let lineCharts = this.$refs.lineCharts
       lineCharts.delegateMethod('showLoading', 'Loading...')
       setTimeout(() => {
+        lineCharts.addSeries(beforeRetire)
         lineCharts.addSeries(retireData)
         lineCharts.addSeries(remainData)
         lineCharts.hideLoading()
