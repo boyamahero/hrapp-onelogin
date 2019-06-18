@@ -10,7 +10,7 @@ class Employee extends Model
 
     protected $table = 'employees';
 
-    protected $appends = ['image_path','is_boss'];
+    protected $appends = ['image_path','is_boss','location'];
 
     protected $hidden = ['birth_date','birth_thai_date','birth_year','birth_month','birth_day','age','idcard_number','weight','weight_ratio','height','height_ratio','blood_group'];
 
@@ -54,6 +54,10 @@ class Employee extends Model
     public function person()
     {
         return $this->hasOne('App\WLPerdata', 'PS_Code', 'employee_ps_code');
+    }
+
+    public function getLocationAttribute() {
+        return $this->person->FirstLocation;
     }
 
 }

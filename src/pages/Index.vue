@@ -15,11 +15,13 @@
                   <q-btn flat style="color: #f96160" label="แก้ไขข้อมูล" icon="edit" @click="$router.push('/editwl')"/>
                 </div>
                 <q-card-separator class="q-mt-xs"/>
+                <div v-if="listtempdata.tempdata">
                 <p>สถานที่ทำงาน : {{listtempdata.wlname}}</p>
                 <p>ห้อง : {{listtempdata.tempdata.ZZROMNO}}</p>
                 <p>อาคารและชั้น : {{listtempdata.tempdata.ZZFLBLD}}</p>
                 <p>เบอร์ติดต่อภายใน : {{listtempdata.tempdata.ZZOFTEL}}</p>
                 <p>เบอร์ติดต่อมือถือ : {{listtempdata.tempdata.ZZMOBL}}</p>
+                </div>
               </q-card-main>
             </q-card>
           </q-carousel-slide>
@@ -32,11 +34,11 @@
                   <q-btn flat style="color: #f96160" label="แก้ไขข้อมูล" icon="edit" @click="$router.push('/editwl')"/>
                 </div>
                 <q-card-separator class="q-mt-xs"/>
-                <p>สถานที่ทำงาน : {{user.person.location.PWAH_Name}}</p>
-                <p>ห้อง : {{user.person.location.PWAH_Room}}</p>
-                <p>อาคารและชั้น : {{user.person.location.PWAH_Building}}</p>
-                <p>เบอร์ติดต่อภายใน : {{user.person.location.PWAH_PhoneNumber}}</p>
-                <p>เบอร์ติดต่อมือถือ : {{user.person.location.PWAH_MobilePhoneNumber}}</p>
+                <p>สถานที่ทำงาน : {{user.location.PWAH_Name}}</p>
+                <p>ห้อง : {{user.location.PWAH_Room}}</p>
+                <p>อาคารและชั้น : {{user.location.PWAH_Building}}</p>
+                <p>เบอร์ติดต่อภายใน : {{user.location.PWAH_PhoneNumber}}</p>
+                <p>เบอร์ติดต่อมือถือ : {{user.location.PWAH_MobilePhoneNumber}}</p>
               </q-card-main>
             </q-card>
           </q-carousel-slide>
