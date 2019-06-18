@@ -38,7 +38,7 @@
                 <p>ห้อง : {{user.location.PWAH_Room}}</p>
                 <p>อาคารและชั้น : {{user.location.PWAH_Building}}</p>
                 <p>เบอร์ติดต่อภายใน : {{user.location.PWAH_PhoneNumber}}</p>
-                <p>เบอร์ติดต่อมือถือ : {{user.location.PWAH_MobilePhoneNumber}}</p>
+                <p>เบอร์ติดต่อมือถือ : {{user.mobile_number}}</p>
               </q-card-main>
             </q-card>
           </q-carousel-slide>

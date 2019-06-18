@@ -273,14 +273,14 @@ export default {
         spinnerSize: 140
       })
       try {
-          this.WL_Type = this.user.person.location.PWAH_WorkLocationCode.charAt(0)
+          this.WL_Type = this.user.location.PWAH_WorkLocationCode.charAt(0)
           this.getWLList()
-          this.WL_Name = this.user.person.location.PWAH_WorkLocationCode
+          this.WL_Name = this.user.location.PWAH_WorkLocationCode
           this.getWLdetail()
-          this.PWAH_MobilePhoneNumber = this.user.person.location.PWAH_MobilePhoneNumber
-          this.PWAH_Building = this.user.person.location.PWAH_Building
-          this.PWAH_PhoneNumber = this.user.person.location.PWAH_PhoneNumber
-          this.PWAH_Room = this.user.person.location.PWAH_Room
+          this.PWAH_MobilePhoneNumber = this.user.mobile_number
+          this.PWAH_Building = this.user.location.PWAH_Building
+          this.PWAH_PhoneNumber = this.user.location.PWAH_PhoneNumber
+          this.PWAH_Room = this.user.location.PWAH_Room
           this.$q.loading.hide()
       } catch (error) {
         this.$q.loading.hide()
