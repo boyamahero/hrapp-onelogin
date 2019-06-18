@@ -99,41 +99,51 @@ class EmployeesController extends Controller
     {
         switch ($level) {
             case "1":
-              $orgs = DB::connection('HRDatabase')->table('Employees')
+              $orgs = DB::connection('HRDatabase')->table('load_hhr00005')
                         ->select(DB::raw('count(*) as employee_count, assistant_abb'))
-                        ->where('status','!=','0')->whereIn('employee_group',[1,2,5,9])
+                        ->where('data_status','!=','0')->whereIn('employee_group',[1,2,5,9])
                         ->where('deputy_abb',$abb)
+                        ->where('organization_type','O')
+                        ->where('percentage',100)
                         ->groupBy('assistant_abb')
                         ->get();
               break;
             case "2":
-              $orgs = DB::connection('HRDatabase')->table('Employees')
+              $orgs = DB::connection('HRDatabase')->table('load_hhr00005')
                         ->select(DB::raw('count(*) as employee_count, division_abb'))
-                        ->where('status','!=','0')->whereIn('employee_group',[1,2,5,9])
+                        ->where('data_status','!=','0')->whereIn('employee_group',[1,2,5,9])
                         ->where('assistant_abb',$abb)
+                        ->where('organization_type','O')
+                        ->where('percentage',100)
                         ->groupBy('division_abb')
                         ->get();
               break;
             case "3":
-              $orgs = DB::connection('HRDatabase')->table('Employees')
+              $orgs = DB::connection('HRDatabase')->table('load_hhr00005')
                         ->select(DB::raw('count(*) as employee_count, department_abb'))
-                        ->where('status','!=','0')->whereIn('employee_group',[1,2,5,9])
+                        ->where('data_status','!=','0')->whereIn('employee_group',[1,2,5,9])
                         ->where('division_abb',$abb)
+                        ->where('organization_type','O')
+                        ->where('percentage',100)
                         ->groupBy('department_abb')
                         ->get();
                 break;
             case "4":
-              $orgs = DB::connection('HRDatabase')->table('Employees')
+              $orgs = DB::connection('HRDatabase')->table('load_hhr00005')
                       ->select(DB::raw('count(*) as employee_count, section_abb'))
-                      ->where('status','!=','0')->whereIn('employee_group',[1,2,5,9])
+                      ->where('data_status','!=','0')->whereIn('employee_group',[1,2,5,9])
                       ->where('department_abb',$abb)
+                      ->where('organization_type','O')
+                      ->where('percentage',100)
                       ->groupBy('section_abb')
                       ->get();
                 break;
             default:
-                $orgs = DB::connection('HRDatabase')->table('Employees')
+                $orgs = DB::connection('HRDatabase')->table('load_hhr00005')
                         ->select(DB::raw('count(*) as employee_count, deputy_abb'))
-                        ->where('status','!=','0')->whereIn('employee_group',[1,2,5,9])
+                        ->where('data_status','!=','0')->whereIn('employee_group',[1,2,5,9])
+                        ->where('organization_type','O')
+                        ->where('percentage',100)
                         ->groupBy('deputy_abb')
                         ->get();
               }
@@ -158,8 +168,12 @@ class EmployeesController extends Controller
             array_push($years,$year+$i);
         }
         
-        $currentCount = Employee::where('status','!=','0')->whereIn('employee_group',[1,2,5,9])->count();
-        $retireYears = Employee::query();
+        $currentCount = DB::connection('HRDatabase')->table('load_hhr00005')
+                            ->where('data_status','!=','0')
+                            ->where('organization_type','O')
+                            ->where('percentage',100)
+                            ->whereIn('employee_group',[1,2,5,9])->count();
+        $retireYears = Employee::query();                           
 
         foreach($years as $year){
             $retireYears->orWhere('retire_thai_date', 'LIKE', '%'.$year.'%')->where('status','!=','0')->whereIn('employee_group',[1,2,5,9]);
