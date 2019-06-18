@@ -29,8 +29,8 @@
                 <q-card-main class="bg-green-2">
                   <p class="header text-bold">ประสบการณ์การทำงาน</p>
                     <div class="row q-body-1 bg-white" v-for="(history_work, index) in portfolio.history_works" :key="'history_work-'+index">
-                      <div class="col-3 q-pl-xs text-bold">
-                        {{history_work.works_date | yearFromDate}}
+                      <div class="col-3 q-pl-xs q-caption q-mt-xs">
+                        {{history_work.works_date | thaiDateFormat}}
                       </div>
                       <div class="col-9" v-html="replaceUnderscore(history_work.works_dsc)">
                       </div>
@@ -333,6 +333,49 @@ export default {
   filters: {
     yearFromDate (value) {
       return value.substring(0, 4)
+    },
+    thaiDateFormat (date) {
+    let dd = (date || '').split('/')
+      let ThaiMonth = ''
+      switch (dd[1]) {
+        case '01':
+          ThaiMonth = 'ม.ค.'
+          break
+        case '02':
+          ThaiMonth = 'ก.พ.'
+          break
+        case '03':
+          ThaiMonth = 'มี.ค.'
+          break
+        case '04':
+          ThaiMonth = 'เม.ย.'
+          break
+        case '05':
+          ThaiMonth = 'พ.ค.'
+          break
+        case '06':
+          ThaiMonth = 'มิ.ย.'
+          break
+        case '07':
+          ThaiMonth = 'ก.ค.'
+          break
+        case '08':
+          ThaiMonth = 'ส.ค.'
+          break
+        case '09':
+          ThaiMonth = 'ก.ย.'
+          break
+        case '10':
+          ThaiMonth = 'ต.ค.'
+          break
+        case '11':
+          ThaiMonth = 'พ.ย.'
+          break
+        case '12':
+          ThaiMonth = 'ธ.ค.'
+          break
+      }
+      return parseInt(dd[2]) + ' ' + ThaiMonth + ' ' + parseInt(dd[0])
     },
     formatNumber (value) {
      return parseFloat(value).toFixed(2)
