@@ -19,7 +19,7 @@
             <div class="col-xs-7 col-lg-10 text-right self-center">
               <div class="title">{{user.name}}</div>
               <div class="subtitle">{{ user.name_english }}</div>
-              <div class="subtitle">{{ user.position_abb }}</div>
+              <div class="subtitle">{{ user.position_combine_abb }}</div>
               <div class="subtitle">{{ user.org_path }}</div>
             </div>
             <div class="col-xs-2 col-lg-1 text-right self-center">

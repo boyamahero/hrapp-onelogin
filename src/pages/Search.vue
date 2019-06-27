@@ -57,7 +57,9 @@
               </q-item-side>
               <q-item-main>
                 <q-item-tile class="q-body-1 text-weight-bold">{{ employee.name }} ({{ employee.code }})</q-item-tile>
-                <q-item-tile class="q-body-1"><q-icon name="work" /> {{ employee.position_abb }}</q-item-tile>
+                <q-item-tile class="q-body-1"><q-icon name="work" />
+                {{ employee.position_abb }}<q-tooltip self="center right" color="black" class="q-body-2 text-primary bg-green-2">{{ employee.position_full }}</q-tooltip>
+                </q-item-tile>
                 <q-item-tile class="q-body-1"><q-icon name="business" /> {{ employee.org_path }}</q-item-tile>
                 <q-item-tile class="q-body-1"><q-icon name="room" /> {{ employee.person_location.PWAH_Name }}</q-item-tile>
                 <q-item-tile class="q-body-1" v-if="employee.person_location.PWAH_Building !==  null || employee.person_location.PWAH_Room !== null"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ employee.person_location.PWAH_Building }} <span v-if="employee.person_location.PWAH_Room &&  employee.person_location.PWAH_Room!= null">ห้อง {{employee.person_location.PWAH_Room.replace('ห้อง','')}} </span></q-item-tile>
