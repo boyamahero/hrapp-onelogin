@@ -47,7 +47,7 @@
             <q-item>
               <q-item-side>
                 <div class="row no-margin text-center">
-                  <div class="col-12">
+                  <div class="col-12" :id="employee.image_path">
                     <img v-lazy="employee.image_path" style="width: 75px;"><br>
                   </div>
                   <div class="col-12" v-if="employee.can_open" >
@@ -391,6 +391,7 @@ export default {
         this.$axios.get('employees/' + this.searchText + (query !== '' ? '?' + query : ''))
           .then((res) => {
             if (res.data.data) {
+              this.employees = []
               this.employees = res.data.data
               this.total = res.data.meta.total
               this.current_page = res.data.meta.current_page
