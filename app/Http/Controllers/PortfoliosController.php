@@ -35,18 +35,20 @@ class PortfoliosController extends Controller
 
         $competency = DB::connection('HRDatabase')->table('TBP_CoreCompetency')
             ->where('Empn',$id)
-            ->whereBetween('TEST_Year',[$yearnow-2,$yearnow])
+            ->whereBetween('Test_Year',[$yearnow-2,$yearnow])
+            ->orderBy('Test_Year')
             ->orderBy('Test_Type','desc')
-            ->get();
+            ->get();              
 
-        $expectCompetency = DB::connection('HRDatabase')->table('TBP_CoreCompetency')
+        $expectCompetency = Competency::select(DB::raw('Test_Year AS Test_Year, AVG(Zlevel) AS Zlevel'))
             ->where('Empn',$id)
-            ->whereBetween('TEST_Year',[$yearnow-2,$yearnow])
-            ->get()
-            ->groupBy('TEST_Year')
-            ->sortBy('TEST_Year'); 
+            ->whereBetween('Test_Year',[$yearnow-2,$yearnow])
+            ->groupBy(DB::raw('Test_Year'))
+            ->orderBy('Test_Year')
+            ->get();
+                        
         $expectCompetency = $expectCompetency->map(function($year ,$key){
-            $level = $year->AVG('Zlevel');
+            $level = $year->Zlevel;
             if($level <= '4')
             {
                 $expectC = '1';
