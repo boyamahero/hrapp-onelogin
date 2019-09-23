@@ -150,10 +150,25 @@
                 ตำแหน่ง
               </q-card-title>
               <q-card-main class="text-left" v-if="employee.positions">
-                <q-list v-for="(position, index) in employee.positions" :key="index" no-border separator>
-                  <q-item>
-                    {{position.position_abb}} <br>
-                    {{position.org_path}}
+                <q-list no-border separator>
+                  <q-item v-for="(position, index) in employee.positions" :key="index" multiline>
+                    <q-item-main>
+                    <q-item-tile label lines="5">{{ position.position_full + " (" + position.position_abb + ")"}}</q-item-tile>
+                    <q-item-tile sublabel lines="10">
+                    <span> {{position.section_full}}</span>
+                    <span> {{position.department_full}}</span>
+                    <span> {{position.division_full}}</span>
+                    <span> {{position.assistant_full}}</span>
+                    <span> {{position.deputy_full}}</span>
+                    (
+                    <span> {{position.section_abb}}</span>
+                    <span> {{position.department_abb}}</span>
+                    <span> {{position.division_abb}}</span>
+                    <span> {{position.assistant_abb}}</span>
+                    <span> {{position.deputy_abb}}</span>
+                    )
+                    </q-item-tile>
+                    </q-item-main>
                   </q-item>
                 </q-list>
               </q-card-main>
@@ -165,8 +180,10 @@
                 การศึกษา
               </q-card-title>
               <q-card-main class="text-left" v-if="employee.educations">
-                <q-list v-for="(education, index) in employee.educations" :key="index" no-border separator>
-                  <q-item>{{ education.degree_name + ' ' + education.certificate_name }} {{ education.school_name }}  GPA.= {{ education.grade }} (ปีจบการศึกษา {{ education.graduated_year | convertToThaiYear}})</q-item>
+                <q-list  no-border separator>
+                  <q-item v-for="(education, index) in employee.educations" :key="index" >
+                    {{ education.degree_name + ' ' + education.certificate_name + ' ' + education.branch_name}} {{ education.school_name }}  GPA.= {{ education.grade }} (ปีจบการศึกษา {{ education.graduated_year | convertToThaiYear}}) {{ education.degree_main=="X"?"(วุฒิหลัก)":""}} {{ education.degree_entry=="X"?"(วุฒิแรกเข้า)":""}}
+                  </q-item>
                 </q-list>
               </q-card-main>
             </q-card>
