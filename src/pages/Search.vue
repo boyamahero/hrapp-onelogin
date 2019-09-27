@@ -9,7 +9,7 @@
               class="full-width"
               v-model="searchText"
               :debounce="1000"
-              placeholder="ชื่อ/นามสกุล/สังกัดย่อ/เลขประจำตัว"
+              placeholder="ชื่อ/นามสกุล(TH/EN)/ สังกัด(ย่อ/เต็ม)/ ตำแหน่งย่อ/ เลขประจำตัว/ อีเมล"
               icon="person"
               float-label="คำค้น"
               clearable

@@ -53,7 +53,9 @@ class EmployeesController extends Controller
             $query = Employee::where('status','!=','0')
                         ->whereIn('employee_group',[1,2,5,9]);
         } else {
-            $query = Employee::whereLike(['name','name_english','email','employee_code','deputy_abb','assistant_abb','division_abb','department_abb','section_abb','position_combine_abb'], $keyword)
+            $query = Employee::whereLike(['name','name_english','email','employee_code',
+                        'deputy_abb','assistant_abb','division_abb','department_abb','section_abb','position_combine_abb',
+                        'deputy_full','assistant_full','division_full','department_full','section_full'], $keyword)
                         ->where('status','!=','0')
                         ->whereIn('employee_group',[1,2,5,9]);
         }
