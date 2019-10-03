@@ -48,7 +48,7 @@
               <q-item-side>
                 <div class="row no-margin text-center">
                   <div class="col-12" :id="employee.image_path">
-                    <img v-lazy="employee.image_path" style="width: 75px;"><br>
+                    <img v-lazy="employee.image_path" style="width: 75px;" draggable="false" oncontextmenu="return false"><br>
                   </div>
                   <div class="col-12" v-if="employee.can_open" >
                     <q-icon name="fas fa-search-plus" @click.native="itemClicked(employee)" :color="employee.is_boss?'white':'primary'"/>
