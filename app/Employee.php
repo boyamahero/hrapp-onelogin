@@ -60,4 +60,9 @@ class Employee extends Model
         return $this->person->FirstLocation;
     }
 
+    public function templocation()
+    {
+        return $this->hasOne('App\WLSavedata', 'PERNR', 'id');
+    }
+
 }

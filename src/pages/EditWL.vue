@@ -203,7 +203,8 @@ export default {
              message: res.data,
              color: 'positive',
              position: 'center',
-             icon: 'done'
+             icon: 'done',
+             timeout: 1000
             })
           this.getTempWL()
       }).catch(() => {

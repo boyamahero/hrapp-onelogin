@@ -18,13 +18,16 @@ class WLPerdata extends Model
     {
         return $this->hasMany('App\WLPersonWorkAddressHistory', 'PWAH_PersonID', 'PersonID')
         ->select('PWAH_WorkLocationCode', 'PWAH_Name','PWAH_Address','PWAH_Room','PWAH_Building','PWAH_PhoneNumber')
+        ->where('PWAH_DataStatus','100')
         ->orderBy('PWAH_DataValidEndDate','desc');
     }
 
     public function mobilephonenumber()
     {
         return $this->hasMany('App\WLPersonWorkAddressHistory', 'PWAH_PersonID', 'PersonID')
-        ->select('PWAH_MobilePhoneNumber')->orderBy('PWAH_DataValidEndDate','desc');
+        ->select('PWAH_MobilePhoneNumber')
+        ->where('PWAH_DataStatus','100')
+        ->orderBy('PWAH_DataValidEndDate','desc');
     }
 
     public function getEmployeeCodeAttribute()
