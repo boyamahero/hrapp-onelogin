@@ -42,6 +42,7 @@ class Employee extends JsonResource
             'level' => $this->employee_subgroup,
             'is_boss' => $this->is_boss,
             'person_location' => $this->person->FirstLocation,
+            'templocation' => $this->templocation,
             'mobile_number' => $this->when(
                 Auth::user()->hasRole('admin') ||
                 (
