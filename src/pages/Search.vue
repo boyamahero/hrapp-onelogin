@@ -58,7 +58,12 @@
               <q-item-main>
                 <q-item-tile class="q-body-1 text-weight-bold">{{ employee.name }} ({{ employee.code }})</q-item-tile>
                 <q-item-tile class="q-body-1"><q-icon name="work" />
-                 <span> {{ employee.position_abb }}<q-tooltip self="center right" color="black" class="q-body-2 text-primary bg-green-2">{{ employee.position_full }}</q-tooltip></span>
+                 <span>
+                    {{ employee.secretary? employee.position_abb + ' ทนท.เลขาฯ '+ employee.secretary.PATH_PersonOrganizationShortName: employee.position_abb }}
+                    <q-tooltip self="center right" color="black" class="q-body-2 text-primary bg-green-2">
+                     {{ employee.secretary? employee.position_full + ' ' + employee.secretary.PATH_PositionName : employee.position_full }}
+                    </q-tooltip>
+                  </span>
                 </q-item-tile>
                 <q-item-tile class="q-body-1"><q-icon name="business" />
                   <span> {{employee.deputy_abb }}<q-tooltip self="center right" color="black" class="q-body-2 text-primary bg-green-2">{{ employee.deputy_full }}</q-tooltip></span>

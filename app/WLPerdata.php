@@ -39,4 +39,9 @@ class WLPerdata extends Model
     public function getMobilePhoneNumberAttribute() {
         return $this->mobilephonenumber()->pluck('PWAH_MobilePhoneNumber')->first();
     }
+
+    public function secretary()
+    {
+        return $this->hasMany('App\Secretary','PATH_PersonID','PersonID')->where('PATH_SecretaryType',24);
+    }
 }
