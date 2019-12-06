@@ -48,7 +48,8 @@ class WorklocationController extends Controller
        'ZZROMNO' => $request->PWAH_Room,
        'ZZFLBLD' => $request->PWAH_Building,
        'ZZOFTEL' => $request->PWAH_PhoneNumber,
-       'ZZMOBL' => $request->PWAH_MobilePhoneNumber
+       'ZZMOBL' => $request->PWAH_MobilePhoneNumber,
+       'GENTEXT_AT' => NULL
    ]);
  
  if($WLSAVE){
