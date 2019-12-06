@@ -21,7 +21,7 @@ class Employee extends JsonResource
             'code' => $this->employee_code,
             'name' => $this->name,
             'position_abb' => $this->position_combine_abb,
-            'secretary' => $this->person->secretary->first(),
+            'secretary' => $this->person->secretary()->with('positionBoss')->first(),
             'position_full' => $this->position_combine_full,
             'org_path' => $this->org_path,
             'deputy_abb' => $this->deputy_abb,

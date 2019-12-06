@@ -59,7 +59,7 @@
                 <q-item-tile class="q-body-1 text-weight-bold">{{ employee.name }} ({{ employee.code }})</q-item-tile>
                 <q-item-tile class="q-body-1"><q-icon name="work" />
                  <span>
-                    {{ employee.secretary? employee.position_abb + ' ทนท.เลขาฯ '+ employee.secretary.PATH_PersonOrganizationShortName: employee.position_abb }}
+                    {{ employee.secretary? employee.position_abb + ' ทนท.เลขาฯ '+ employee.secretary.position_boss.PST_TShortName : employee.position_abb }}
                     <q-tooltip self="center right" color="black" class="q-body-2 text-primary bg-green-2">
                      {{ employee.secretary? employee.position_full + ' ' + employee.secretary.PATH_PositionName : employee.position_full }}
                     </q-tooltip>
