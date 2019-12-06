@@ -374,6 +374,7 @@ export default {
       filterOpened: false,
       maximizedModal: false,
       showResult: false,
+      pages: [],
       employee: {}
     }
   },
@@ -431,6 +432,7 @@ export default {
               this.last_page = res.data.meta.last_page
               this.next_page_url = res.data.links.next
               this.showResult = true
+              this.pages.push(res.data.meta.current_page)
             }
           }).catch((e) => {
             this.$q.dialog({
@@ -449,10 +451,13 @@ export default {
         if ((this.next_page_url)) {
           this.$axios.get(this.next_page_url)
             .then((res) => {
-              console.log('loadmore')
-              this.employees = this.employees.concat(res.data.data)
-              this.current_page = res.data.meta.current_page
-              this.next_page_url = res.data.links.next
+              if (!this.pages.includes(res.data.meta.current_page)) {
+                console.log('loadmore ' + res.data.meta.current_page)
+                this.employees = this.employees.concat(res.data.data)
+                this.current_page = res.data.meta.current_page
+                this.next_page_url = res.data.links.next
+                this.pages.push(res.data.meta.current_page)
+              }
             }).catch(() => {
               this.$q.dialog({
                 color: 'negative',
@@ -465,7 +470,7 @@ export default {
             })
         }
         done()
-      }, 3000)
+      }, 5000)
     }
   }
 }
