@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Secretary extends Model
 {
-    protected $connection = 'WorkLocationDB';
+    protected $connection = 'NewHRDatabase';
 
     protected $table = 'V_PersonAction';
 
