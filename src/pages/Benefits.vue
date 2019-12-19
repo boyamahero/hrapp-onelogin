@@ -72,7 +72,8 @@ export default {
       return 'ยอดเบิก ' + parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (parts[1] ? '.' + parts[1] : '') + ' บาท'
     },
     dateFormatEnToTh (date) {
-      let dd = (date || '').split('.')
+      let datetime = (date || '').split(' ')
+      let dd = (datetime[0] || '').split('-')
       let ThaiMonth = ''
       switch (dd[1]) {
         case '01':
@@ -112,7 +113,7 @@ export default {
           ThaiMonth = 'ธ.ค.'
           break
       }
-      return 'วันที่เบิก ' + parseInt(dd[0]) + ' ' + ThaiMonth + ' ' + (parseInt(dd[2]) + 543)
+      return 'วันที่เบิก ' + parseInt(dd[2]) + ' ' + ThaiMonth + ' ' + (parseInt(dd[0]) + 543)
     }
   },
   created () {

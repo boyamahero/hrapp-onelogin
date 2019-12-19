@@ -37,7 +37,9 @@ Route::middleware(['jwt.verify'])->group(function () {
 
   Route::get('/salary', 'EmployeesController@salary');
   
-  Route::get('/medical-expenses/{year?}', 'MedicalExpensesController@show');
+  Route::get('/medical-expenses/{year?}', 'MedicalFeeController@show');
+
+  Route::get('/medical-fees/{year?}', 'MedicalFeeController@show');
 
   //worklocation 
 

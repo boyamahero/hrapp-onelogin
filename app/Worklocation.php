@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Worklocation extends Model
 {
-    protected $connection = 'WorkLocationDB';
+    protected $connection = 'NewHRDatabase';
     protected $table = 'WorkLocation';
 }

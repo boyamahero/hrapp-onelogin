@@ -100,7 +100,7 @@ return [
             'prefix' => '',
         ],
 
-        'WorkLocationDB' => [
+        'NewHRDatabase' => [
             'driver' => 'sqlsrv',
             'host' => env('DBWL_HOST', 'localhost'),
             'port' => env('DBWL_PORT', '1433'),
