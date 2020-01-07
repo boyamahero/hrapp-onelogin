@@ -7,7 +7,7 @@
             quick-nav-icon="stop"
             >
             <!-- iftemp -->
-            <q-carousel-slide v-if="listtempdata">
+            <q-carousel-slide v-if="listtempdata.lenght > 0 ">
             <q-card class="q-ma-xs justify-center personcard">
               <q-card-main>
                 <div class="row justify-between">
@@ -34,11 +34,11 @@
                   <q-btn flat style="color: #f96160" label="แก้ไขข้อมูล" icon="edit" @click="$router.push('/editwl')"/>
                 </div>
                 <q-card-separator class="q-mt-xs"/>
-                <p>สถานที่ทำงาน : {{user.location.PWAH_Name}}</p>
-                <p>ห้อง : {{user.location.PWAH_Room}}</p>
-                <p>อาคารและชั้น : {{user.location.PWAH_Building}}</p>
-                <p>เบอร์ติดต่อภายใน : {{user.location.PWAH_PhoneNumber}}</p>
-                <p>เบอร์ติดต่อมือถือ : {{user.mobile_number}}</p>
+                <p v-if="user.location">สถานที่ทำงาน : {{user.location.PWAH_Name}}</p>
+                <p v-if="user.location">ห้อง : {{user.location.PWAH_Room}}</p>
+                <p v-if="user.location">อาคารและชั้น : {{user.location.PWAH_Building}}</p>
+                <p v-if="user.location">เบอร์ติดต่อภายใน : {{user.location.PWAH_PhoneNumber}}</p>
+                <p v-if="user.location">เบอร์ติดต่อมือถือ : {{user.mobile_number}}</p>
               </q-card-main>
             </q-card>
           </q-carousel-slide>

@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 
 class WLPersonWorkAddressHistory extends Model
 {
+    use Cachable;
+    
     protected $connection = 'NewHRDatabase';
     protected $table = 'PersonWorkAddressHistory';
 
