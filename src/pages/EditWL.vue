@@ -200,7 +200,7 @@ export default {
       this.$axios.post('saveWlupdate', fd)
         .then((res) => {
           this.$q.notify({
-             message: res.data,
+             message: res.data.message,
              color: 'positive',
              position: 'center',
              icon: 'done',

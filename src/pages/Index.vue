@@ -7,7 +7,7 @@
             quick-nav-icon="stop"
             >
             <!-- iftemp -->
-            <q-carousel-slide v-if="listtempdata.lenght > 0 ">
+            <q-carousel-slide>
             <q-card class="q-ma-xs justify-center personcard">
               <q-card-main>
                 <div class="row justify-between">
@@ -16,32 +16,23 @@
                 </div>
                 <q-card-separator class="q-mt-xs"/>
                 <div v-if="listtempdata.tempdata">
-                <p>สถานที่ทำงาน : {{listtempdata.wlname}}</p>
-                <p>ห้อง : {{listtempdata.tempdata.ZZROMNO}}</p>
-                <p>อาคารและชั้น : {{listtempdata.tempdata.ZZFLBLD}}</p>
-                <p>เบอร์ติดต่อภายใน : {{listtempdata.tempdata.ZZOFTEL}}</p>
-                <p>เบอร์ติดต่อมือถือ : {{listtempdata.tempdata.ZZMOBL}}</p>
+                  <p>สถานที่ทำงาน : {{listtempdata.wlname}}</p>
+                  <p>ห้อง : {{listtempdata.tempdata.ZZROMNO}}</p>
+                  <p>อาคารและชั้น : {{listtempdata.tempdata.ZZFLBLD}}</p>
+                  <p>เบอร์ติดต่อภายใน. : {{listtempdata.tempdata.ZZOFTEL}}</p>
+                  <p>เบอร์ติดต่อมือถือ : {{listtempdata.tempdata.ZZMOBL}}</p>
+                </div>
+                <div v-else>
+                  <p v-if="user.location">สถานที่ทำงาน : {{user.location.PWAH_Name}}</p>
+                  <p v-if="user.location">ห้อง : {{user.location.PWAH_Room}}</p>
+                  <p v-if="user.location">อาคารและชั้น : {{user.location.PWAH_Building}}</p>
+                  <p v-if="user.location">เบอร์ติดต่อภายใน : {{user.location.PWAH_PhoneNumber}}</p>
+                  <p v-if="user.location">เบอร์ติดต่อมือถือ : {{user.mobile_number}}</p>
                 </div>
               </q-card-main>
             </q-card>
           </q-carousel-slide>
           <!-- iftemp -->
-          <q-carousel-slide v-else>
-            <q-card class="q-ma-xs justify-center personcard">
-              <q-card-main>
-                <div class="row justify-between">
-                  <p class="header">ข้อมูลสถานที่ทำงาน</p>
-                  <q-btn flat style="color: #f96160" label="แก้ไขข้อมูล" icon="edit" @click="$router.push('/editwl')"/>
-                </div>
-                <q-card-separator class="q-mt-xs"/>
-                <p v-if="user.location">สถานที่ทำงาน : {{user.location.PWAH_Name}}</p>
-                <p v-if="user.location">ห้อง : {{user.location.PWAH_Room}}</p>
-                <p v-if="user.location">อาคารและชั้น : {{user.location.PWAH_Building}}</p>
-                <p v-if="user.location">เบอร์ติดต่อภายใน : {{user.location.PWAH_PhoneNumber}}</p>
-                <p v-if="user.location">เบอร์ติดต่อมือถือ : {{user.mobile_number}}</p>
-              </q-card-main>
-            </q-card>
-          </q-carousel-slide>
           <q-carousel-slide>
             <q-card class="q-ma-xs justify-center personcard">
               <q-card-main>

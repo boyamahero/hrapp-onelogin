@@ -11,6 +11,8 @@ class WLSavedata extends Model
     
     protected $connection = 'HRDatabase';
 
+    public $timestamps = false;
+
     protected $table = 'work_locations';
 
     protected $fillable = ['PERNR', 'type_code', 'BEGDA' ,'ZZCODE' ,'ZZROMNO' ,'ZZFLBLD' ,'ZZOFTEL' ,'ZZMOBL',];

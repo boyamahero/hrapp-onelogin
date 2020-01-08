@@ -16,14 +16,19 @@ class WorklocationController extends Controller
  }
 
  public function gettempwl() {
-   $tempdata = WLSavedata::where('PERNR',auth()->user()->username)->first();
-   if($tempdata){
-   $wlname = Worklocation::where('WL_Code',$tempdata->ZZCODE)->pluck('WL_Name')->first();
-   return [
-    'tempdata' => $tempdata,
-    'wlname' => $wlname,
-    ];
-  }
+    $tempdata = WLSavedata::where('PERNR',auth()->user()->username)->first();
+    if($tempdata){
+      $wlname = Worklocation::where('WL_Code',$tempdata->ZZCODE)->pluck('WL_Name')->first();
+      return [
+        'tempdata' => $tempdata,
+        'wlname' => $wlname,
+      ];
+    } else {
+      return [
+        'tempdata' => null,
+        'wlname' => null,
+      ];
+    }
 }
 
  public function getwllist($type) {
@@ -40,20 +45,33 @@ class WorklocationController extends Controller
  }
  
  public function saveWlupdate(Request $request)  {
-     $WLSAVE = WLSavedata::updateOrInsert(
-       ['PERNR' => auth()->user()->username],
-       ['type_code' => $request->WL_Type,
-       'BEGDA' => date("Y.m.d"),
-       'ZZCODE' => $request->WL_Name,
-       'ZZROMNO' => $request->PWAH_Room,
-       'ZZFLBLD' => $request->PWAH_Building,
-       'ZZOFTEL' => $request->PWAH_PhoneNumber,
-       'ZZMOBL' => $request->PWAH_MobilePhoneNumber,
-       'GENTEXT_AT' => NULL
-   ]);
+  $data = WLSavedata::where('PERNR',auth()->user()->username)->first();
+  if($data) {
+    $data->type_code = $request->WL_Type;
+    $data->BEGDA = date("Y.m.d");
+    $data->ZZCODE = $request->WL_Name;
+    $data->ZZROMNO =  $request->PWAH_Room;
+    $data->ZZFLBLD =  $request->PWAH_Building;
+    $data->ZZOFTEL =  $request->PWAH_PhoneNumber;
+    $data->ZZMOBL =  $request->PWAH_MobilePhoneNumber;
+    $data->GENTEXT_AT =  NULL;
+    $data->save();
+  } else {
+    $data = new WLSavedata;
+    $data->PERNR = auth()->user()->username;
+    $data->type_code = $request->WL_Type;
+    $data->BEGDA = date("Y.m.d");
+    $data->ZZCODE = $request->WL_Name;
+    $data->ZZROMNO =  $request->PWAH_Room;
+    $data->ZZFLBLD =  $request->PWAH_Building;
+    $data->ZZOFTEL =  $request->PWAH_PhoneNumber;
+    $data->ZZMOBL =  $request->PWAH_MobilePhoneNumber;
+    $data->GENTEXT_AT =  NULL;
+    $data->save();
+  }
  
- if($WLSAVE){
-   return 'บันทึกการเปลี่ยนแปลงแล้ว';
+ if($data){
+   return ['message' => 'บันทึกการเปลี่ยนแปลงแล้ว'];
  }else{
    exit();
  }
