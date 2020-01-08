@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,6 +12,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/flush-cache', function() {
+    $exitCode = Artisan::call('modelCache:clear');
+});
 
 // Redirect all to the front-end router
 Route::get('/{pattern?}', function() {
