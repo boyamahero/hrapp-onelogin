@@ -75,7 +75,7 @@
                 <q-item-tile class="q-body-1" v-if="employee.person_location && !employee.templocation"><q-icon name="room" /> {{ employee.person_location.PWAH_Name }}</q-item-tile>
                 <q-item-tile class="q-body-1" v-if="employee.person_location && !employee.templocation && (employee.person_location.PWAH_Building !==  null || employee.person_location.PWAH_Room !== null)"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ employee.person_location.PWAH_Building }} <span v-if="employee.person_location.PWAH_Room &&  employee.person_location.PWAH_Room!= null">ห้อง {{employee.person_location.PWAH_Room.replace('ห้อง','')}} </span></q-item-tile>
                 <q-item-tile class="q-body-1" v-if="employee.person_location && !employee.templocation && (employee.person_location.PWAH_PhoneNumber &&  employee.person_location.PWAH_PhoneNumber!='-')"><q-icon name="call" /> {{ employee.person_location.PWAH_PhoneNumber }}</q-item-tile>
-                <q-item-tile class="q-body-1" v-if="employee.mobile_number"><q-icon name="smartphone" /> {{ employee.mobile_number }}</q-item-tile>
+                <q-item-tile class="q-body-1" v-if="employee.mobile_number && !employee.templocation"><q-icon name="smartphone" /> {{ employee.mobile_number }}</q-item-tile>
 
                 <q-item-tile class="q-body-1" v-if="employee.templocation"><q-icon name="room" /> {{ employee.templocation.wlfullname.WL_Name }}</q-item-tile>
                 <q-item-tile class="q-body-1" v-if="employee.templocation && (employee.templocation.ZZFLBLD !==  null || employee.templocation.ZZROMNO !== null)"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ employee.templocation.ZZFLBLD }} <span v-if="employee.templocation.ZZROMNO &&  employee.templocation.ZZROMNO!= null">ห้อง {{employee.templocation.ZZROMNO.replace('ห้อง','')}} </span></q-item-tile>
@@ -403,6 +403,7 @@ export default {
     search () {
       this.filterOpened = false
       this.employees = []
+      this.loadedPages = []
       if (this.searchText.length === 0) {
         this.total = 0
         this.current_page = 0
@@ -432,7 +433,7 @@ export default {
               this.last_page = res.data.meta.last_page
               this.next_page_url = res.data.links.next
               this.showResult = true
-              this.pages.push(res.data.meta.current_page)
+              this.loadedPages.push(res.data.meta.current_page)
             }
           }).catch((e) => {
             this.$q.dialog({
@@ -451,12 +452,12 @@ export default {
         if ((this.next_page_url)) {
           this.$axios.get(this.next_page_url)
             .then((res) => {
-              if (!this.pages.includes(res.data.meta.current_page)) {
+              if (!this.loadedPages.includes(res.data.meta.current_page)) {
                 console.log('loadmore ' + res.data.meta.current_page)
                 this.employees = this.employees.concat(res.data.data)
                 this.current_page = res.data.meta.current_page
                 this.next_page_url = res.data.links.next
-                this.pages.push(res.data.meta.current_page)
+                this.loadedPages.push(res.data.meta.current_page)
               }
             }).catch(() => {
               this.$q.dialog({
