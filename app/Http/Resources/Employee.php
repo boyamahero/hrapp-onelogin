@@ -40,6 +40,7 @@ class Employee extends JsonResource
             'senior' => $this->senior,
             'image_path' => $this->image_path,
             'level' => $this->employee_subgroup,
+            'org_level' => $this->org->org_level,
             'is_boss' => $this->is_boss,
             'person_location' => $this->person->FirstLocation,
             'templocation' => $this->templocation,

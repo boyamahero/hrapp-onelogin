@@ -43,7 +43,7 @@
     <div class="row justify-center">
       <div class="col-12 justify-between">
         <q-infinite-scroll :handler="loadMore" ref="infiniteScroll">
-          <q-card v-for="(employee, index) in employees" :key="index" :color="employee.is_boss?'blue-5':''">
+          <q-card v-for="(employee, index) in employees" :key="index" :color="employee | blockColor">
             <q-item>
               <q-item-side>
                 <div class="row no-margin text-center">
@@ -352,6 +352,9 @@ export default {
           break
       }
       return parseInt(dd[0]) + ' ' + ThaiMonth + ' ' + parseInt(dd[2])
+    },
+    blockColor (employee) {
+      return !employee.is_boss ? '' : (parseInt(employee.org_level) === 1 ? 'deep-orange-5' : (parseInt(employee.org_level) === 2 ? 'orange-5' : (parseInt(employee.org_level) === 3 ? 'green-5' : (parseInt(employee.org_level) === 4 ? 'teal-5' : 'blue-5'))))
     }
   },
   // name: 'PageName',
