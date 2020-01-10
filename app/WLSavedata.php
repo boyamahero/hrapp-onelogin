@@ -19,6 +19,11 @@ class WLSavedata extends Model
 
     protected $with = ['wlfullname'];
 
+    public function scopeExclude($query,$value = array()) 
+    {
+        return $query->select( array_diff( $this->fillable,(array) $value) );
+    }
+
     public function wlfullname()
     {
         return $this->belongsTo('App\Worklocation','ZZCODE','WL_Code');

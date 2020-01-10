@@ -43,28 +43,14 @@ class Employee extends JsonResource
             'org_level' => $this->org->org_level,
             'is_boss' => $this->is_boss,
             'person_location' => $this->person->FirstLocation,
-            'templocation' => $this->when(
-                Auth::user()->hasRole('admin') ||
-                (
-                    Auth::user()->employee->is_boss && 
-                    Auth::user()->username != $this->id && 
-                    $this->isOwnerDataLevel(Auth::user()) 
-                )
-                , $this->templocation),
-            'mobile_number' => $this->when(
-                Auth::user()->hasRole('admin') ||
-                (
-                    Auth::user()->employee->is_boss && 
-                    Auth::user()->username != $this->id && 
-                    $this->isOwnerDataLevel(Auth::user()) 
-                )
-                , $this->person->MobilePhoneNumber),
+            'templocation' => $this->templocation,
             $this->mergeWhen(Auth::user()->hasRole('admin') ||
             (
                 Auth::user()->employee->is_boss && 
                 Auth::user()->username != $this->id && 
                 $this->isOwnerDataLevel(Auth::user()) 
             ), [
+                'mobile_number' => $this->templocation ? $this->templocation->ZZMOBL : $this->person->MobilePhoneNumber,
                 'name_english' => $this->name_english,
                 'blood_group' => $this->blood_group,
                 'employee_group_name' => $this->employee_group_name,

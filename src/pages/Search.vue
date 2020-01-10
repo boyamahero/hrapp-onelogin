@@ -75,12 +75,11 @@
                 <q-item-tile class="q-body-1" v-if="employee.person_location && !employee.templocation"><q-icon name="room" /> {{ employee.person_location.PWAH_Name }}</q-item-tile>
                 <q-item-tile class="q-body-1" v-if="employee.person_location && !employee.templocation && (employee.person_location.PWAH_Building !==  null || employee.person_location.PWAH_Room !== null)"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ employee.person_location.PWAH_Building }} <span v-if="employee.person_location.PWAH_Room &&  employee.person_location.PWAH_Room!= null">ห้อง {{employee.person_location.PWAH_Room.replace('ห้อง','')}} </span></q-item-tile>
                 <q-item-tile class="q-body-1" v-if="employee.person_location && !employee.templocation && (employee.person_location.PWAH_PhoneNumber &&  employee.person_location.PWAH_PhoneNumber!='-')"><q-icon name="call" /> {{ employee.person_location.PWAH_PhoneNumber }}</q-item-tile>
-                <q-item-tile class="q-body-1" v-if="employee.mobile_number && !employee.templocation"><q-icon name="smartphone" /> {{ employee.mobile_number }}</q-item-tile>
 
                 <q-item-tile class="q-body-1" v-if="employee.templocation"><q-icon name="room" /> {{ employee.templocation.wlfullname.WL_Name }}</q-item-tile>
                 <q-item-tile class="q-body-1" v-if="employee.templocation && (employee.templocation.ZZFLBLD !==  null || employee.templocation.ZZROMNO !== null)"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ employee.templocation.ZZFLBLD }} <span v-if="employee.templocation.ZZROMNO &&  employee.templocation.ZZROMNO!= null">ห้อง {{employee.templocation.ZZROMNO.replace('ห้อง','')}} </span></q-item-tile>
                 <q-item-tile class="q-body-1" v-if="employee.templocation && (employee.templocation.ZZOFTEL &&  employee.templocation.ZZOFTEL!='-')"><q-icon name="call" /> {{ employee.templocation.ZZOFTEL }}</q-item-tile>
-                <q-item-tile class="q-body-1" v-if="employee.templocation"><q-icon name="smartphone" /> {{ employee.templocation.ZZMOBL }}</q-item-tile>
+                <q-item-tile class="q-body-1" v-if="employee.mobile_number"><q-icon name="smartphone" /> {{ employee.mobile_number }}</q-item-tile>
               </q-item-main>
             </q-item>
           </q-card>
@@ -354,7 +353,11 @@ export default {
       return parseInt(dd[0]) + ' ' + ThaiMonth + ' ' + parseInt(dd[2])
     },
     blockColor (employee) {
-      return !employee.is_boss ? '' : (parseInt(employee.org_level) === 1 ? 'deep-orange-5' : (parseInt(employee.org_level) === 2 ? 'orange-5' : (parseInt(employee.org_level) === 3 ? 'green-5' : (parseInt(employee.org_level) === 4 ? 'teal-5' : 'blue-5'))))
+      return !employee.is_boss ? '' : (parseInt(employee.level) === 14 || parseInt(employee.level) === 0 ? 'deep-orange-5'
+      : (parseInt(employee.level) === 13 ? 'orange-5'
+      : (parseInt(employee.level) === 12 ? 'green-5'
+      : (parseInt(employee.level) === 11 && parseInt(employee.org_level) === 3 ? 'green-5'
+      : (parseInt(employee.org_level) === 4 ? 'teal-5' : 'blue-5')))))
     }
   },
   // name: 'PageName',

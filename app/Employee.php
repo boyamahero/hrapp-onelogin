@@ -65,7 +65,7 @@ class Employee extends Model
 
     public function templocation()
     {
-        return $this->hasOne('App\WLSavedata', 'PERNR', 'id');
+        return $this->hasOne('App\WLSavedata', 'PERNR', 'id')->exclude(['ZZMOBL']);
     }
 
 }
