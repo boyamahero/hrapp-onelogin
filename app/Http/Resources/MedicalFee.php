@@ -25,6 +25,7 @@ class MedicalFee extends JsonResource
             'SickDateFrom' => $this->PMFH_MedicalTreatmentBeginDate,
             'SickDateTo' => $this->PMFH_MedicalTreatmentEndDate,
             'Zyear' => substr($this->PMFH_MedicalTreatmentBeginDate,0,4),
+            'ApprovedStatus' => $this->PMFH_ApprovedStatus,
             'Claim_Amount' => $this->PMFH_ApprovedAmount,
             'Reimburse' => $this->PMFH_ApprovedAmount,
             'Total_Amount' => $this->PMFH_MedicalFeeClaimAmount,

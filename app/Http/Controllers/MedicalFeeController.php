@@ -21,6 +21,13 @@ class MedicalFeeController extends Controller
  
         $person = Person::where('PS_Code', 'like', '00'.auth()->user()->username)->first();
 
+
+        $returnFees = MedicalFee::medical3600Fee()
+                        ->where('PMFH_PersonID',$person->PersonID)
+                        ->whereBetween('PMFH_MedicalTreatmentBeginDate', [date($year.'-01-01'), date($year.'-12-31')])
+                        ->where('PMFH_ApprovedStatus',20)
+                        ->get();
+
         $fees = MedicalFee::medical3600Fee()
                         ->where('PMFH_PersonID',$person->PersonID)
                         ->whereBetween('PMFH_MedicalTreatmentBeginDate', [date($year.'-01-01'), date($year.'-12-31')])
@@ -30,7 +37,7 @@ class MedicalFeeController extends Controller
 
         return  response()->json([
                     'year' => (int)(($year)?:date("Y")),
-                    'total' => $fees->sum('PMFH_ApprovedAmount'),
+                    'total' => $fees->sum('PMFH_ApprovedAmount') - ( 2 * $returnFees->sum('PMFH_ApprovedAmount')) ,
                     'data' => $fees
                 ]);
 

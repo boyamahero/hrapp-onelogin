@@ -38,7 +38,7 @@
         <q-list class="q-ma-md" separator>
           <q-list-header class="text-bold">รายการเบิก</q-list-header>
           <q-item-separator />
-          <q-collapsible v-for="(expense, index) in expenses" :key="index" :label="expense.Claim_Date | dateFormatEnToTh" :sublabel="parseFloat(expense.Reimburse) | formatNumbeWithPrefix">
+          <q-collapsible v-for="(expense, index) in expenses" :key="index" :label="expense.Claim_Date | dateFormatEnToTh" :sublabel="expense | formatNumbeWithPrefix">
             <div class="row">
               <div class="col-xs-3 col-lg-2 text-bold">ผู้ป่วย</div>
               <div class="col-xs-9 col-lg-10">{{ expense.family_type || 'ตนเอง' }}</div>
@@ -68,8 +68,8 @@ export default {
       return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (parts[1] ? '.' + parts[1] : '') + ' บาท'
     },
     formatNumbeWithPrefix (val) {
-      let parts = val.toFixed(2).toString().split('.')
-      return 'ยอดเบิก ' + parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (parts[1] ? '.' + parts[1] : '') + ' บาท'
+      let parts = parseFloat(val.Reimburse).toFixed(2).toString().split('.')
+      return 'ยอดเบิก ' + (val.ApprovedStatus === '10' ? '' : '-') + parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (parts[1] ? '.' + parts[1] : '') + ' บาท'
     },
     dateFormatEnToTh (date) {
       let datetime = (date || '').split(' ')
