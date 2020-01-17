@@ -41,7 +41,7 @@
           <q-collapsible v-for="(expense, index) in expenses" :key="index" :label="expense.Claim_Date | dateFormatEnToTh" :sublabel="parseFloat(expense.Reimburse) | formatNumbeWithPrefix">
             <div class="row">
               <div class="col-xs-3 col-lg-2 text-bold">ผู้ป่วย</div>
-              <div class="col-xs-9 col-lg-10">{{ expense.family_type }}</div>
+              <div class="col-xs-9 col-lg-10">{{ expense.family_type || 'ตนเอง' }}</div>
             </div>
             <div class="row">
               <div class="col-xs-3 col-lg-2 text-bold">โรค</div>
