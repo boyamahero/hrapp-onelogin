@@ -21,8 +21,7 @@ class MedicalFee extends Model
      */
     public function scopeMedical3600Fee($query)
     {
-        return $query->where('PMFH_MedicalFeeType',50)
-                ->where('PMFH_ApprovedStatus',10);
+        return $query->where('PMFH_MedicalFeeType',50);
     }
 
     /**
