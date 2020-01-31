@@ -45,13 +45,16 @@ class WorklocationController extends Controller
  }
  
  public function saveWlupdate(Request $request)  {
+   $ZZFLBLD = $request->PWAH_Building." ชั้น ".$request->PWAH_Floor;
   $data = WLSavedata::where('PERNR',auth()->user()->username)->first();
   if($data) {
     $data->type_code = $request->WL_Type;
     $data->BEGDA = date("Y.m.d");
     $data->ZZCODE = $request->WL_Name;
     $data->ZZROMNO =  $request->PWAH_Room;
-    $data->ZZFLBLD =  $request->PWAH_Building;
+    $data->ZZFLBLD =  $ZZFLBLD;
+    $data->ZZBLD =  $request->PWAH_Building;
+    $data->ZZFL =  $request->PWAH_Floor;
     $data->ZZOFTEL =  $request->PWAH_PhoneNumber;
     $data->ZZMOBL =  $request->PWAH_MobilePhoneNumber;
     $data->GENTEXT_AT =  NULL;
@@ -63,7 +66,9 @@ class WorklocationController extends Controller
     $data->BEGDA = date("Y.m.d");
     $data->ZZCODE = $request->WL_Name;
     $data->ZZROMNO =  $request->PWAH_Room;
-    $data->ZZFLBLD =  $request->PWAH_Building;
+    $data->ZZFLBLD =  $ZZFLBLD;
+    $data->ZZBLD =  $request->PWAH_Building;
+    $data->ZZFL =  $request->PWAH_Floor;
     $data->ZZOFTEL =  $request->PWAH_PhoneNumber;
     $data->ZZMOBL =  $request->PWAH_MobilePhoneNumber;
     $data->GENTEXT_AT =  NULL;

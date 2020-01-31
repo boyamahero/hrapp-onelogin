@@ -52,13 +52,25 @@
       </q-card>
       <q-card class="q-ma-md q-px-xs">
        <q-card-title>
-          อาคาร และ ชั้น
+          อาคาร
         </q-card-title>
         <q-card-separator />
       <q-card-main>
         <p><q-input v-model="PWAH_Building" clearable/></p>
       </q-card-main>
       </q-card>
+      <q-card class="q-ma-md" v-if="SL_Floor">
+        <q-select
+          dense
+          inverted-light
+          color="white"
+          float-label="ชั้น"
+          v-model="PWAH_Floor"
+          @input="getWLdetail"
+          separator
+          :options="SL_Floor"
+   />
+     </q-card>
       <q-card class="q-ma-md q-px-xs">
        <q-card-title>
           เบอร์โทร
@@ -94,6 +106,96 @@ export default {
     return {
       SL_WL_Type: [],
       SL_WL_Name: [],
+      SL_Floor: [
+      {
+          label: 'ชั้น G',
+          value: 'G'
+        },
+        {
+          label: 'ชั้น B',
+          value: 'B'
+        },
+        {
+          label: 'ชั้น 1',
+          value: '1'
+        },
+        {
+          label: 'ชั้น 2',
+          value: '2'
+        },
+        {
+          label: 'ชั้น 3',
+          value: '3'
+        },
+        {
+          label: 'ชั้น 4',
+          value: '4'
+        },
+        {
+          label: 'ชั้น 5',
+          value: '5'
+        },
+        {
+          label: 'ชั้น 6',
+          value: '6'
+        },
+        {
+          label: 'ชั้น 7',
+          value: '7'
+        },
+        {
+          label: 'ชั้น 8',
+          value: '8'
+        },
+        {
+          label: 'ชั้น 9',
+          value: '9'
+        },
+        {
+          label: 'ชั้น 10',
+          value: '10'
+        },
+        {
+          label: 'ชั้น 11',
+          value: '11'
+        },
+        {
+          label: 'ชั้น 12',
+          value: '12'
+        },
+        {
+          label: 'ชั้น 13',
+          value: '13'
+        },
+        {
+          label: 'ชั้น 14',
+          value: '14'
+        },
+        {
+          label: 'ชั้น 15',
+          value: '15'
+        },
+        {
+          label: 'ชั้น 16',
+          value: '16'
+        },
+        {
+          label: 'ชั้น 17',
+          value: '17'
+        },
+        {
+          label: 'ชั้น 18',
+          value: '18'
+        },
+        {
+          label: 'ชั้น 19',
+          value: '19'
+        },
+        {
+          label: 'ชั้น 20',
+          value: '20'
+        }
+    ],
       WL_Data: [],
       listtempdata: [],
       WL_Province: '',
@@ -103,6 +205,7 @@ export default {
       WL_Type: null,
       PWAH_MobilePhoneNumber: null,
       PWAH_Building: null,
+      PWAH_Floor: null,
       PWAH_PhoneNumber: null,
       PWAH_Room: null
     }
@@ -127,10 +230,19 @@ export default {
             })
       }
       if (!this.PWAH_Building) {
-        this.errors.push('ไม่ได้กรอกข้อมูลอาคาร ชั้น')
+        this.errors.push('ไม่ได้กรอกข้อมูลอาคาร')
         this.$q.dialog({
               color: 'negative',
-              message: 'ไม่ได้กรอกข้อมูลอาคาร ชั้น',
+              message: 'ไม่ได้กรอกข้อมูลอาคาร',
+              icon: 'report_problem',
+              ok: 'ok'
+            })
+      }
+      if (!this.PWAH_Floor) {
+        this.errors.push('ไม่ได้กรอกข้อมูลชั้น')
+        this.$q.dialog({
+              color: 'negative',
+              message: 'ไม่ได้กรอกข้อมูลชั้น',
               icon: 'report_problem',
               ok: 'ok'
             })
@@ -180,7 +292,8 @@ export default {
           this.WL_Name = res.data.tempdata.ZZCODE
           this.getWLdetail()
           this.PWAH_MobilePhoneNumber = res.data.tempdata.ZZMOBL
-          this.PWAH_Building = res.data.tempdata.ZZFLBLD
+          this.PWAH_Building = res.data.tempdata.ZZBLD
+          this.PWAH_Floor = res.data.tempdata.ZZFL
           this.PWAH_PhoneNumber = res.data.tempdata.ZZOFTEL
           this.PWAH_Room = res.data.tempdata.ZZROMNO
           this.$q.loading.hide()
@@ -195,6 +308,7 @@ export default {
       fd.append('WL_Name', this.WL_Name)
       fd.append('PWAH_MobilePhoneNumber', this.PWAH_MobilePhoneNumber)
       fd.append('PWAH_Building', this.PWAH_Building)
+      fd.append('PWAH_Floor', this.PWAH_Floor)
       fd.append('PWAH_PhoneNumber', this.PWAH_PhoneNumber)
       fd.append('PWAH_Room', this.PWAH_Room)
       this.$axios.post('saveWlupdate', fd)
@@ -279,7 +393,10 @@ export default {
           this.WL_Name = this.user.location.PWAH_WorkLocationCode
           this.getWLdetail()
           this.PWAH_MobilePhoneNumber = this.user.mobile_number
-          this.PWAH_Building = this.user.location.PWAH_Building
+          let splbld = this.user.location.PWAH_Building.split(' ชั้น ')
+          this.PWAH_Building = splbld[0]
+          this.PWAH_Floor = splbld[1]
+          // this.PWAH_Building = this.user.location.PWAH_Building
           this.PWAH_PhoneNumber = this.user.location.PWAH_PhoneNumber
           this.PWAH_Room = this.user.location.PWAH_Room
           this.$q.loading.hide()
