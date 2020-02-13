@@ -299,7 +299,7 @@ export default {
           this.$q.loading.hide()
          this.listtempdata = res.data
       }).catch(() => {
-    this.getWldata()
+     this.getWldata()
       })
     },
     saveData () {
@@ -393,9 +393,11 @@ export default {
           this.WL_Name = this.user.location.PWAH_WorkLocationCode
           this.getWLdetail()
           this.PWAH_MobilePhoneNumber = this.user.mobile_number
+          if (this.user.location.PWAH_Building) {
           let splbld = this.user.location.PWAH_Building.split(' ชั้น ')
           this.PWAH_Building = splbld[0]
           this.PWAH_Floor = splbld[1]
+          }
           // this.PWAH_Building = this.user.location.PWAH_Building
           this.PWAH_PhoneNumber = this.user.location.PWAH_PhoneNumber
           this.PWAH_Room = this.user.location.PWAH_Room
