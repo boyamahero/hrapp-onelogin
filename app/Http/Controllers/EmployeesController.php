@@ -29,7 +29,7 @@ class EmployeesController extends Controller
         ->where('status','!=','0')
         ->first();
         header('Content-type: image/jpeg');
-        echo file_get_contents('http://10.20.56.21/IMAGE/WINFOMA/PERSON/DATA/DATA'.substr($emp->docuname,1,4).'/'.$emp->docuname.'.jpg');
+        echo file_get_contents('http://10.40.61.208/IMAGE/WINFOMA/PERSON/DATA/DATA'.substr($emp->docuname,1,4).'/'.$emp->docuname.'.jpg');
     }
 
     public function show()
