@@ -46,7 +46,9 @@ class Employee extends Model
 
     public function educations()
     {
-        return $this->hasMany('App\Education', 'employee_id', 'id');
+        return $this->hasMany('App\Education', 'PersonCode', 'id')
+                    ->orderBy('PEDH_EducationQualificationCode')
+                    ->orderBy('PEDH_EducationGraduateYear','desc');
     }
 
     public function boss()

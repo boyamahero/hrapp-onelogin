@@ -11,6 +11,6 @@ class Education extends Model
     
     protected $connection = 'HRDatabase';
 
-    protected $table = 'educations';
+    protected $table = 'PSN_STATE0_Educations';
     
 }

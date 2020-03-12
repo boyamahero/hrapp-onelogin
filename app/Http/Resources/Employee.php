@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\EducationCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Employee extends JsonResource
@@ -65,7 +66,7 @@ class Employee extends JsonResource
                 'level_date' => $this->old_dat,
                 'level_work_age' => $this->old_dat_age,
                 'positions' => $this->positions,
-                'educations' => $this->educations,
+                'educations' => new EducationCollection($this->educations),
                 'can_open' => true
             ]),
         ];
