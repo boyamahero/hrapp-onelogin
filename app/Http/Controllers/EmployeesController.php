@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Document;
 use App\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,14 +23,20 @@ class EmployeesController extends Controller
 
     public function images($id,$hash)
     {
+        // if ($hash !== base64_encode( substr(sprintf("%06d", $id),0,3) ).env('APP_SECRET','HrApP').base64_encode( substr(sprintf("%06d", $id),3,3) ) )
+        //     return null;
+
+        // $emp = Employee::where('id',$id)
+        // ->where('status','!=','0')
+        // ->first();
+        // header('Content-type: image/jpeg');
+        // echo file_get_contents('http://10.40.61.208/IMAGE/WINFOMA/PERSON/DATA/DATA'.substr($emp->docuname,1,4).'/'.$emp->docuname.'.jpg');
+
         if ($hash !== base64_encode( substr(sprintf("%06d", $id),0,3) ).env('APP_SECRET','HrApP').base64_encode( substr(sprintf("%06d", $id),3,3) ) )
             return null;
-
-        $emp = Employee::where('id',$id)
-        ->where('status','!=','0')
-        ->first();
         header('Content-type: image/jpeg');
-        echo file_get_contents('http://10.40.61.208/IMAGE/WINFOMA/PERSON/DATA/DATA'.substr($emp->docuname,1,4).'/'.$emp->docuname.'.jpg');
+        $document = Document::where('employee_code','00'.$id)->where('type','001')->first();
+        echo file_get_contents('http://10.40.61.208/IMAGE/WINFOMA/PERSON/DATA/DATA'.substr($document->docuname,1,4).'/'.$document->docuname.'.jpg');
     }
 
     public function show()
