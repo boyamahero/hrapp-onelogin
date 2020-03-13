@@ -24,10 +24,24 @@ Route::get('/geolocation/{room}', function($room) {
     return view('geolocation');
 });
 
+Route::get('/login', function() {
+    return view('login');
+});
+
+Route::get('/register/{type}', function($type) {
+    if($type=="person"){
+        return view('register_person');
+    }else{
+        return view('register_empegat');
+    }
+});
+
+Route::post('register_save/{type}','GeoLocationController@insert');
+
 Route::get('/geolocation_result/{room}/{lat}/{long}', function($room,$lat,$long) {
    
 $datalocate = array(
-	["code"=> "001","roomname"=> "สำนักงานกลาง อาคาร ท.100 ห้อง 396"],
+	["code"=> "000000","roomname"=> "สำนักงานกลาง อาคาร ท.100 ห้อง 396"],
     ["code"=> "002","roomname"=> "383 ท.100"]);
     
 $user_ip = Request::ip();
