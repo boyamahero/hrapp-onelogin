@@ -17,6 +17,32 @@ Route::get('/flush-cache', function() {
     $exitCode = Artisan::call('modelCache:clear');
 });
 
+
+Route::get('/geolocation/{room}', function($room) {
+    
+
+$datalocate = array
+(
+	["code"=> "001","roomname"=> "สำนักงานกลาง อาคาร ท.100 ห้อง 396"],
+	["code"=> "002","roomname"=> "383 ท.100"]
+);
+$homepage = file_get_contents('https://career.egat.co.th/geo.html');
+$user_ip = Request::ip();
+
+
+echo "IP: ".$user_ip; 
+echo "<br>";
+// echo "Room: ".$_GET["room"]; 
+echo "Room: ".$datalocate[0]["roomname"]; 
+echo "<br>";
+echo "Date: ".date('Y-m-d');
+echo "<br>";
+echo "Time: ".date('H:i:s');
+echo "<br><br>";
+echo "Location: ".$homepage;
+
+});
+
 // Redirect all to the front-end router
 Route::get('/{pattern?}', function() {
     return view('welcome');
