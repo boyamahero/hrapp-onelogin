@@ -3,8 +3,8 @@
     <div class="row justify-center">
       <div class="col-12">
         <q-card class="q-ma-md">
-          <q-card-main class="bg-blue-1">
-            <p class="header text-bold">แก้ไขข้อมูลสถานที่ทำงาน</p>
+          <q-card-main class="bg-blue">
+            <p class="header text-bold" style="color:white">แก้ไขข้อมูลสถานที่ทำงาน</p>
           </q-card-main>
         </q-card>
       </div>
@@ -66,7 +66,6 @@
           color="white"
           float-label="ชั้น"
           v-model="PWAH_Floor"
-          @input="getWLdetail"
           separator
           :options="SL_Floor"
    />
@@ -89,9 +88,45 @@
         <p><q-input type="text"  v-model="PWAH_MobilePhoneNumber" clearable/></p>
       </q-card-main>
       </q-card>
+       <div class="col-12">
+        <q-card class="q-ma-md">
+          <q-card-main class="bg-blue">
+            <p class="header text-bold" style="color:white">ผู้ที่สามารถติดต่อได้กรณีฉุกเฉิน</p>
+          </q-card-main>
+        </q-card>
+      </div>
+      <q-card class="q-ma-md q-px-xs">
+       <q-card-title>
+          ชื่อ-สกุล
+        </q-card-title>
+        <q-card-separator />
+      <q-card-main>
+        <p><q-input type="text"  v-model="INTM_NAME" clearable/></p>
+      </q-card-main>
+      </q-card>
+       <q-card class="q-ma-md q-px-xs">
+       <q-card-title>
+          เบอร์โทรศัพท์
+        </q-card-title>
+        <q-card-separator />
+      <q-card-main>
+        <p><q-input type="text"  v-model="INTM_TEL" clearable/></p>
+      </q-card-main>
+      </q-card>
+         <q-card class="q-ma-md" v-if="SL_Floor">
+        <q-select
+          dense
+          inverted-light
+          color="white"
+          float-label="ความสัมพันธ์"
+          v-model="INTM_RELATION"
+          separator
+          :options="SL_RELATION"
+   />
+     </q-card>
       <div class="row justify-center">
-      <q-btn class="q-ma-lg center" label="บันทึกการปรับปรุง" color="secondary" @click="checkForm"/>
       <q-btn class="q-ma-lg center" label="คืนค่าเริ่มต้น" color="warning" @click="getTempWL"/>
+      <q-btn class="q-ma-lg center" label="บันทึกการปรับปรุง" color="secondary" @click="checkForm"/>
       </div>
       </div>
     </div>
@@ -196,6 +231,32 @@ export default {
           value: '20'
         }
     ],
+    SL_RELATION: [
+      {
+          label: 'บิดา/มารดา',
+          value: 'บิดา/มารดา'
+        },
+        {
+          label: 'พี่น้อง',
+          value: 'พี่น้อง'
+        },
+        {
+          label: 'คู่สมรส',
+          value: 'คู่สมรส'
+        },
+        {
+          label: 'บุตร',
+          value: 'บุตร'
+        },
+        {
+          label: 'ญาติ',
+          value: 'ญาติ'
+        },
+        {
+          label: 'เพื่อน',
+          value: 'เพื่อน'
+        }
+    ],
       WL_Data: [],
       listtempdata: [],
       WL_Province: '',
@@ -203,6 +264,9 @@ export default {
       WL_SubDistrict: '',
       WL_Name: null,
       WL_Type: null,
+      INTM_NAME: null,
+      INTM_TEL: null,
+      INTM_RELATION: null,
       PWAH_MobilePhoneNumber: null,
       PWAH_Building: null,
       PWAH_Floor: null,
@@ -265,6 +329,33 @@ export default {
               ok: 'ok'
             })
       }
+       if (!this.INTM_NAME) {
+        this.errors.push('ไม่ได้กรอกชื่อผู้ที่สามารถติดต่อได้กรณีฉุกเฉิน')
+        this.$q.dialog({
+              color: 'negative',
+              message: 'ไม่ได้กรอกชื่อผู้ที่สามารถติดต่อได้กรณีฉุกเฉิน',
+              icon: 'report_problem',
+              ok: 'ok'
+            })
+      }
+       if (!this.INTM_TEL) {
+        this.errors.push('ไม่ได้กรอกเบอร์ผู้ที่สามารถติดต่อได้กรณีฉุกเฉิน')
+        this.$q.dialog({
+              color: 'negative',
+              message: 'ไม่ได้กรอกเบอร์ผู้ที่สามารถติดต่อได้กรณีฉุกเฉิน',
+              icon: 'report_problem',
+              ok: 'ok'
+            })
+      }
+       if (!this.INTM_RELATION) {
+        this.errors.push('ไม่ได้กรอกความสัมพันธ์ผู้ที่สามารถติดต่อได้กรณีฉุกเฉิน')
+        this.$q.dialog({
+              color: 'negative',
+              message: 'ไม่ได้กรอกความสัมพันธ์ผู้ที่สามารถติดต่อได้กรณีฉุกเฉิน',
+              icon: 'report_problem',
+              ok: 'ok'
+            })
+      }
       if (this.errors.length === 0) {
         this.$q.dialog({
           title: 'ยืนยัน',
@@ -289,13 +380,21 @@ export default {
         .then((res) => {
           this.WL_Type = res.data.tempdata.type_code
           this.getWLList()
+          if (this.SL_WL_Name || this.SL_WL_Name.length > 0) {
           this.WL_Name = res.data.tempdata.ZZCODE
+          } else {
+              this.getWLList()
+              this.WL_Name = res.data.tempdata.ZZCODE
+          }
           this.getWLdetail()
           this.PWAH_MobilePhoneNumber = res.data.tempdata.ZZMOBL
           this.PWAH_Building = res.data.tempdata.ZZBLD
           this.PWAH_Floor = res.data.tempdata.ZZFL
           this.PWAH_PhoneNumber = res.data.tempdata.ZZOFTEL
           this.PWAH_Room = res.data.tempdata.ZZROMNO
+          this.INTM_NAME = res.data.tempdata.INTM_NAME
+          this.INTM_TEL = res.data.tempdata.INTM_TEL
+          this.INTM_RELATION = res.data.tempdata.INTM_RELATION
           this.$q.loading.hide()
          this.listtempdata = res.data
       }).catch(() => {
@@ -311,6 +410,9 @@ export default {
       fd.append('PWAH_Floor', this.PWAH_Floor)
       fd.append('PWAH_PhoneNumber', this.PWAH_PhoneNumber)
       fd.append('PWAH_Room', this.PWAH_Room)
+      fd.append('INTM_NAME', this.INTM_NAME)
+      fd.append('INTM_TEL', this.INTM_TEL)
+      fd.append('INTM_RELATION', this.INTM_RELATION)
       this.$axios.post('saveWlupdate', fd)
         .then((res) => {
           this.$q.notify({
@@ -390,7 +492,12 @@ export default {
       try {
           this.WL_Type = this.user.location.PWAH_WorkLocationCode.charAt(0)
           this.getWLList()
+          if (this.SL_WL_Name || this.SL_WL_Name.length > 0) {
           this.WL_Name = this.user.location.PWAH_WorkLocationCode
+          } else {
+            this.getWLList()
+            this.WL_Name = this.user.location.PWAH_WorkLocationCode
+          }
           this.getWLdetail()
           this.PWAH_MobilePhoneNumber = this.user.mobile_number
           if (this.user.location.PWAH_Building) {

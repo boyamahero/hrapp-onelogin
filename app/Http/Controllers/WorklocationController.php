@@ -57,6 +57,9 @@ class WorklocationController extends Controller
     $data->ZZFL =  $request->PWAH_Floor;
     $data->ZZOFTEL =  $request->PWAH_PhoneNumber;
     $data->ZZMOBL =  $request->PWAH_MobilePhoneNumber;
+    $data->INTM_NAME =$request->INTM_NAME;
+    $data->INTM_TEL =$request->INTM_TEL;
+    $data->INTM_RELATION =$request->INTM_RELATION;
     $data->GENTEXT_AT =  NULL;
     $data->save();
   } else {
@@ -71,6 +74,9 @@ class WorklocationController extends Controller
     $data->ZZFL =  $request->PWAH_Floor;
     $data->ZZOFTEL =  $request->PWAH_PhoneNumber;
     $data->ZZMOBL =  $request->PWAH_MobilePhoneNumber;
+    $data->INTM_NAME =$request->INTM_NAME;
+    $data->INTM_TEL =$request->INTM_TEL;
+    $data->INTM_RELATION =$request->INTM_RELATION;
     $data->GENTEXT_AT =  NULL;
     $data->save();
   }

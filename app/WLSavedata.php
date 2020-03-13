@@ -15,7 +15,7 @@ class WLSavedata extends Model
 
     protected $table = 'work_locations';
 
-    protected $fillable = ['PERNR', 'type_code', 'BEGDA' ,'ZZCODE' ,'ZZROMNO' ,'ZZFLBLD','ZZBLD','ZZFL' ,'ZZOFTEL' ,'ZZMOBL',];
+    protected $fillable = ['PERNR', 'type_code', 'BEGDA' ,'ZZCODE' ,'ZZROMNO' ,'ZZFLBLD','ZZBLD','ZZFL' ,'ZZOFTEL' ,'ZZMOBL','INTM_NAME','INTM_TEL','INTM_RELATION',];
 
     protected $with = ['wlfullname'];
 
