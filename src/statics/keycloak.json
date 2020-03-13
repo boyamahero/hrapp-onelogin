@@ -2,9 +2,9 @@
   "realm": "EGAT",
   "auth-server-url": "https://ssolb.egat.co.th/auth",
   "ssl-required": "all",
-  "resource": "hrapp",
+  "resource": "hrapp_dev",
   "credentials": {
-    "secret": "5cc1f589-9fe9-4be6-ac4d-385c69dd29e3"
+    "secret": "b72dc7f6-39a9-44a2-9759-8822930248dd"
   },
   "confidential-port": 0
 }
