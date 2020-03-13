@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Education;
 use App\Bkpi;
-use App\Competency;
 use App\Vision;
+use App\Education;
 use App\Portfolio;
+use App\Competency;
 use App\HistoryWork;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\EducationCollection;
 
 class PortfoliosController extends Controller
 {
@@ -92,16 +93,28 @@ class PortfoliosController extends Controller
             ];
         });
 
-        $highest_degree = DB::connection('HRDatabase')->table('educations')
-            ->select('degree_id','degree_name')
-            ->where('employee_id',$id)->take(1)
-            ->orderBy('degree_id','asc')
-            ->first();
+        $highest_degree = Education::where('PersonCode','00'.$id)
+            ->selectRaw('PEDH_EducationQualificationName as degree_name')
+            ->orderBy('PEDH_EducationQualificationCode')
+             ->first();
 
-        $education = Education::select('degree_name','certificate_name','branch_name','school_name')
-            ->where('employee_id',$id)
-            ->orderBy('graduated_year','desc')
+        // $highest_degree = DB::connection('HRDatabase')->table('educations')
+        //     ->select('degree_id','degree_name')
+        //     ->where('employee_id',$id)->take(1)
+        //     ->orderBy('degree_id','asc')
+        //     ->first();
+
+
+        $educations = Education::where('PersonCode','00'.$id)
+            ->orderBy('PEDH_EducationQualificationCode')
+            ->orderBy('PEDH_EducationGraduateYear','desc')
              ->get();
+        $education = new EducationCollection($educations);
+
+        // $education = Education::select('degree_name','certificate_name','branch_name','school_name')
+        //     ->where('employee_id',$id)
+        //     ->orderBy('graduated_year','desc')
+        //      ->get();
 
         $historyWorks = HistoryWork::select(DB::raw('emp_code, MIN(works_date) AS works_date, CAST(works_dsc AS NVARCHAR(255)) AS works_dsc'))
             ->where('emp_code',$id)->take(5)

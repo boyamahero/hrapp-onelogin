@@ -26,10 +26,12 @@ class MedicalFeeController extends Controller
                         ->where('PMFH_PersonID',$person->PersonID)
                         ->whereBetween('PMFH_MedicalTreatmentBeginDate', [date($year.'-01-01'), date($year.'-12-31')])
                         ->where('PMFH_ApprovedStatus',20)
+                        ->where('PMFH_PaidFlag',1)
                         ->get();
 
         $fees = MedicalFee::medical3600Fee()
                         ->where('PMFH_PersonID',$person->PersonID)
+                        ->where('PMFH_PaidFlag',1)
                         ->whereBetween('PMFH_MedicalTreatmentBeginDate', [date($year.'-01-01'), date($year.'-12-31')])
                         ->get();
 
