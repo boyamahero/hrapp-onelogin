@@ -34,6 +34,11 @@ class Employee extends Model
         return '00'.$this->employee_code;
     }
 
+    public function getMobileNumberAttribute()
+    {
+        return $this->person->mobilephonenumber;
+    }
+
     public function org()
     {
         return $this->hasOne('App\Organization', 'org_egat_id', 'org_egat_id');
