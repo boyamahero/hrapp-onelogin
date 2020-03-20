@@ -57,6 +57,9 @@ Route::middleware(['jwt.verify'])->group(function () {
 
 });
 
+// for emergency contact person
+Route::get('/requiredEmergencyContactPerson/{employeeCode}', 'TempLocationController@exist');
+
 
 Route::get('/retire-next/{year?}/{abb?}', 'EmployeesController@retire');
 
