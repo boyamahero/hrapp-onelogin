@@ -17,7 +17,7 @@ class WorklocationController extends Controller
  }
 
  public function gettempwl() {
- Artisan::call('modelCache:clear');
+//  Artisan::call('modelCache:clear');
     $tempdata = WLSavedata::where('PERNR',auth()->user()->username)->first();
     if($tempdata){
       $wlname = Worklocation::where('WL_Code',$tempdata->ZZCODE)->pluck('WL_Name')->first();
