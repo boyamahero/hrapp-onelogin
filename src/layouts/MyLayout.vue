@@ -54,7 +54,7 @@
           <q-item-side icon="smartphone" color="yellow" inverted />
           <q-item-main label="SMART LIFE" class="text-left text-bold"/>
         </q-item>
-        <q-item @click.native="index" dark>
+        <q-item @click.native="$router.push('/')" dark>
           <q-item-side icon="home" color="blue-3" inverted />
           <q-item-main label="HRIS" class="text-left text-bold"/>
         </q-item>
