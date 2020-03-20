@@ -134,7 +134,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import { QSpinnerGears } from 'quasar'
 export default {
   data () {
@@ -274,10 +273,8 @@ export default {
       PWAH_Room: null
     }
   },
-  computed: {
-    ...mapState('user', ['user'])
-  },
   created () {
+    this.getUser()
     this.getTempWL()
     this.getWLType()
   },
@@ -369,6 +366,12 @@ export default {
         })
       }
       e.preventDefault()
+    },
+    getUser () {
+      this.$axios.get('/user')
+      .then((res) => {
+        this.user = res.data
+      })
     },
     getTempWL () {
       this.$q.loading.show({
