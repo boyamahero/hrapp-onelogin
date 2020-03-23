@@ -74,7 +74,7 @@
           <q-item-side icon="home"  @click.native="$router.push('/')" style="color:#14548a;font-size: 20px;"/>
           </q-btn>
           <q-btn flat>
-          <img src="statics/speedlogo.png" class="col-xs-9 col-lg-1 col-md-3" style="max-width: 30%;" @click.native="show(value)">
+          <img src="statics/speedlogo.png" class="col-xs-9 col-lg-1 col-md-3" style="max-width: 30%;">
           </q-btn>
           <q-btn
           flat
