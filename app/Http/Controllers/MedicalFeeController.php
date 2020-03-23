@@ -22,24 +22,26 @@ class MedicalFeeController extends Controller
         $person = Person::where('PS_Code', 'like', '00'.auth()->user()->username)->first();
 
 
-        $returnFees = MedicalFee::medical3600Fee()
-                        ->where('PMFH_PersonID',$person->PersonID)
-                        ->whereBetween('PMFH_MedicalTreatmentBeginDate', [date($year.'-01-01'), date($year.'-12-31')])
-                        ->where('PMFH_ApprovedStatus',20)
-                        ->where('PMFH_PaidFlag',1)
-                        ->get();
+        // $returnFees = MedicalFee::medical3600Fee()
+        //                 ->where('PMFH_PersonID',$person->PersonID)
+        //                 ->whereBetween('PMFH_MedicalTreatmentBeginDate', [date($year.'-01-01'), date($year.'-12-31')])
+        //                 ->where('PMFH_ApprovedStatus',20)
+        //                 ->where('PMFH_PaidFlag',1)
+        //                 ->get();
 
         $fees = MedicalFee::medical3600Fee()
                         ->where('PMFH_PersonID',$person->PersonID)
-                        ->where('PMFH_PaidFlag',1)
-                        ->whereBetween('PMFH_MedicalTreatmentBeginDate', [date($year.'-01-01'), date($year.'-12-31')])
+                        ->where('PMFH_ApprovedStatus',10)
+                        ->where('PMFH_DataStatus',100)
+                        ->whereBetween('PMFH_ReceiptDate', [date($year.'-01-01'), date($year.'-12-31')])
                         ->get();
 
         $fees = new MedicalFeeCollection($fees);                        
 
         return  response()->json([
                     'year' => (int)(($year)?:date("Y")),
-                    'total' => $fees->sum('PMFH_ApprovedAmount') - ( 2 * $returnFees->sum('PMFH_ApprovedAmount')) ,
+                    // 'total' => $fees->sum('PMFH_ApprovedAmount') - ( 2 * $returnFees->sum('PMFH_ApprovedAmount')) ,
+                    'total' => $fees->sum('PMFH_ApprovedAmount'),
                     'data' => $fees
                 ]);
 
