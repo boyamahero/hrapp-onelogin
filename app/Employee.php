@@ -72,8 +72,7 @@ class Employee extends Model
 
     public function templocation()
     {
-        return $this->hasOne('App\WLSavedata', 'PERNR', 'id')
-                ->whereNull('GENTEXT_AT');
+        return $this->hasOne('App\WLSavedata', 'PERNR', 'id');
     }
 
 }

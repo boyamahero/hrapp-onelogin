@@ -125,7 +125,7 @@
    />
      </q-card>
       <div class="row justify-center">
-      <q-btn class="q-ma-lg center" label="คืนค่าเริ่มต้น" color="warning" @click="getTempWL"/>
+      <q-btn class="q-ma-lg center" label="คืนค่าเริ่มต้น" color="warning" @click="getTemplocation"/>
       <q-btn class="q-ma-lg center" label="บันทึกการปรับปรุง" color="secondary" @click="checkForm"/>
       </div>
       </div>
@@ -257,7 +257,7 @@ export default {
         }
     ],
       WL_Data: [],
-      listtempdata: [],
+      // listtempdata: [],
       WL_Province: '',
       WL_District: '',
       WL_SubDistrict: '',
@@ -279,10 +279,119 @@ export default {
     }
   },
   created () {
-    this.getTempWL()
+    this.createForm()
     this.getWLType()
   },
   methods: {
+    createForm () {
+      if (this.user.templocation) {
+        this.getTemplocation()
+      } else {
+        this.getLocation()
+      }
+    },
+    getTemplocation () {
+      this.$q.loading.show({
+        spinner: QSpinnerGears,
+        spinnerColor: 'yellow',
+        spinnerSize: 140
+      })
+      let templocation = this.user.templocation
+      this.WL_Type = templocation.type_code
+      this.getWLList()
+      this.WL_Name = templocation.ZZCODE
+      this.getWLdetail()
+      this.PWAH_MobilePhoneNumber = templocation.ZZMOBL
+      this.PWAH_Building = templocation.ZZBLD
+      this.PWAH_Floor = templocation.ZZFL
+      this.PWAH_PhoneNumber = templocation.ZZOFTEL
+      this.PWAH_Room = templocation.ZZROMNO
+      this.INTM_NAME = templocation.INTM_NAME
+      this.INTM_TEL = templocation.INTM_TEL
+      this.INTM_RELATION = templocation.INTM_RELATION
+      this.$q.loading.hide()
+    },
+    getLocation () {
+      this.$q.loading.show({
+        spinner: QSpinnerGears,
+        spinnerColor: 'yellow',
+        spinnerSize: 140
+      })
+      let location = this.user.location
+      try {
+          this.WL_Type = location.PWAH_WorkLocationCode.charAt(0)
+          this.getWLList()
+          this.WL_Name = location.PWAH_WorkLocationCode
+          this.getWLdetail()
+          this.PWAH_MobilePhoneNumber = this.user.mobile_number
+          if (location.PWAH_Building) {
+          let splbld = location.PWAH_Building.split(' ชั้น ')
+          this.PWAH_Building = splbld[0]
+          this.PWAH_Floor = splbld[1]
+          }
+          // this.PWAH_Building = location.PWAH_Building
+          this.PWAH_PhoneNumber = location.PWAH_PhoneNumber
+          this.PWAH_Room = location.PWAH_Room
+          this.$q.loading.hide()
+      } catch (error) {
+        this.$q.loading.hide()
+            this.$q.dialog({
+              color: 'negative',
+              message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
+              icon: 'report_problem',
+              ok: 'ok'
+            })
+      }
+    },
+    getWLType () {
+      this.$axios.get('getwltype')
+        .then((res) => {
+          this.SL_WL_Type = res.data
+      }).catch(() => {
+        this.$q.dialog({
+          color: 'negative',
+          message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
+          icon: 'report_problem',
+          ok: 'ok'
+        }).then(() => {
+          // this.$router.push({name: 'login'})
+        })
+      })
+    },
+    getWLList () {
+      this.SL_WL_Name = []
+      this.WL_Name = ''
+      this.$axios.get('getwllist/' + this.WL_Type)
+        .then((res) => {
+          this.SL_WL_Name = res.data
+      }).catch(() => {
+        this.$q.dialog({
+          color: 'negative',
+          message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
+          icon: 'report_problem',
+          ok: 'ok'
+        }).then(() => {
+          // this.$router.push({name: 'login'})
+        })
+      })
+    },
+    getWLdetail () {
+      this.$axios.get('getwladdress/' + this.WL_Name)
+        .then((res) => {
+          this.WL_Province = res.data[0].WL_Province
+          this.WL_District = res.data[0].WL_District
+          this.WL_SubDistrict = res.data[0].WL_SubDistrict
+      }).catch(() => {
+        this.$q.dialog({
+          color: 'negative',
+          message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
+          icon: 'report_problem',
+          ok: 'ok'
+        }).then(() => {
+          // this.$router.push({name: 'login'})
+        })
+      })
+    },
     checkForm: function (e) {
       this.errors = []
       if (!this.PWAH_MobilePhoneNumber) {
@@ -371,37 +480,6 @@ export default {
       }
       e.preventDefault()
     },
-    getTempWL () {
-      this.$q.loading.show({
-        spinner: QSpinnerGears,
-        spinnerColor: 'yellow',
-        spinnerSize: 140
-      })
-      this.$axios.get('gettempwl')
-        .then((res) => {
-          this.WL_Type = res.data.tempdata.type_code
-          this.getWLList()
-          if (this.SL_WL_Name || this.SL_WL_Name.length > 0) {
-          this.WL_Name = res.data.tempdata.ZZCODE
-          } else {
-              this.getWLList()
-              this.WL_Name = res.data.tempdata.ZZCODE
-          }
-          this.getWLdetail()
-          this.PWAH_MobilePhoneNumber = res.data.tempdata.ZZMOBL
-          this.PWAH_Building = res.data.tempdata.ZZBLD
-          this.PWAH_Floor = res.data.tempdata.ZZFL
-          this.PWAH_PhoneNumber = res.data.tempdata.ZZOFTEL
-          this.PWAH_Room = res.data.tempdata.ZZROMNO
-          this.INTM_NAME = res.data.tempdata.INTM_NAME
-          this.INTM_TEL = res.data.tempdata.INTM_TEL
-          this.INTM_RELATION = res.data.tempdata.INTM_RELATION
-          this.$q.loading.hide()
-         this.listtempdata = res.data
-      }).catch(() => {
-     this.getWldata()
-      })
-    },
     saveData () {
       const fd = new FormData()
       fd.append('WL_Type', this.WL_Type)
@@ -434,94 +512,9 @@ export default {
           // this.$router.push({name: 'login'})
         })
       })
-    },
-    getWLType () {
-      this.$axios.get('getwltype')
-        .then((res) => {
-          this.SL_WL_Type = res.data
-      }).catch(() => {
-        this.$q.dialog({
-          color: 'negative',
-          message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
-          icon: 'report_problem',
-          ok: 'ok'
-        }).then(() => {
-          // this.$router.push({name: 'login'})
-        })
-      })
-    },
-    getWLList () {
-      this.SL_WL_Name = []
-      this.WL_Name = ''
-      this.$axios.get('getwllist/' + this.WL_Type)
-        .then((res) => {
-          this.SL_WL_Name = res.data
-      }).catch(() => {
-        this.$q.dialog({
-          color: 'negative',
-          message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
-          icon: 'report_problem',
-          ok: 'ok'
-        }).then(() => {
-          // this.$router.push({name: 'login'})
-        })
-      })
-    },
-    getWLdetail () {
-      this.$axios.get('getwladdress/' + this.WL_Name)
-        .then((res) => {
-          this.WL_Province = res.data[0].WL_Province
-          this.WL_District = res.data[0].WL_District
-          this.WL_SubDistrict = res.data[0].WL_SubDistrict
-      }).catch(() => {
-        this.$q.dialog({
-          color: 'negative',
-          message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
-          icon: 'report_problem',
-          ok: 'ok'
-        }).then(() => {
-          // this.$router.push({name: 'login'})
-        })
-      })
-    },
-    getWldata () {
-      this.$q.loading.show({
-        spinner: QSpinnerGears,
-        spinnerColor: 'yellow',
-        spinnerSize: 140
-      })
-      try {
-          this.WL_Type = this.user.location.PWAH_WorkLocationCode.charAt(0)
-          this.getWLList()
-          if (this.SL_WL_Name || this.SL_WL_Name.length > 0) {
-          this.WL_Name = this.user.location.PWAH_WorkLocationCode
-          } else {
-            this.getWLList()
-            this.WL_Name = this.user.location.PWAH_WorkLocationCode
-          }
-          this.getWLdetail()
-          this.PWAH_MobilePhoneNumber = this.user.mobile_number
-          if (this.user.location.PWAH_Building) {
-          let splbld = this.user.location.PWAH_Building.split(' ชั้น ')
-          this.PWAH_Building = splbld[0]
-          this.PWAH_Floor = splbld[1]
-          }
-          // this.PWAH_Building = this.user.location.PWAH_Building
-          this.PWAH_PhoneNumber = this.user.location.PWAH_PhoneNumber
-          this.PWAH_Room = this.user.location.PWAH_Room
-          this.$q.loading.hide()
-      } catch (error) {
-        this.$q.loading.hide()
-            this.$q.dialog({
-              color: 'negative',
-              message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
-              icon: 'report_problem',
-              ok: 'ok'
-            })
-      }
     }
   }
-  }
+}
 </script>
 
 <style>
