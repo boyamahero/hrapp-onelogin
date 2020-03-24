@@ -88,47 +88,27 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
-// import 'vue-image-zoom/dist/vue-image-zoom.css'
-// import Vue from 'vue'
-// Vue.use(zoom)
 export default {
   name: 'MyLayout',
+  preFetch ({ store }) {
+    return store.dispatch('employee/setEmployee')
+  },
   data () {
     return {
-      // leftDrawerOpen: this.$q.platform.is.desktop
       leftDrawerOpen: false
     }
   },
-  mounted () {
-    this.setUser()
-      .then()
-      .catch((err) => {
-        let message = 'ไม่พบข้อมูลผู้ปฏิบัติงาน'
-        if (err.message === 'Request failed with status code 401') {
-          message = 'กรุณาเข้าระบบใหม่'
-        }
-        this.$q.dialog({
-          color: 'negative',
-          message: message,
-          icon: 'report_problem',
-          ok: 'ok'
-        }).then(() => {
-          this.$router.push({name: 'smartlife'})
-        })
-      })
-  },
   computed: {
-    ...mapState('user', ['user'])
+    user () {
+      return this.$store.state.employee.employee
+    }
   },
   methods: {
-    ...mapActions('user', ['setUser']),
     smartlife () {
       this.$router.push({name: 'smartlife'})
     },
     logout () {
       this.logoutloading = true
-
       var keycloakAuth = this.$store.getters.SECURITY_AUTH
       keycloakAuth.logout()
       this.$store.dispatch('authLogout')

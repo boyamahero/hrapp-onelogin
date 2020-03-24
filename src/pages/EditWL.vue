@@ -273,8 +273,12 @@ export default {
       PWAH_Room: null
     }
   },
+  computed: {
+    user () {
+      return this.$store.state.employee.employee
+    }
+  },
   created () {
-    this.getUser()
     this.getTempWL()
     this.getWLType()
   },
@@ -367,12 +371,6 @@ export default {
       }
       e.preventDefault()
     },
-    getUser () {
-      this.$axios.get('/user')
-      .then((res) => {
-        this.user = res.data
-      })
-    },
     getTempWL () {
       this.$q.loading.show({
         spinner: QSpinnerGears,
@@ -425,7 +423,7 @@ export default {
              icon: 'done',
              timeout: 1000
             })
-          this.getTempWL()
+          this.$store.dispatch('employee/setEmployee')
       }).catch(() => {
         this.$q.dialog({
           color: 'negative',

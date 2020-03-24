@@ -15,19 +15,19 @@
                   <q-btn flat style="color: #f96160" label="แก้ไขข้อมูล" icon="edit" @click="$router.push('/editwl')"/>
                 </div>
                 <q-card-separator class="q-mt-xs"/>
-                <div v-if="listtempdata.tempdata">
-                  <p>สถานที่ทำงาน : {{listtempdata.wlname}}</p>
-                  <p>ห้อง : {{listtempdata.tempdata.ZZROMNO}}</p>
-                  <p>อาคารและชั้น : {{listtempdata.tempdata.ZZFLBLD}}</p>
-                  <p>เบอร์ติดต่อภายใน. : {{listtempdata.tempdata.ZZOFTEL}}</p>
-                  <p>เบอร์ติดต่อมือถือ : {{listtempdata.tempdata.ZZMOBL}}</p>
+                <div v-if="user.templocation">
+                  <p>สถานที่ทำงาน : {{user.templocation.wlfullname.WL_Name}}</p>
+                  <p>อาคารและชั้น : {{user.templocation.ZZFLBLD}}</p>
+                  <p>ห้อง : {{user.templocation.ZZROMNO}}</p>
+                  <p>เบอร์ติดต่อภายใน. : {{user.templocation.ZZOFTEL}}</p>
+                  <p>เบอร์ติดต่อมือถือ : {{user.templocation.ZZMOBL}}</p>
                 </div>
                 <div v-else>
-                  <p v-if="user.location">สถานที่ทำงาน : {{user.location.PWAH_Name}}</p>
-                  <p v-if="user.location">ห้อง : {{user.location.PWAH_Room}}</p>
-                  <p v-if="user.location">อาคารและชั้น : {{user.location.PWAH_Building}}</p>
-                  <p v-if="user.location">เบอร์ติดต่อภายใน : {{user.location.PWAH_PhoneNumber}}</p>
-                  <p v-if="user.location">เบอร์ติดต่อมือถือ : {{user.mobile_number}}</p>
+                  <p>สถานที่ทำงาน : {{user.location.PWAH_Name}}</p>
+                  <p>อาคารและชั้น : {{user.location.PWAH_Building}}</p>
+                  <p>ห้อง : {{user.location.PWAH_Room}}</p>
+                  <p>เบอร์ติดต่อภายใน : {{user.location.PWAH_PhoneNumber}}</p>
+                  <p>เบอร์ติดต่อมือถือ : {{user.mobile_number}}</p>
                 </div>
               </q-card-main>
             </q-card>
@@ -110,36 +110,20 @@
 </style>
 
 <script>
-import { mapState } from 'vuex'
 export default {
   name: 'PageIndex',
   data () {
     return {
-      listtempdata: []
     }
   },
   computed: {
-    ...mapState('user', ['user'])
+    user () {
+      return this.$store.state.employee.employee
+    }
   },
   created () {
-    this.getTempWL()
   },
   methods: {
-    getTempWL () {
-      this.$axios.get('gettempwl')
-        .then((res) => {
-         this.listtempdata = res.data
-      }).catch(() => {
-        this.$q.dialog({
-          color: 'negative',
-          message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
-          icon: 'report_problem',
-          ok: 'ok'
-        }).then(() => {
-          // this.$router.push({name: 'login'})
-        })
-      })
-    },
     convertThaiMonth (month) {
       var ThaiMonth = ''
       switch (month) {
