@@ -20,11 +20,11 @@ export default function (/* { ssrContext } */) {
       token,
       user,
       employee
-    },
+    }
 
     // enable strict mode (adds overhead!)
     // for dev mode only
-    strict: process.env.DEV
+    // strict: process.env.DEV
   })
 
   /*
@@ -34,12 +34,12 @@ export default function (/* { ssrContext } */) {
     get into our production build (and it shouldn't).
   */
 
-  if (process.env.DEV && module.hot) {
+  // if (process.env.DEV && module.hot) {
     module.hot.accept(['./employee'], () => {
       const Employee = require('./employee').default
       Store.hotUpdate({ modules: { employee: Employee } })
     })
-  }
+  // }
 
   return Store
 }
