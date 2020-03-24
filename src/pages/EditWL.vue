@@ -501,7 +501,7 @@ export default {
              icon: 'done',
              timeout: 1000
             })
-          this.$store.dispatch('employee/setEmployee')
+          this.$store.dispatch('employee/setEmployee').then(this.$router.push('/'))
       }).catch(() => {
         this.$q.dialog({
           color: 'negative',
