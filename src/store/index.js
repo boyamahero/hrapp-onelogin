@@ -20,7 +20,7 @@ export default function (/* { ssrContext } */) {
       token,
       user,
       employee
-    },
+    }
 
     // enable strict mode (adds overhead!)
     // for dev mode only
