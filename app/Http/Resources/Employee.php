@@ -44,7 +44,7 @@ class Employee extends JsonResource
             'org_level' => $this->org->org_level,
             'is_boss' => $this->is_boss,
             'person_location' => $this->person->FirstLocation,
-            'templocation' => $this->templocation ? $this->templocation->makeHidden('ZZMOBL'):null,
+            'templocation' => $this->templocation ? $this->templocation->makeHidden(['ZZMOBL','INTM_NAME','INTM_TEL','INTM_RELATION','GENTEXT_AT']):null,
             $this->mergeWhen(Auth::user()->hasRole('admin') ||
             (
                 Auth::user()->employee->is_boss && 
