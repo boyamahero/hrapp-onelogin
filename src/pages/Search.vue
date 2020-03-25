@@ -75,7 +75,7 @@
                 <div v-if='employee.templocation'>
                   {{ log(employee.templocation) }}
                   <q-item-tile class="q-body-1" v-if='employee.templocation.wlfullname !== null'><q-icon name="room" /> {{ employee.templocation.wlfullname.WL_Name }}</q-item-tile>
-                  <q-item-tile class="q-body-1"> &nbsp;&nbsp;&nbsp;&nbsp; {{ employee.templocation.ZZFLBLD }}<span> ห้อง {{ employee.templocation.ZZROMNO.replace('ห้อง','') || '-' }}</span></q-item-tile>
+                  <q-item-tile class="q-body-1"> &nbsp;&nbsp;&nbsp;&nbsp; {{ employee.templocation.ZZFLBLD }}<span> ห้อง {{ employee.templocation.ZZROMNO.replace('ห้อง','') }}</span></q-item-tile>
                   <q-item-tile class="q-body-1"><q-icon name="call" /> {{ employee.templocation.ZZOFTEL }}</q-item-tile>
                 </div>
                 <div v-else>
