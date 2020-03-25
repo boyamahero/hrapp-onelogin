@@ -72,13 +72,17 @@
                   <span> {{employee.department_abb }}<q-tooltip self="center right" color="black" class="q-body-2 text-primary bg-green-2">{{ employee.department_full }}</q-tooltip></span>
                   <span> {{employee.section_abb }}<q-tooltip self="center right" color="black" class="q-body-2 text-primary bg-green-2">{{ employee.section_full }}</q-tooltip></span>
                 </q-item-tile>
-                <q-item-tile class="q-body-1" v-if="employee.person_location && !employee.templocation"><q-icon name="room" /> {{ employee.person_location.PWAH_Name }}</q-item-tile>
-                <q-item-tile class="q-body-1" v-if="employee.person_location && !employee.templocation && (employee.person_location.PWAH_Building !==  null || employee.person_location.PWAH_Room !== null)"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ employee.person_location.PWAH_Building }} <span v-if="employee.person_location.PWAH_Room &&  employee.person_location.PWAH_Room!= null">ห้อง {{employee.person_location.PWAH_Room.replace('ห้อง','')}} </span></q-item-tile>
-                <q-item-tile class="q-body-1" v-if="employee.person_location && !employee.templocation && (employee.person_location.PWAH_PhoneNumber &&  employee.person_location.PWAH_PhoneNumber!='-')"><q-icon name="call" /> {{ employee.person_location.PWAH_PhoneNumber }}</q-item-tile>
-
-                <q-item-tile class="q-body-1" v-if="employee.templocation"><q-icon name="room" /> {{ employee.templocation.wlfullname.WL_Name }}</q-item-tile>
-                <q-item-tile class="q-body-1" v-if="employee.templocation && (employee.templocation.ZZFLBLD !==  null || employee.templocation.ZZROMNO !== null)"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ employee.templocation.ZZFLBLD }} <span v-if="employee.templocation.ZZROMNO &&  employee.templocation.ZZROMNO!= null">ห้อง {{employee.templocation.ZZROMNO.replace('ห้อง','')}} </span></q-item-tile>
-                <q-item-tile class="q-body-1" v-if="employee.templocation && (employee.templocation.ZZOFTEL &&  employee.templocation.ZZOFTEL!='-')"><q-icon name="call" /> {{ employee.templocation.ZZOFTEL }}</q-item-tile>
+                <div v-if='employee.templocation'>
+                  {{ log(employee.templocation) }}
+                  <q-item-tile class="q-body-1" v-if='employee.templocation.wlfullname !== null'><q-icon name="room" /> {{ employee.templocation.wlfullname.WL_Name }}</q-item-tile>
+                  <q-item-tile class="q-body-1"> &nbsp;&nbsp;&nbsp;&nbsp; {{ employee.templocation.ZZFLBLD }}<span> ห้อง {{ employee.templocation.ZZROMNO.replace('ห้อง','') || '-' }}</span></q-item-tile>
+                  <q-item-tile class="q-body-1"><q-icon name="call" /> {{ employee.templocation.ZZOFTEL }}</q-item-tile>
+                </div>
+                <div v-else>
+                  <q-item-tile class="q-body-1"><q-icon name="room" /> {{ employee.person_location.PWAH_Name }}</q-item-tile>
+                  <q-item-tile class="q-body-1"> &nbsp;&nbsp;&nbsp;&nbsp; {{ employee.person_location.PWAH_Building }}<span> ห้อง {{ employee.person_location.PWAH_Room }}</span></q-item-tile>
+                  <q-item-tile class="q-body-1"><q-icon name="call" /> {{ employee.person_location.PWAH_PhoneNumber }}</q-item-tile>
+                </div>
                 <q-item-tile class="q-body-1" v-if="employee.mobile_number"><q-icon name="smartphone" /> {{ employee.mobile_number }}</q-item-tile>
               </q-item-main>
             </q-item>
@@ -390,6 +394,11 @@ export default {
     }
   },
   methods: {
+    log (templocation) {
+      if (typeof (templocation.wlfullname) === 'undefined' || templocation.wlfullname === null) {
+        console.log(templocation)
+      }
+    },
     itemClicked (item) {
       this.employee = item
       this.maximizedModal = true
