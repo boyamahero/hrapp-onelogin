@@ -53,7 +53,7 @@
                   <div class="col-12">
                     <q-icon v-if="employee.can_open" name="fas fa-search-plus" @click.native="itemClicked(employee)" :color="employee.is_boss?'white':'primary'"/>
                     <q-icon v-if="employee.work_from_home" name="fas fa-home" :color="employee.is_boss?'white':'secondary'">
-                      <q-tooltip self="center right" color="black" class="q-body-2 text-primary bg-green-2">Work From Home</q-tooltip>
+                      <q-tooltip color="black" class="q-body-2 text-primary bg-green-2">Work From Home</q-tooltip>
                     </q-icon>
                   </div>
                 </div>

@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\EducationCollection;
+use App\Http\Resources\WorkFromHomeCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Employee extends JsonResource
@@ -46,7 +47,7 @@ class Employee extends JsonResource
             'is_boss' => $this->is_boss,
             'person_location' => $this->person->FirstLocation,
             'templocation' => $this->templocation ? $this->templocation->makeHidden(['ZZMOBL','INTM_NAME','INTM_TEL','INTM_RELATION','GENTEXT_AT']):null,
-            'work_from_home' => $this->workFromHome()->where('BeginAt','<=',Carbon::now())->where('EndAt','>=',Carbon::now())->first(),
+            'work_from_home' => $this->workFromHome()->where('BeginAt','<=',Carbon::now())->where('EndAt','>=',Carbon::now())->exists(),
             $this->mergeWhen(Auth::user()->hasRole('admin') ||
             (
                 Auth::user()->employee->is_boss && 
