@@ -75,4 +75,9 @@ class Employee extends Model
         return $this->hasOne('App\WLSavedata', 'PERNR', 'id');
     }
 
+    public function workFromHome()
+    {
+        return $this->hasMany('App\WorkFromHome', 'EmpNo', 'employee_code');
+    }
+
 }
