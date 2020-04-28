@@ -30,8 +30,8 @@
       <button type="button" class="btn btn-info btn-to-top"><i class="fa fa-chevron-up"></i></button>
     </back-to-top>
     </div>
-    <div class="absolute-bottom-right" v-if="data_date != ''">
-      <div class="q-my-xs"><small>ข้อมูลล่าสุดวันที่ {{data_date}}</small></div>
+    <div class="absolute-bottom-right q-mr-md" v-if="data_date != ''">
+      <div class="q-my-xs"><small>ข้อมูล ณ วันที่ {{data_date}}</small></div>
     </div>
    </q-page>
 </template>
