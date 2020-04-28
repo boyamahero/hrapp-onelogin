@@ -67,10 +67,11 @@ module.exports = function (ctx) {
     devServer: {
       // https: true,
       // port: 8080,
-      open: true, // opens browser window automatically
+      watchOptions: { poll: true },
+      open: false, // opens browser window automatically
       proxy: [{
         context: ['/api', '/storage'],
-        target: 'http://localhost:8000', // laravel end-point
+        target: 'http://127.0.0.1:8000', // laravel end-point
       }],
       historyApiFallback: true
     },
