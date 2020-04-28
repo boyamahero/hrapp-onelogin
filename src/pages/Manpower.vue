@@ -30,6 +30,9 @@
       <button type="button" class="btn btn-info btn-to-top"><i class="fa fa-chevron-up"></i></button>
     </back-to-top>
     </div>
+    <div class="absolute-bottom-right" v-if="data_date != ''">
+      <div class="q-my-xs"><small>ข้อมูลล่าสุดวันที่ {{data_date}}</small></div>
+    </div>
    </q-page>
 </template>
 
@@ -59,7 +62,10 @@ export default {
         credits: {
           enabled: false
         }
-      }
+      },
+      data_date: '',
+      data_type: '',
+      data_contact: ''
     }
 },
   mounted () {
@@ -71,6 +77,9 @@ export default {
       this.$axios.get('manpower')
         .then((res) => {
           let data = res.data.data
+          this.data_date = res.data.data_date
+          this.data_type = res.data.data_type
+          this.data_contact = res.data.contact_us
           for (let i = 0; i < data.length; i++) {
             if (data[i].deputy_abb === '' || null) {
               data[i].deputy_abb = 'ส่วนกลาง'
@@ -100,7 +109,7 @@ export default {
       })
       let option = {
         title: {
-          text: 'จำนวนผู้ปฏิบัติงาน'
+          text: 'จำนวนผู้ปฏิบัติเฉพาะ' + this.data_type
         },
         subtitle: {
           text: 'ภาพรวม กฟผ. จำนวน ' + total.toLocaleString() + ' คน'

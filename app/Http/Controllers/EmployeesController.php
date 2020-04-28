@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\User;
 use App\Document;
 use App\Employee;
@@ -110,7 +111,7 @@ class EmployeesController extends Controller
             case "1":
               $orgs = DB::connection('HRDatabase')->table('load_hhr00005')
                         ->select(DB::raw('count(*) as employee_count, assistant_abb'))
-                        ->where('data_status','!=','0')->whereIn('employee_group',[1,2,5,9])
+                        ->where('data_status','!=','0')->whereIn('employee_group',[1,2,5])
                         ->where('deputy_abb',$abb)
                         ->where('organization_type','O')
                         ->where('percentage',100)
@@ -120,7 +121,7 @@ class EmployeesController extends Controller
             case "2":
               $orgs = DB::connection('HRDatabase')->table('load_hhr00005')
                         ->select(DB::raw('count(*) as employee_count, division_abb'))
-                        ->where('data_status','!=','0')->whereIn('employee_group',[1,2,5,9])
+                        ->where('data_status','!=','0')->whereIn('employee_group',[1,2,5])
                         ->where('assistant_abb',$abb)
                         ->where('organization_type','O')
                         ->where('percentage',100)
@@ -130,7 +131,7 @@ class EmployeesController extends Controller
             case "3":
               $orgs = DB::connection('HRDatabase')->table('load_hhr00005')
                         ->select(DB::raw('count(*) as employee_count, department_abb'))
-                        ->where('data_status','!=','0')->whereIn('employee_group',[1,2,5,9])
+                        ->where('data_status','!=','0')->whereIn('employee_group',[1,2,5])
                         ->where('division_abb',$abb)
                         ->where('organization_type','O')
                         ->where('percentage',100)
@@ -140,7 +141,7 @@ class EmployeesController extends Controller
             case "4":
               $orgs = DB::connection('HRDatabase')->table('load_hhr00005')
                       ->select(DB::raw('count(*) as employee_count, section_abb'))
-                      ->where('data_status','!=','0')->whereIn('employee_group',[1,2,5,9])
+                      ->where('data_status','!=','0')->whereIn('employee_group',[1,2,5])
                       ->where('department_abb',$abb)
                       ->where('organization_type','O')
                       ->where('percentage',100)
@@ -150,15 +151,24 @@ class EmployeesController extends Controller
             default:
                 $orgs = DB::connection('HRDatabase')->table('load_hhr00005')
                         ->select(DB::raw('count(*) as employee_count, deputy_abb'))
-                        ->where('data_status','!=','0')->whereIn('employee_group',[1,2,5,9])
+                        ->where('data_status','!=','0')->whereIn('employee_group',[1,2,5])
                         ->where('organization_type','O')
                         ->where('percentage',100)
                         ->groupBy('deputy_abb')
                         ->get();
               }
+            $data_date = DB::connection('HRDatabase')->table('transfer_tables')
+            ->where('table_name','hhr00005')
+            ->first();
+
+            $dt = Carbon::parse($data_date->updated_at);
+            $dt->subDay(1);
         
         return response()->json([
-              'data' => $orgs
+              'data' => $orgs,
+              'data_type' => 'พนักงาน และพนักงานสัญญาจ้างพิเศษ',
+              'data_date' => $this->formatDateThat($dt),
+              'contact_us' => 'คุณธนากร จะโต หบค-ห. กทห-ห. อจส. โทร. 64452'
           ]);
     }
 
@@ -210,5 +220,15 @@ class EmployeesController extends Controller
             'retire_total' => $retireSum,
             'retire_years' => $retireYears,
         ]);
+    }
+
+    function formatDateThat($date)
+    {
+        $strYear = date("Y",strtotime($date))+543;
+        $strMonth= date("n",strtotime($date));
+        $strDay= date("j",strtotime($date));
+        $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+        $strMonthThai=$strMonthCut[$strMonth];
+        return "$strDay $strMonthThai $strYear";
     }
 }
