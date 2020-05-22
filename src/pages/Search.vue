@@ -81,10 +81,15 @@
                   <q-item-tile class="q-body-1"> &nbsp;&nbsp;&nbsp;&nbsp; {{ employee.templocation.ZZFLBLD }}<span> ห้อง {{ employee.templocation.ZZROMNO.replace('ห้อง','') || '-' }}</span></q-item-tile>
                   <q-item-tile class="q-body-1"><q-icon name="call" /> {{ employee.templocation.ZZOFTEL }}</q-item-tile>
                 </div>
-                <div v-else>
+                <div v-else-if='employee.person_location'>
                   <q-item-tile class="q-body-1"><q-icon name="room" /> {{ employee.person_location.PWAH_Name }}</q-item-tile>
                   <q-item-tile class="q-body-1"> &nbsp;&nbsp;&nbsp;&nbsp; {{ employee.person_location.PWAH_Building }}<span> ห้อง {{ employee.person_location.PWAH_Room }}</span></q-item-tile>
                   <q-item-tile class="q-body-1"><q-icon name="call" /> {{ employee.person_location.PWAH_PhoneNumber }}</q-item-tile>
+                </div>
+                <div v-else>
+                  <q-item-tile class="q-body-1"><q-icon name="room" /> - </q-item-tile>
+                  <q-item-tile class="q-body-1"> &nbsp;&nbsp;&nbsp;&nbsp; - </q-item-tile>
+                  <q-item-tile class="q-body-1"><q-icon name="call" /> - </q-item-tile>
                 </div>
                 <q-item-tile class="q-body-1" v-if="employee.mobile_number"><q-icon name="smartphone" /> {{ employee.mobile_number }}</q-item-tile>
               </q-item-main>
