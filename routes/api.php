@@ -59,7 +59,7 @@ Route::middleware(['jwt.verify'])->group(function () {
   //hrapi
 });
 
-Route::middleware(['auth.role:admin'])->group(function () {
+Route::middleware(['auth.role:hrrepot'])->group(function () {
   Route::get('/persons', 'HRAPIController@persons');
 });
 
