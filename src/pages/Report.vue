@@ -353,6 +353,7 @@ export default {
       })
         .then((res) => {
           this.meta = res.data.meta
+          this.persons = []
           res.data.data.forEach(person => {
             if (person.organizations) {
               person.organizations.forEach(organization => {
