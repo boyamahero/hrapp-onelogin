@@ -16,15 +16,16 @@
         </q-btn>
 
         <q-toolbar-title class="q-ml-md">
-          HR Search
-          <div slot="subtitle" class="q-subheading">สอบถามข้อมูลบุคคลและหมายเลขโทรศัพท์</div>
+          {{ $route.meta.title }}
+          <div
+            slot="subtitle"
+            class="q-subheading"
+          >{{ $route.meta.description }}</div>
         </q-toolbar-title>
       </q-toolbar>
     </q-layout-header>
 
-    <q-layout-drawer
-      v-model="leftDrawerOpen"
-    >
+    <q-layout-drawer v-model="leftDrawerOpen">
       <q-list
         separator
         border
@@ -33,29 +34,79 @@
       >
         <q-list-header class="text-weight-bolder text-center uppercase">
           <div class="row justify-center">
-            <div class="col-xs-8 text-right self-center" style="padding-right:10px">
+            <div
+              class="col-xs-8 text-right self-center"
+              style="padding-right:10px"
+            >
               <div class="title">{{user.name}}</div>
               <div class="subtitle">{{ user.name_english }}</div>
               <div class="subtitle">{{ user.position_combine_abb }}</div>
               <div class="subtitle">{{ user.org_path }}</div>
             </div>
             <div class="col-xs-4 text-center self-center">
-                <img :src="user.image_path" class="q-item-avatar">
+              <img
+                :src="user.image_path"
+                class="q-item-avatar"
+              >
             </div>
           </div>
         </q-list-header>
         <q-item-separator />
-        <q-item @click.native="smartlife" dark>
-          <q-item-side icon="smartphone" color="yellow" inverted />
-          <q-item-main label="SMART LIFE" class="text-left text-bold"/>
+        <q-item
+          @click.native="index"
+          dark
+        >
+          <q-item-side
+            icon="home"
+            color="blue-3"
+            inverted-light
+          />
+          <q-item-main
+            label="HRIS"
+            class="text-left text-bold"
+          />
         </q-item>
-         <q-item @click.native="index" dark>
-          <q-item-side icon="home" color="blue-3" inverted />
-          <q-item-main label="HRIS" class="text-left text-bold"/>
+        <q-item
+          @click.native="report"
+          dark
+        >
+          <q-item-side
+            icon="description"
+            color="orange-3"
+            inverted-light
+          />
+          <q-item-main
+            label="HR Report"
+            class="text-left text-bold"
+          />
         </q-item>
-        <q-item @click.native="logout" dark>
-          <q-item-side icon="power_settings_new" color="red" inverted-light/>
-          <q-item-main label="ออกจากระบบ" class="text-left text-bold"/>
+        <q-item
+          @click.native="smartlife"
+          dark
+        >
+          <q-item-side
+            icon="smartphone"
+            color="yellow"
+            inverted-light
+          />
+          <q-item-main
+            label="Smart Life"
+            class="text-left text-bold"
+          />
+        </q-item>
+        <q-item
+          @click.native="logout"
+          dark
+        >
+          <q-item-side
+            icon="power_settings_new"
+            color="red"
+            inverted-light
+          />
+          <q-item-main
+            label="Sing Out"
+            class="text-left text-bold"
+          />
         </q-item>
       </q-list>
     </q-layout-drawer>
@@ -99,10 +150,13 @@ export default {
   methods: {
     ...mapActions('user', ['setUser']),
     smartlife () {
-      this.$router.push({name: 'smartlife'})
+      this.$router.push({ name: 'smartlife' })
     },
     index () {
-      this.$router.push({name: 'index'})
+      this.$router.push({ name: 'index' })
+    },
+    report () {
+      this.$router.push({ name: 'report' })
     },
     logout () {
       this.logoutloading = true

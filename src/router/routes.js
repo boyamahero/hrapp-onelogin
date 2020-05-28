@@ -14,7 +14,25 @@ const routes = [
         name: 'search',
         component: () => import('pages/Search.vue'),
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          title: 'HR Search',
+          description: 'สอบถามข้อมูลบุคคลและหมายเลขโทรศัพท์'
+        }
+      }
+    ]
+  },
+  {
+    path: '/report',
+    component: () => import('layouts/MySearch.vue'),
+    children: [
+      {
+        path: '',
+        name: 'report',
+        component: () => import('pages/Report.vue'),
+        meta: {
+          requiresAuth: true,
+          title: 'HR Report',
+          description: 'รายงานสารสนเทศบุคคล'
         }
       }
     ]

@@ -3,13 +3,14 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use JWTAuth;
-use Exception;
 use App\User;
+use Exception;
 use App\Position;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 
-class JwtMiddleware extends BaseMiddleware
+class RoleAuthorization extends BaseMiddleware
 {
     /**
      * Handle an incoming request.
@@ -18,7 +19,7 @@ class JwtMiddleware extends BaseMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, ...$roles)
     {
         try {
             // get token from request
@@ -59,7 +60,19 @@ class JwtMiddleware extends BaseMiddleware
                 return response()->json(['status' => 'Authorization Token not found'], 403);
             }
         }
-        return $next($request);
+        //If user was authenticated successfully and user is in one of the acceptable roles, send to next request.
+        if ($user && $user->hasRole($roles)) {
+            return $next($request);
+        }
+        return $this->unauthorized();
+    }
+
+    private function unauthorized($message = null)
+    {
+        return response()->json([
+            'message' => $message ? $message : 'You are unauthorized to access this resource',
+            'success' => false
+        ], 401);
     }
 
     public function KeycloakIntrospectToken($url, $atkn)

@@ -1,17 +1,19 @@
 <?php
-use App\Education;
+
 use App\Kpi;
 use App\Bkpi;
 use App\User;
 use App\Vision;
 use App\Category;
 use App\Employee;
+use App\Education;
 use App\Portfolio;
 use App\Competency;
 use App\HistoryWork;
 use App\Infographic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +25,7 @@ use Illuminate\Support\Facades\DB;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::middleware(['jwt.verify'])->group(function () {
 
   Route::get('/user', 'EmployeesController@user');
@@ -30,13 +33,13 @@ Route::middleware(['jwt.verify'])->group(function () {
   Route::get('/employees/{keyword}', 'EmployeesController@search')->where('keyword', '(.*)');;
 
   Route::get('/manpower/{level?}/{abb?}', 'EmployeesController@manpower');
-  
+
   Route::get('/portfolioInfo', 'PortfoliosController@show');
 
   Route::get('/employee', 'EmployeesController@show');
 
   Route::get('/salary', 'EmployeesController@salary');
-  
+
   Route::get('/medical-expenses/{year?}', 'MedicalFeeController@show');
 
   Route::get('/medical-fees/{year?}', 'MedicalFeeController@show');
@@ -53,8 +56,11 @@ Route::middleware(['jwt.verify'])->group(function () {
 
   Route::post('/saveWlupdate', 'WorklocationController@saveWlupdate');
 
-//worklocation
+  //hrapi
+});
 
+Route::middleware(['auth.role:admin'])->group(function () {
+  Route::get('/persons', 'HRAPIController@persons');
 });
 
 // for emergency contact person
@@ -72,7 +78,7 @@ Route::get('/info-categories', function () {
 });
 
 Route::get('/info-categories/{id}', function ($id) {
-  return Infographic::where('category_id',$id)->get();
+  return Infographic::where('category_id', $id)->get();
 });
 
 Route::post('/login', 'AuthController@login');

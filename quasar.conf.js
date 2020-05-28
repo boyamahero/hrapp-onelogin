@@ -4,7 +4,6 @@ const
   SymlinkWebpackPlugin = require('symlink-webpack-plugin'),
   CopyWebpackPlugin = require('copy-webpack-plugin')
 
-
 module.exports = function (ctx) {
   return {
     preFetch: true,
@@ -46,7 +45,7 @@ module.exports = function (ctx) {
         if (ctx.prod) {
           cfg.plugins.push(new CopyWebpackPlugin([{
             from: path.resolve(__dirname, 'public_files'),
-            to: '',
+            to: ''
           }]))
 
           cfg.plugins.push(new SymlinkWebpackPlugin({
@@ -54,15 +53,14 @@ module.exports = function (ctx) {
             symlink: 'storage'
           }))
         }
-
       },
       env: {
         api: JSON.stringify(
           ctx.dev
             ? '/api'
             : 'https://hrapp.egat.co.th/api' // production end-point
-        ),
-      },
+        )
+      }
     },
     devServer: {
       // https: true,
@@ -71,13 +69,15 @@ module.exports = function (ctx) {
       open: false, // opens browser window automatically
       proxy: [{
         context: ['/api', '/storage'],
-        target: 'http://127.0.0.1:8000', // laravel end-point
+        target: 'http://127.0.0.1:8000' // laravel end-point
       }],
       historyApiFallback: true
     },
     // framework: 'all' --- includes everything; for dev only!
     framework: {
       components: [
+        'QChip',
+        'QDatetime',
         'QLayout',
         'QLayoutHeader',
         'QLayoutDrawer',
