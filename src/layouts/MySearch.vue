@@ -69,6 +69,7 @@
         <q-item
           @click.native="report"
           dark
+          v-if="user.hrreport"
         >
           <q-item-side
             icon="description"

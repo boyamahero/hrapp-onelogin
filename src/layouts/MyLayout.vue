@@ -2,20 +2,23 @@
   <q-layout view="lHh Lpr lFf">
     <q-layout-header reveal>
       <q-toolbar
-          inverted
-          color="white"
+        inverted
+        color="white"
+      >
+        <q-btn
+          round
+          flat
+          @click="leftDrawerOpen = !leftDrawerOpen"
+          aria-label="Menu"
         >
-          <q-btn
-            round
-            flat
-            @click="leftDrawerOpen = !leftDrawerOpen"
-            aria-label="Menu"
-          >
-            <q-icon name="menu" class="menu"/>
-          </q-btn>
+          <q-icon
+            name="menu"
+            class="menu"
+          />
+        </q-btn>
 
-          <q-toolbar-title>
-            <div class="row justify-center">
+        <q-toolbar-title>
+          <div class="row justify-center">
             <div class="col-xs-8 col-lg-10 text-right self-center">
               <div class="title">{{user.name}}</div>
               <div class="subtitle">{{ user.name_english }}</div>
@@ -23,11 +26,14 @@
               <div class="subtitle">{{ user.org_path }}</div>
             </div>
             <div class="col-xs-4 col-lg-1 text-center self-center">
-                <img :src="user.image_path" class="q-item-avatar">
+              <img
+                :src="user.image_path"
+                class="q-item-avatar"
+              >
             </div>
-            </div>
-          </q-toolbar-title>
-        </q-toolbar>
+          </div>
+        </q-toolbar-title>
+      </q-toolbar>
     </q-layout-header>
     <q-layout-drawer
       v-model="leftDrawerOpen"
@@ -39,8 +45,8 @@
         link
         inset-delimiter
       >
-        <q-item class="justify-center">
-           เมนู
+        <q-item class="justify-center text-bold">
+          Main Menu
         </q-item>
       </q-list>
       <q-list
@@ -49,18 +55,48 @@
         separator
         link
         inset-delimiter
+      >
+        <q-item
+          @click.native="$router.push('/')"
+          dark
         >
-        <q-item @click.native="smartlife" dark>
-          <q-item-side icon="smartphone" color="yellow" inverted />
-          <q-item-main label="SMART LIFE" class="text-left text-bold"/>
+          <q-item-side
+            icon="home"
+            color="blue-3"
+            inverted-light
+          />
+          <q-item-main
+            label="HRIS"
+            class="text-left text-bold"
+          />
         </q-item>
-        <q-item @click.native="$router.push('/')" dark>
-          <q-item-side icon="home" color="blue-3" inverted />
-          <q-item-main label="HRIS" class="text-left text-bold"/>
+        <q-item
+          @click.native="smartlife"
+          dark
+        >
+          <q-item-side
+            icon="smartphone"
+            color="yellow"
+            inverted-light
+          />
+          <q-item-main
+            label="SMART LIFE"
+            class="text-left text-bold"
+          />
         </q-item>
-        <q-item @click.native="logout" dark>
-          <q-item-side icon="power_settings_new" color="red" inverted-light/>
-          <q-item-main label="ออกจากระบบ" class="text-left text-bold"/>
+        <q-item
+          @click.native="logout"
+          dark
+        >
+          <q-item-side
+            icon="power_settings_new"
+            color="red"
+            inverted-light
+          />
+          <q-item-main
+            label="ออกจากระบบ"
+            class="text-left text-bold"
+          />
         </q-item>
       </q-list>
     </q-layout-drawer>
@@ -68,22 +104,37 @@
     <q-page-container>
       <router-view />
     </q-page-container>
- <q-layout-footer  reveal>
-        <q-item class="justify-between" style="padding:0">
-          <q-btn flat>
-          <q-item-side icon="home"  @click.native="$router.push('/')" style="color:#14548a;font-size: 20px;"/>
-          </q-btn>
-          <q-btn flat>
-          <img src="statics/speedlogo.png" class="col-xs-9 col-lg-1 col-md-3" style="max-width: 30%;">
-          </q-btn>
-          <q-btn
+    <q-layout-footer reveal>
+      <q-item
+        class="justify-between"
+        style="padding:0"
+      >
+        <q-btn flat>
+          <q-item-side
+            icon="home"
+            @click.native="$router.push('/')"
+            style="color:#14548a;font-size: 20px;"
+          />
+        </q-btn>
+        <q-btn flat>
+          <img
+            src="statics/speedlogo.png"
+            class="col-xs-9 col-lg-1 col-md-3"
+            style="max-width: 30%;"
+          >
+        </q-btn>
+        <q-btn
           flat
           @click="$router.go(-1)"
         >
-          <q-icon name="reply" color="primary" class="menu"/>
+          <q-icon
+            name="reply"
+            color="primary"
+            class="menu"
+          />
         </q-btn>
-        </q-item>
-  </q-layout-footer>
+      </q-item>
+    </q-layout-footer>
   </q-layout>
 </template>
 
@@ -105,7 +156,7 @@ export default {
   },
   methods: {
     smartlife () {
-      this.$router.push({name: 'smartlife'})
+      this.$router.push({ name: 'smartlife' })
     },
     logout () {
       this.logoutloading = true
@@ -119,8 +170,8 @@ export default {
 
 <style>
 .q-layout-header {
--webkit-box-shadow: none;
--moz-box-shadow: none;
-box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
 </style>
