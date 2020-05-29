@@ -70,13 +70,12 @@
               </div>
               <div class="col-12 col-md-6">
                 <q-select
-                  multiple
-                  chips
                   color="green"
                   inverted
                   float-label="ตำแหน่งตามคุณวุฒิ"
-                  v-model="ShortPositionKeyMultipleSelect"
-                  :options="ShortPositionKeyOptions"
+                  v-model="shortPositionKeyMultipleSelect"
+                  :options="shortPositionKeyOptions"
+                  clearable
                   class="q-mx-md q-ma-sm"
                 />
               </div>
@@ -87,8 +86,46 @@
                   color="green"
                   inverted
                   float-label="เพศ"
-                  v-model="GenderSelect"
-                  :options="GenderOptions"
+                  v-model="genderSelect"
+                  :options="genderOptions"
+                  clearable
+                  class="q-mx-md q-ma-sm"
+                />
+              </div>
+              <div class="col-12 col-md-6">
+                <q-select
+                  color="green"
+                  inverted
+                  float-label="ศาสนา"
+                  v-model="religionSelect"
+                  :options="religionOptions"
+                  clearable
+                  class="q-mx-md q-ma-sm"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <q-select
+                  color="green"
+                  inverted
+                  float-label="ระดับคุณวุฒิ"
+                  v-model="educationLevelSelect"
+                  :options="educationLevelOptions"
+                  clearable
+                  class="q-mx-md q-ma-sm"
+                />
+              </div>
+              <div
+                class="col-12 col-md-6"
+                v-if="!isActive"
+              >
+                <q-select
+                  color="green"
+                  inverted
+                  float-label="เหตุผลสิ้นสภาพ"
+                  v-model="withdrawTypeSelect"
+                  :options="withdrawTypeOptions"
                   clearable
                   class="q-mx-md q-ma-sm"
                 />
@@ -139,19 +176,155 @@
               </div>
             </div>
             <div class="row">
+              <div class="col-12 col-md-6 q-px-md">
+                <p class="caption text-green">
+                  ปีเกิด
+                  <span class="chip-container">
+                    <q-chip
+                      square
+                      color="green"
+                    >
+                      {{ birthYear.min }} ถึง {{ birthYear.max }}
+                    </q-chip>
+                  </span>
+                </p>
+                <q-range
+                  v-model="birthYear"
+                  color="green"
+                  :min="birthYearValid.min"
+                  :max="birthYearValid.max"
+                  inverted
+                  class="q-mb-sm"
+                />
+              </div>
+              <div class="col-12 col-md-6 q-px-md">
+                <p class="caption text-green">
+                  เดือนเกิด
+                  <span class="chip-container">
+                    <q-chip
+                      square
+                      color="green"
+                    >
+                      {{ birthMonth.min }} ถึง {{ birthMonth.max }}
+                    </q-chip>
+                  </span>
+                </p>
+                <q-range
+                  v-model="birthMonth"
+                  color="green"
+                  :min="birthMonthValid.min"
+                  :max="birthMonthValid.max"
+                  inverted
+                  class="q-mb-sm"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-6 q-px-md">
+                <p class="caption text-green">
+                  อายุ
+                  <span class="chip-container">
+                    <q-chip
+                      square
+                      color="green"
+                    >
+                      {{ age.min }} ถึง {{ age.max }}
+                    </q-chip>
+                  </span>
+                </p>
+                <q-range
+                  v-model="age"
+                  color="green"
+                  :min="ageValid.min"
+                  :max="ageValid.max"
+                  inverted
+                  class="q-mb-sm"
+                />
+              </div>
+              <div class="col-12 col-md-6 q-px-md">
+                <p class="caption text-green">
+                  อายุงาน
+                  <span class="chip-container">
+                    <q-chip
+                      square
+                      color="green"
+                    >
+                      {{ workAge.min }} ถึง {{ workAge.max }}
+                    </q-chip>
+                  </span>
+                </p>
+                <q-range
+                  v-model="workAge"
+                  color="green"
+                  :min="workAgeValid.min"
+                  :max="workAgeValid.max"
+                  inverted
+                  class="q-mb-sm"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-6 q-px-md">
+                <p class="caption text-green">
+                  ปีเกษียณ
+                  <span class="chip-container">
+                    <q-chip
+                      square
+                      color="green"
+                    >
+                      {{ retireYear.min }} ถึง {{ retireYear.max }}
+                    </q-chip>
+                  </span>
+                </p>
+                <q-range
+                  v-model="retireYear"
+                  color="green"
+                  :min="retireYearValid.min"
+                  :max="retireYearValid.max"
+                  inverted
+                  class="q-mb-sm"
+                />
+              </div>
+              <div
+                class="col-12 col-md-6 q-px-md"
+                v-if="!isActive"
+              >
+                <p class="caption text-green">
+                  ปีสิ้นสภาพ
+                  <span class="chip-container">
+                    <q-chip
+                      square
+                      color="green"
+                    >
+                      {{ withdrawYear.min }} ถึง {{ withdrawYear.max }}
+                    </q-chip>
+                  </span>
+                </p>
+                <q-range
+                  v-model="withdrawYear"
+                  color="green"
+                  :min="withdrawYearValid.min"
+                  :max="withdrawYearValid.max"
+                  inverted
+                  class="q-mb-sm"
+                />
+              </div>
+            </div>
+            <div class="row">
               <div class="col-6 col-md-3">
                 <p class="caption text-green q-mx-md">
-                  เฉพาะผู้ปฏิบัติคงสภาพ
+                  คงสภาพผู้ปฏิบัติงาน
                 </p>
                 <q-toggle
                   v-model="isActive"
                   color="green"
                   class="q-mx-md q-mb-sm"
+                  @input="activeChange"
                 />
               </div>
               <div class="col-6 col-md-3">
                 <p class="caption text-green q-mx-md">
-                  เฉพาะโครงการ
+                  โครงการ
                 </p>
                 <q-toggle
                   v-model="isProject"
@@ -161,7 +334,7 @@
               </div>
               <div class="col-6 col-md-3">
                 <p class="caption text-green q-mx-md">
-                  เฉพาะผู้บังคับบัญชา
+                  ผู้บังคับบัญชา
                 </p>
                 <q-toggle
                   v-model="isBossOnly"
@@ -171,7 +344,7 @@
               </div>
               <div class="col-6 col-md-3">
                 <p class="caption text-green q-mx-md">
-                  เฉพาะผู้บังคับบัญชาโครงการ
+                  ผู้บังคับบัญชาโครงการ
                 </p>
                 <q-toggle
                   v-model="isBossProjectOnly"
@@ -206,6 +379,7 @@ const today = new Date()
 const { startOfDate, addToDate, subtractFromDate } = date
 
 var qs = require('qs')
+
 export default {
   name: 'Report',
   data () {
@@ -220,8 +394,8 @@ export default {
         { label: 'ลูกจ้างชั่วคราวตามฤดูกาล', value: 500 },
         { label: 'ลูกจ้างพิเศษ', value: 800 }
       ],
-      ShortPositionKeyMultipleSelect: [],
-      ShortPositionKeyOptions: [
+      shortPositionKeyMultipleSelect: null,
+      shortPositionKeyOptions: [
         { label: 'วิศวกร', value: 'วศ.' },
         { label: 'สถาปนิก', value: 'สถ.' },
         { label: 'นักธรณีวิทยา', value: 'นธ.' },
@@ -249,16 +423,69 @@ export default {
         { label: 'หัวหน้าพนักงานรักษาความปลอดภัย', value: 'พรป.' },
         { label: 'พนักงานรักษาความปลอดภัย', value: 'รป.' }
       ],
-      GenderSelect: null,
-      GenderOptions: [
+      genderSelect: null,
+      genderOptions: [
         { label: 'ชาย', value: 1 },
         { label: 'หญิง', value: 2 }
+      ],
+      religionSelect: null,
+      religionOptions: [
+        { label: 'พุทธ', value: 'พุทธ' },
+        { label: 'คริสต์', value: 'คริสต์' },
+        { label: 'ฮินดู', value: 'ฮินดู' },
+        { label: 'อิสลาม', value: 'อิสลาม' },
+        { label: 'ซิกซ์', value: 'ซิกซ์' },
+        { label: 'อื่นๆ', value: 'อื่นๆ' }
+      ],
+      educationLevelSelect: null,
+      educationLevelOptions: [
+        { label: 'ปริญญาเอก', value: 'ปริญญาเอก' },
+        { label: 'ปริญญาโท', value: 'ปริญญาโท' },
+        { label: 'ปริญญาตรี', value: 'ปริญญาตรี' },
+        { label: 'ปวส.', value: 'ปวส.' },
+        { label: 'ปวช.', value: 'ปวช.' },
+        { label: 'ต่ำกว่า ปวช.', value: 'ต่ำกว่า ปวช.' }
+      ],
+      withdrawTypeSelect: null,
+      withdrawTypeOptions: [
+        { label: 'ถึงแก่กรรม', value: '10' },
+        { label: 'ลาออก', value: '20' },
+        { label: 'ให้ออก', value: '30' },
+        { label: 'ปลดออก', value: '40' },
+        { label: 'เกษียณอายุ', value: '50' },
+        { label: 'สิ้นกำหนดการจ้าง', value: '60' },
+        { label: 'ออกจากงานด้วยความยินดีฯ', value: '70' },
+        { label: 'เลิกจ้าง', value: '80' }
       ],
       level: {
         min: 0,
         max: 14
       },
       entryYear: {
+        min: 2512,
+        max: (new Date()).getFullYear() + 543
+      },
+      birthYear: {
+        min: 2475,
+        max: (new Date()).getFullYear() + 543
+      },
+      birthMonth: {
+        min: 1,
+        max: 12
+      },
+      age: {
+        min: 15,
+        max: 65
+      },
+      workAge: {
+        min: 0,
+        max: 45
+      },
+      retireYear: {
+        min: (new Date()).getMonth() > 9 ? (new Date()).getFullYear() + 1 + 543 : (new Date()).getFullYear() + 543,
+        max: (new Date()).getMonth() > 9 ? (new Date()).getFullYear() + 61 + 543 : (new Date()).getFullYear() + 60 + 543
+      },
+      withdrawYear: {
         min: 2512,
         max: (new Date()).getFullYear() + 543
       },
@@ -286,9 +513,35 @@ export default {
     entryYearValid () {
       var d = new Date()
       return { min: 2512, max: d.getFullYear() + 543 }
+    },
+    birthYearValid () {
+      var d = new Date()
+      return { min: 2475, max: d.getFullYear() + 543 }
+    },
+    birthMonthValid () {
+      return { min: 1, max: 12 }
+    },
+    ageValid () {
+      return { min: 15, max: 65 }
+    },
+    workAgeValid () {
+      return { min: 0, max: 45 }
+    },
+    retireYearValid () {
+      return { min: (new Date()).getMonth() > 9 ? (new Date()).getFullYear() + 543 + 1 : (new Date()).getFullYear() + 543, max: (new Date()).getMonth() > 9 ? (new Date()).getFullYear() + 1 + 60 + 543 : (new Date()).getFullYear() + 60 + 543 }
+    },
+    withdrawYearValid () {
+      return { min: 2512, max: (new Date()).getFullYear() + 543 }
     }
   },
   methods: {
+    activeChange () {
+      if (this.isActive) {
+        this.withdrawTypeSelect = null
+        this.withdrawYear.min = 2512
+        this.withdrawYear.max = (new Date()).getFullYear() + 543
+      }
+    },
     handler () {
       this.query['sort'] = 'senior'
       this.query['include'] = 'organizations'
@@ -307,15 +560,30 @@ export default {
       } else {
         delete this.query['filter[PersonType]']
       }
-      if (this.ShortPositionKeyMultipleSelect.length) {
-        this.query['filter[ShortPositionKey]'] = this.ShortPositionKeyMultipleSelect.join(',')
+      if (this.shortPositionKeyMultipleSelect) {
+        this.query['filter[ShortPositionKey]'] = this.shortPositionKeyMultipleSelect
       } else {
         delete this.query['filter[ShortPositionKey]']
       }
-      if (this.GenderSelect) {
-        this.query['filter[Gender]'] = this.GenderSelect
+      if (this.genderSelect) {
+        this.query['filter[Gender]'] = this.genderSelect
       } else {
         delete this.query['filter[Gender]']
+      }
+      if (this.religionSelect) {
+        this.query['filter[Religion]'] = this.religionSelect
+      } else {
+        delete this.query['filter[Religion]']
+      }
+      if (this.educationLevelSelect) {
+        this.query['filter[EducationLevel]'] = this.educationLevelSelect
+      } else {
+        delete this.query['filter[EducationLevel]']
+      }
+      if (this.withdrawTypeSelect) {
+        this.query['filter[WithdrawType]'] = this.withdrawTypeSelect
+      } else {
+        delete this.query['filter[WithdrawType]']
       }
       if (this.level.min === 0 && this.level.max === 14) {
         delete this.query['filter[Level]']
@@ -342,6 +610,36 @@ export default {
       } else {
         delete this.query['filter[IsBossProject]']
       }
+      if (this.birthYear.min === this.birthYearValid.min && this.birthYear.max === this.birthYearValid.max) {
+        delete this.query['filter[BirthYear]']
+      } else {
+        this.query['filter[BirthYear]'] = this.birthYear.min + ',' + this.birthYear.max
+      }
+      if (this.birthMonth.min === this.birthMonthValid.min && this.birthMonth.max === this.birthMonthValid.max) {
+        delete this.query['filter[BirthMonth]']
+      } else {
+        this.query['filter[BirthMonth]'] = this.birthMonth.min + ',' + this.birthMonth.max
+      }
+      if (this.age.min === this.ageValid.min && this.age.max === this.ageValid.max) {
+        delete this.query['filter[Age]']
+      } else {
+        this.query['filter[Age]'] = this.age.min + ',' + this.age.max
+      }
+      if (this.workAge.min === this.workAgeValid.min && this.workAge.max === this.workAgeValid.max) {
+        delete this.query['filter[WorkAge]']
+      } else {
+        this.query['filter[WorkAge]'] = this.workAge.min + ',' + this.workAge.max
+      }
+      if (this.retireYear.min === this.retireYearValid.min && this.retireYear.max === this.retireYearValid.max) {
+        delete this.query['filter[RetireYear]']
+      } else {
+        this.query['filter[RetireYear]'] = this.retireYear.min + ',' + this.retireYear.max
+      }
+      if (this.withdrawYear.min === this.withdrawYearValid.min && this.withdrawYear.max === this.withdrawYearValid.max) {
+        delete this.query['filter[WithdrawYear]']
+      } else {
+        this.query['filter[WithdrawYear]'] = this.withdrawYear.min + ',' + this.withdrawYear.max
+      }
       // console.log(this.query)
       this.loading = true
       // we simulate a delay here:
@@ -355,11 +653,13 @@ export default {
           this.meta = res.data.meta
           this.persons = []
           res.data.data.forEach(person => {
-            if (person.organizations) {
-              person.organizations.forEach(organization => {
-                Object.assign(person, organization)
+            let rowPerson = person
+            if (rowPerson.organizations) {
+              rowPerson.organizations.forEach(organization => {
                 delete person.organizations
+                Object.assign(person, organization)
                 this.persons.push(person)
+                person = rowPerson
               })
             }
           })
