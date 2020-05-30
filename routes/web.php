@@ -18,12 +18,11 @@ use Illuminate\Support\Facades\Artisan;
 
 Route::get('/flush-cache', function () {
     $exitCode = Artisan::call('modelCache:clear');
-    $exitCode = Artisan::call('php artisan cache:forget spatie.permission.cache');
     return 'Done';
 });
 
 Route::get('/flush-cache-permission', function () {
-    $exitCode = Artisan::call('php artisan cache:forget spatie.permission.cache');
+    $exitCode = Artisan::call('cache:forget spatie.permission.cache');
     return 'Done';
 });
 
