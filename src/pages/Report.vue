@@ -372,11 +372,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import XLSX from 'xlsx' // import xlsx
-import { date } from 'quasar'
-
-const today = new Date()
-const { startOfDate, addToDate, subtractFromDate } = date
 
 var qs = require('qs')
 
@@ -489,13 +486,6 @@ export default {
         min: 2512,
         max: (new Date()).getFullYear() + 543
       },
-      entryBeginDate: null,
-      entryEndDate: null,
-      today,
-      tomorrow: addToDate(today, { days: 1 }),
-      yesterday: subtractFromDate(today, { days: 1 }),
-      state: new Date(),
-      defaultValue: startOfDate(today, 'year'),
       isActive: true,
       isProject: false,
       isBossOnly: false,
@@ -510,6 +500,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('user', ['user']),
     entryYearValid () {
       var d = new Date()
       return { min: 2512, max: d.getFullYear() + 543 }
@@ -541,6 +532,52 @@ export default {
         this.withdrawYear.min = 2512
         this.withdrawYear.max = (new Date()).getFullYear() + 543
       }
+    },
+    exportToExcel () {
+      let createXLSLFormatObj = []
+
+      /* XLS Head Columns */
+      let xlsHeaderPerson = ['เลขประจำตัว', 'ชื่อ-นามสกุล(ไทย)', 'ชื่อ-นามสกุล(อังกฤษ)', 'ประเภทผู้ปฏิบัติงาน', 'ระดับ', 'เพศ']
+      if (this.user.permissions.some(el => el.name === 'view_personal_data_citizen_id')) {
+        xlsHeaderPerson.push('เลขบัตรประชาชน')
+      }
+      if (this.user.permissions.some(el => el.name === 'view_personal_data_religion')) {
+        xlsHeaderPerson.push('พุทธ')
+      }
+      if (this.user.permissions.some(el => el.name === 'view_personal_data_birthdate')) {
+        xlsHeaderPerson.push('วันเกิด')
+      }
+      if (this.user.permissions.some(el => el.name === 'view_personal_data_health')) {
+        xlsHeaderPerson.concat(['หมู่เลือด', 'น้ำหนัก', 'ส่วนสูง'])
+      }
+      xlsHeaderPerson = xlsHeaderPerson.concat(['สถานะผู้ปฏิบัติงาน', 'วันเริ่มงาน', 'วันบรรจุ', 'วันเกษียณ', 'วันเริ่มจ้างงาน', 'วันสุดท้ายจ้างงาน', 'วันสิ้นสุดสัญญา', 'วันสิ้นสภาพ', 'เหตุผลสิ้นสภาพ', 'ตำแหน่งตามคุณวุฒิ', 'ตำแหน่งย่อ', 'ตำแหน่งเต็ม'])
+      let xlsHeaderOrganization = ['รหัสสังกัด', 'รหัสต้นทุน', 'รหัสสังกัด erp', 'ประเภทสังกัด', 'ระดับสังกัด', 'การฝากสาย', 'สังกัดย่อ', 'สังกัดเต็ม', 'สังกัดเต็ม-อังกฤษ', 'สายรอง', 'ผู้ช่วย', 'ฝ่าย', 'กอง', 'แผนก', 'สายบังคับบัญชา']
+      let xlsHeader = xlsHeaderPerson.concat(xlsHeaderOrganization)
+
+      /* XLS Rows Data */
+      let xlsRows = this.persons
+
+      createXLSLFormatObj.push(xlsHeader)
+      xlsRows.forEach(row => {
+        createXLSLFormatObj.push(Object.values(row))
+      })
+
+      /* File Name */
+      let filename = 'person.xlsx'
+
+      /* Sheet Name */
+      let wsname = 'person'
+
+      if (typeof console !== 'undefined') console.log(new Date())
+      let wb = XLSX.utils.book_new(),
+        ws = XLSX.utils.aoa_to_sheet(createXLSLFormatObj)
+
+      /* Add worksheet to workbook */
+      XLSX.utils.book_append_sheet(wb, ws, wsname)
+
+      /* Write workbook and Download */
+      if (typeof console !== 'undefined') console.log(new Date())
+      XLSX.writeFile(wb, filename)
     },
     handler () {
       this.query['sort'] = 'senior'
@@ -663,7 +700,7 @@ export default {
               })
             }
           })
-          this.onExport()
+          this.exportToExcel()
           this.loading = false
         }).catch((error) => {
           this.loading = false
@@ -676,12 +713,12 @@ export default {
         })
     },
     onExport () {
-      const dataWS = XLSX.utils.json_to_sheet(this.persons)
+      const dataWS = XLSX.utils.json_to_sheet(this.persons, { skipHeader: true })
       const wb = XLSX.utils.book_new()
       if (!wb.Custprops) wb.Custprops = {}
       wb.Custprops['Create By'] = this.meta.request_by
       wb.Custprops['Data Date'] = this.meta.updated_at
-      XLSX.utils.book_append_sheet(wb, dataWS)
+      XLSX.utils.book_append_sheet(wb, dataWS, 'person')
       XLSX.writeFile(wb, 'export.xlsx')
     }
   }

@@ -19,8 +19,9 @@ class EmployeesController extends Controller
 
     public function user(Request $request)
     {
-        $hasRoleHRReport = $request->user()->hasRole('hrreport');
-        return $request->user()->employee()->with('templocation')->first()->setAttribute('hrreport', $hasRoleHRReport);
+        $roles = $request->user()->roles;
+        $permissions = $request->user()->getAllPermissions();
+        return $request->user()->employee()->with('templocation')->first()->setAttribute('roles', $roles)->setAttribute('permissions', $permissions);
     }
 
     public function images($id, $hash)

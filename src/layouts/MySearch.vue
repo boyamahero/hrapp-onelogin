@@ -69,7 +69,7 @@
         <q-item
           @click.native="report"
           dark
-          v-if="user.hrreport"
+          v-if="user.roles.some(el => el.name === 'hrreport')"
         >
           <q-item-side
             icon="description"
