@@ -71,6 +71,21 @@
           />
         </q-item>
         <q-item
+          @click.native="report"
+          dark
+          v-if="user.roles.some(el => el.name === 'hrreport')"
+        >
+          <q-item-side
+            icon="description"
+            color="orange-3"
+            inverted-light
+          />
+          <q-item-main
+            label="HR Report"
+            class="text-left text-bold"
+          />
+        </q-item>
+        <q-item
           @click.native="smartlife"
           dark
         >
@@ -158,6 +173,9 @@ export default {
     smartlife () {
       this.$router.push({ name: 'smartlife' })
     },
+    report () {
+      this.$router.push({ name: 'report' })
+    },
     logout () {
       this.logoutloading = true
       var keycloakAuth = this.$store.getters.SECURITY_AUTH
@@ -169,9 +187,9 @@ export default {
 </script>
 
 <style>
-.q-layout-header {
+/* .q-layout-header {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-}
+} */
 </style>
