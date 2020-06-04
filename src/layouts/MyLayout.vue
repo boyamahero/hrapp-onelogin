@@ -109,7 +109,7 @@
             inverted-light
           />
           <q-item-main
-            label="ออกจากระบบ"
+            label="Log Out"
             class="text-left text-bold"
           />
         </q-item>

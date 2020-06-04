@@ -105,7 +105,7 @@
             inverted-light
           />
           <q-item-main
-            label="Sing Out"
+            label="Log Out"
             class="text-left text-bold"
           />
         </q-item>
