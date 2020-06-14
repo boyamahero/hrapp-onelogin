@@ -46,14 +46,12 @@ class Employee extends JsonResource
             'org_level' => $this->org->org_level,
             'is_boss' => $this->is_boss,
             'person_location' => $this->person->FirstLocation,
-            'templocation' => $this->templocation ? $this->templocation->makeHidden(['ZZMOBL','INTM_NAME','INTM_TEL','INTM_RELATION','GENTEXT_AT']):null,
-            'work_from_home' => $this->workFromHome()->where('BeginAt','<=',Carbon::now())->where('EndAt','>=',Carbon::now())->exists(),
+            'templocation' => $this->templocation ? $this->templocation->makeHidden(['ZZMOBL', 'INTM_NAME', 'INTM_TEL', 'INTM_RELATION', 'GENTEXT_AT']) : null,
+            'work_from_home' => $this->workFromHome()->where('BeginAt', '<=', Carbon::now()->format('Y-m-d H:i:s'))->where('EndAt', '>=', Carbon::now()->format('Y-m-d H:i:s'))->exists(),
             $this->mergeWhen(Auth::user()->hasRole('admin') ||
-            (
-                Auth::user()->employee->is_boss && 
-                Auth::user()->username != $this->id && 
-                $this->isOwnerDataLevel(Auth::user()) 
-            ), [
+                (Auth::user()->employee->is_boss &&
+                    Auth::user()->username != $this->id &&
+                    $this->isOwnerDataLevel(Auth::user())), [
                 'mobile_number' => $this->templocation ? $this->templocation->ZZMOBL : $this->person->MobilePhoneNumber,
                 'name_english' => $this->name_english,
                 'blood_group' => $this->blood_group,
@@ -90,6 +88,5 @@ class Employee extends JsonResource
         } else if ($user->employee->org->org_level == 1) {
             return $user->employee->deputy_abb == $this->deputy_abb;
         }
-        
     }
 }
