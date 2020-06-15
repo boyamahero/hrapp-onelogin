@@ -8,9 +8,11 @@ use App\Category;
 use App\Employee;
 use App\Education;
 use App\Portfolio;
+use Carbon\Carbon;
 use App\Competency;
 use App\HistoryWork;
 use App\Infographic;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -83,3 +85,15 @@ Route::get('/info-categories/{id}', function ($id) {
 
 Route::post('/login', 'AuthController@login');
 Route::post('/logout', 'AuthController@logout');
+
+
+
+Route::get('/wfh/{dateFrom?}', function ($dateFrom = null) {
+
+  if (!$dateFrom) {
+    $dateFrom = Carbon::now()->format('Ymd');
+  }
+  $client = new Client();
+  $response = $client->get("https://edms.egat.co.th/Public/API/EDMSAPI.php?action=GetWHMonthlyAllDept&sdate=" . $dateFrom . "&edate=20200630");
+  return $response->getBody();
+});
