@@ -8,20 +8,20 @@ use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 class Employee extends Model
 {
     use Cachable;
-    
+
     protected $connection = 'HRDatabase';
 
     protected $table = 'employees';
 
-    protected $appends = ['image_path','is_boss','location'];
+    protected $appends = ['image_path', 'is_boss', 'location'];
 
-    protected $hidden = ['birth_date','birth_thai_date','birth_year','birth_month','birth_day','age','idcard_number','weight','weight_ratio','height','height_ratio','blood_group'];
+    protected $hidden = ['birth_date', 'birth_thai_date', 'birth_year', 'birth_month', 'birth_day', 'age', 'idcard_number', 'weight', 'weight_ratio', 'height', 'height_ratio', 'blood_group'];
 
     /* @ retrun image_path */
     public function getImagePathAttribute()
     {
         // return 'https://pmsp.egat.co.th/EGAT-PMSP-IMAGE-DI/viewImage?PersonCode='. sprintf("%06d", $this->id) .'&pfdrid_c=true';
-        return '/api/images/'. sprintf("%06d", $this->id).'/'.base64_encode( substr(sprintf("%06d", $this->id),0,3) ).env('APP_SECRET','HrApP').base64_encode( substr(sprintf("%06d", $this->id),3,3) );
+        return '/api/images/' . sprintf("%06d", $this->id) . '/' . base64_encode(substr(sprintf("%06d", $this->id), 0, 3)) . env('APP_SECRET', 'HrApP') . base64_encode(substr(sprintf("%06d", $this->id), 3, 3));
     }
 
     public function getIsBossAttribute()
@@ -31,7 +31,7 @@ class Employee extends Model
 
     public function getEmployeePsCodeAttribute()
     {
-        return '00'.$this->employee_code;
+        return '00' . $this->employee_code;
     }
 
     public function getMobileNumberAttribute()
@@ -52,8 +52,8 @@ class Employee extends Model
     public function educations()
     {
         return $this->hasMany('App\Education', 'PersonCode', 'id')
-                    ->orderBy('PEDH_EducationQualificationCode')
-                    ->orderBy('PEDH_EducationGraduateYear','desc');
+            ->orderBy('PEDH_EducationQualificationCode')
+            ->orderBy('PEDH_EducationGraduateYear', 'desc');
     }
 
     public function boss()
@@ -66,7 +66,8 @@ class Employee extends Model
         return $this->hasOne('App\WLPerdata', 'PS_Code', 'employee_ps_code');
     }
 
-    public function getLocationAttribute() {
+    public function getLocationAttribute()
+    {
         return $this->person->FirstLocation;
     }
 
@@ -77,7 +78,6 @@ class Employee extends Model
 
     public function workFromHome()
     {
-        return $this->hasMany('App\WorkFromHome', 'EmpNo', 'employee_code');
+        return $this->hasMany('App\WorkFromHome', 'EmpNo', 'employee_ps_code');
     }
-
 }
