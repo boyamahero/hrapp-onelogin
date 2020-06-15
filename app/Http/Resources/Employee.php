@@ -47,7 +47,7 @@ class Employee extends JsonResource
             'is_boss' => $this->is_boss,
             'person_location' => $this->person->FirstLocation,
             'templocation' => $this->templocation ? $this->templocation->makeHidden(['ZZMOBL', 'INTM_NAME', 'INTM_TEL', 'INTM_RELATION', 'GENTEXT_AT']) : null,
-            'work_from_home' => $this->workFromHome()->where('BeginAt', '<=', Carbon::now()->format('Y-m-d H:i:s'))->where('EndAt', '>=', Carbon::now()->format('Y-m-d H:i:s'))->exists(),
+            'work_from_home' => $this->workFromHome()->exists(),
             $this->mergeWhen(Auth::user()->hasRole('admin') ||
                 (Auth::user()->employee->is_boss &&
                     Auth::user()->username != $this->id &&
