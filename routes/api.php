@@ -94,6 +94,9 @@ Route::get('/wfh/{dateFrom?}', function ($dateFrom = null) {
     $dateFrom = Carbon::now()->format('Ymd');
   }
   $client = new Client();
-  $response = $client->get("https://edms.egat.co.th/Public/API/EDMSAPI.php?action=GetWHMonthlyAllDept&sdate=" . $dateFrom . "&edate=20200615");
-  echo (string) $response->getBody();
+  $response = $client->get("https://edms.egat.co.th/Public/API/EDMSAPI.php?action=GetWHMonthlyAllDept&sdate=" . $dateFrom . "&edate=20200615&
+        type=xml");
+  $body = $response->getBody()->getContents();
+
+  echo preg_replace('//', '', $body);
 });
