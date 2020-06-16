@@ -17,10 +17,8 @@ class Employee extends Model
 
     protected $hidden = ['birth_date', 'birth_thai_date', 'birth_year', 'birth_month', 'birth_day', 'age', 'idcard_number', 'weight', 'weight_ratio', 'height', 'height_ratio', 'blood_group'];
 
-    /* @ retrun image_path */
     public function getImagePathAttribute()
     {
-        // return 'https://pmsp.egat.co.th/EGAT-PMSP-IMAGE-DI/viewImage?PersonCode='. sprintf("%06d", $this->id) .'&pfdrid_c=true';
         return '/api/images/' . sprintf("%06d", $this->id) . '/' . base64_encode(substr(sprintf("%06d", $this->id), 0, 3)) . env('APP_SECRET', 'HrApP') . base64_encode(substr(sprintf("%06d", $this->id), 3, 3));
     }
 
@@ -29,7 +27,7 @@ class Employee extends Model
         return ($this->priority !== '' && $this->priority !== '04' && $this->priority !== '05' && $this->priority !== '06') || $this->employee_group == 9;
     }
 
-    public function getEmployeePsCodeAttribute()
+    public function getPSCodeAttribute()
     {
         return '00' . $this->employee_code;
     }
@@ -63,12 +61,12 @@ class Employee extends Model
 
     public function person()
     {
-        return $this->hasOne('App\WLPerdata', 'PS_Code', 'employee_ps_code');
+        return $this->hasOne('App\Person', 'PS_Code', 'PSCode');
     }
 
     public function getLocationAttribute()
     {
-        return $this->person->FirstLocation;
+        return $this->person->workLocations->first();
     }
 
     public function templocation()
@@ -78,6 +76,6 @@ class Employee extends Model
 
     public function workFromHome()
     {
-        return $this->hasMany('App\WorkFromHome', 'EmpNo', 'employee_ps_code');
+        return $this->hasMany('App\WorkFromHome', 'EmpNo', 'PSCode');
     }
 }

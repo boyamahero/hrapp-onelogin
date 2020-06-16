@@ -6,16 +6,16 @@
           <q-card-main>
             <div class="row q-ma-md">
               <q-search
-              class="full-width"
-              v-model="searchText"
-              :debounce="1000"
-              placeholder="ชื่อ/นามสกุล(TH/EN)/ สังกัด(ย่อ/เต็ม)/ ตำแหน่งย่อ/ เลขประจำตัว/ อีเมล"
-              icon="person"
-              float-label="คำค้น"
-              clearable
-              inverted
-              @change="val => { searchText = val }"
-              @input="search"
+                class="full-width"
+                v-model="searchText"
+                :debounce="1000"
+                placeholder="ชื่อ/นามสกุล(TH/EN)/ สังกัด(ย่อ/เต็ม)/ ตำแหน่งย่อ/ เลขประจำตัว/ อีเมล"
+                icon="person"
+                float-label="คำค้น"
+                clearable
+                inverted
+                @change="val => { searchText = val }"
+                @input="search"
               />
             </div>
           </q-card-main>
@@ -23,7 +23,10 @@
       </div>
     </div>
 
-    <div class="row justify-between q-ma-md" v-if="showResult">
+    <div
+      class="row justify-between q-ma-md"
+      v-if="showResult"
+    >
       <div class="text-left self-center">
         <div>
           <div v-if="total > 0">พบผลการค้นหาจำนวน {{ total }} ท่าน</div>
@@ -35,77 +38,173 @@
           <span v-if="filter.orderBySenior"> <span v-if="filter.level.min !== 0 || filter.level.max !==14 || filter.onlyBoss"> , </span>เรียงลำดับอาวุโส</span>
         </div>
       </div>
-      <div class="text-right self-center"> <q-btn icon="filter_list" round no-shadow @click.native="filterOpened = true" :color=" isFiltered ? 'primary':''" /></div>
+      <div class="text-right self-center">
+        <q-btn
+          icon="filter_list"
+          round
+          no-shadow
+          @click.native="filterOpened = true"
+          :color=" isFiltered ? 'primary':''"
+        />
+      </div>
     </div>
 
     <!-- <q-item-separator /> -->
 
     <div class="row justify-center">
       <div class="col-12 justify-between">
-        <q-infinite-scroll :handler="loadMore" ref="infiniteScroll">
-          <q-card v-for="(employee, index) in employees" :key="index" :color="employee | blockColor">
+        <q-infinite-scroll
+          :handler="loadMore"
+          ref="infiniteScroll"
+        >
+          <q-card
+            v-for="(employee, index) in employees"
+            :key="index"
+            :color="employee | blockColor"
+          >
             <q-item>
               <q-item-side>
                 <div class="row no-margin text-center">
-                  <div class="col-12" :id="employee.image_path">
-                    <img v-lazy="employee.image_path" style="width: 75px;" draggable="false" oncontextmenu="return false"><br>
+                  <div
+                    class="col-12"
+                    :id="employee.image_path"
+                  >
+                    <img
+                      v-lazy="employee.image_path"
+                      style="width: 75px;"
+                      draggable="false"
+                      oncontextmenu="return false"
+                    ><br>
                   </div>
                   <div class="col-12">
-                    <q-icon v-if="employee.can_open" name="fas fa-search-plus" @click.native="itemClicked(employee)" :color="employee.is_boss?'white':'primary'"/>
-                    <q-icon v-if="employee.work_from_home" name="fas fa-home" :color="employee.is_boss?'white':'secondary'">
-                      <q-tooltip color="black" class="q-body-2 text-primary bg-green-2">Work From Home</q-tooltip>
+                    <q-icon
+                      v-if="employee.can_open"
+                      name="fas fa-search-plus"
+                      @click.native="itemClicked(employee)"
+                      :color="employee.is_boss?'white':'primary'"
+                    />
+                    <q-icon
+                      v-if="employee.work_from_home.length > 0"
+                      name="fas fa-home"
+                      :color="employee.is_boss?'white':'secondary'"
+                    >
+                      <q-tooltip
+                        color="black"
+                        class="q-body-2 text-primary bg-green-2"
+                        v-for="(wfh, index) in employee.work_from_home"
+                        :key="index"
+                      >
+                        {{wfh.BeginDate}} {{wfh.BeginTime}} - {{wfh.EndDate}} {{wfh.EndTime}}
+                      </q-tooltip>
                     </q-icon>
                   </div>
                 </div>
               </q-item-side>
               <q-item-main>
                 <q-item-tile class="q-body-1 text-weight-bold">{{ employee.name }} ({{ employee.code }})</q-item-tile>
-                <q-item-tile class="q-body-1"><q-icon name="work" />
-                 <span>
+                <q-item-tile class="q-body-1">
+                  <q-icon name="work" />
+                  <span>
                     {{ employee.secretary? employee.position_abb + ' ทนท.เลขาฯ '+ employee.secretary.position_boss.PST_TShortName : employee.position_abb }}
-                    <q-tooltip self="center right" color="black" class="q-body-2 text-primary bg-green-2">
-                     {{ employee.secretary? employee.position_full + ' ' + employee.secretary.PATH_PositionName : employee.position_full }}
+                    <q-tooltip
+                      self="center right"
+                      color="black"
+                      class="q-body-2 text-primary bg-green-2"
+                    >
+                      {{ employee.secretary? employee.position_full + ' ' + employee.secretary.PATH_PositionName : employee.position_full }}
                     </q-tooltip>
                   </span>
                 </q-item-tile>
-                <q-item-tile class="q-body-1"><q-icon name="business" />
-                  <span> {{employee.deputy_abb }}<q-tooltip self="center right" color="black" class="q-body-2 text-primary bg-green-2">{{ employee.deputy_full }}</q-tooltip></span>
-                  <span> {{employee.assistant_abb }}<q-tooltip self="center right" color="black" class="q-body-2 text-primary bg-green-2">{{ employee.assistant_full }}</q-tooltip></span>
-                  <span> {{employee.division_abb }}<q-tooltip self="center right" color="black" class="q-body-2 text-primary bg-green-2">{{ employee.division_full }}</q-tooltip></span>
-                  <span> {{employee.department_abb }}<q-tooltip self="center right" color="black" class="q-body-2 text-primary bg-green-2">{{ employee.department_full }}</q-tooltip></span>
-                  <span> {{employee.section_abb }}<q-tooltip self="center right" color="black" class="q-body-2 text-primary bg-green-2">{{ employee.section_full }}</q-tooltip></span>
+                <q-item-tile class="q-body-1">
+                  <q-icon name="business" />
+                  <span> {{employee.deputy_abb }}<q-tooltip
+                      self="center right"
+                      color="black"
+                      class="q-body-2 text-primary bg-green-2"
+                    >{{ employee.deputy_full }}</q-tooltip></span>
+                  <span> {{employee.assistant_abb }}<q-tooltip
+                      self="center right"
+                      color="black"
+                      class="q-body-2 text-primary bg-green-2"
+                    >{{ employee.assistant_full }}</q-tooltip></span>
+                  <span> {{employee.division_abb }}<q-tooltip
+                      self="center right"
+                      color="black"
+                      class="q-body-2 text-primary bg-green-2"
+                    >{{ employee.division_full }}</q-tooltip></span>
+                  <span> {{employee.department_abb }}<q-tooltip
+                      self="center right"
+                      color="black"
+                      class="q-body-2 text-primary bg-green-2"
+                    >{{ employee.department_full }}</q-tooltip></span>
+                  <span> {{employee.section_abb }}<q-tooltip
+                      self="center right"
+                      color="black"
+                      class="q-body-2 text-primary bg-green-2"
+                    >{{ employee.section_full }}</q-tooltip></span>
                 </q-item-tile>
                 <div v-if='employee.templocation'>
-                  {{ log(employee.templocation) }}
-                  <q-item-tile class="q-body-1" v-if='employee.templocation.wlfullname !== null'><q-icon name="room" /> {{ employee.templocation.wlfullname.WL_Name }}</q-item-tile>
-                  <q-item-tile class="q-body-1"> &nbsp;&nbsp;&nbsp;&nbsp; {{ employee.templocation.ZZFLBLD }}<span> ห้อง {{ employee.templocation.ZZROMNO.replace('ห้อง','') || '-' }}</span></q-item-tile>
-                  <q-item-tile class="q-body-1"><q-icon name="call" /> {{ employee.templocation.ZZOFTEL }}</q-item-tile>
+                  <q-item-tile class="q-body-1">
+                    <q-icon name="room" /> {{ employee.templocation.Name }}</q-item-tile>
+                  <q-item-tile class="q-body-1"> &nbsp;&nbsp;&nbsp;&nbsp; {{ employee.templocation.Building }}<span> ห้อง {{ employee.templocation.Room }}</span></q-item-tile>
+                  <q-item-tile class="q-body-1">
+                    <q-icon name="call" /> {{ employee.templocation.PhoneNumber }}</q-item-tile>
+                  <q-item-tile
+                    class="q-body-1"
+                    v-if="employee.templocation.MobilePhoneNumber"
+                  >
+                    <q-icon name="smartphone" /> {{ employee.templocation.MobilePhoneNumber }}</q-item-tile>
                 </div>
                 <div v-else-if='employee.person_location'>
-                  <q-item-tile class="q-body-1"><q-icon name="room" /> {{ employee.person_location.PWAH_Name }}</q-item-tile>
-                  <q-item-tile class="q-body-1"> &nbsp;&nbsp;&nbsp;&nbsp; {{ employee.person_location.PWAH_Building }}<span> ห้อง {{ employee.person_location.PWAH_Room }}</span></q-item-tile>
-                  <q-item-tile class="q-body-1"><q-icon name="call" /> {{ employee.person_location.PWAH_PhoneNumber }}</q-item-tile>
+                  <q-item-tile class="q-body-1">
+                    <q-icon name="room" /> {{ employee.person_location.Name }}</q-item-tile>
+                  <q-item-tile class="q-body-1"> &nbsp;&nbsp;&nbsp;&nbsp; {{ employee.person_location.Building }}<span> ห้อง {{ employee.person_location.Room  }}</span></q-item-tile>
+                  <q-item-tile class="q-body-1">
+                    <q-icon name="call" /> {{ employee.person_location.PhoneNumber }}</q-item-tile>
+                  <q-item-tile
+                    class="q-body-1"
+                    v-if="employee.person_location.MobilePhoneNumber"
+                  >
+                    <q-icon name="smartphone" /> {{ employee.person_location.MobilePhoneNumber }}</q-item-tile>
                 </div>
                 <div v-else>
-                  <q-item-tile class="q-body-1"><q-icon name="room" /> - </q-item-tile>
+                  <q-item-tile class="q-body-1">
+                    <q-icon name="room" /> - </q-item-tile>
                   <q-item-tile class="q-body-1"> &nbsp;&nbsp;&nbsp;&nbsp; - </q-item-tile>
-                  <q-item-tile class="q-body-1"><q-icon name="call" /> - </q-item-tile>
+                  <q-item-tile class="q-body-1">
+                    <q-icon name="call" /> - </q-item-tile>
                 </div>
-                <q-item-tile class="q-body-1" v-if="employee.mobile_number"><q-icon name="smartphone" /> {{ employee.mobile_number }}</q-item-tile>
               </q-item-main>
             </q-item>
           </q-card>
-          <back-to-top bottom="100px" right="10px">
-            <button type="button" class="btn btn-info btn-to-top"><i class="fa fa-chevron-up"></i></button>
+          <back-to-top
+            bottom="100px"
+            right="10px"
+          >
+            <button
+              type="button"
+              class="btn btn-info btn-to-top"
+            ><i class="fa fa-chevron-up"></i></button>
           </back-to-top>
-          <div class="row justify-center" style="margin-bottom: 20px;" v-if="next_page_url">
-            <q-spinner-dots slot="message" :size="40" />
+          <div
+            class="row justify-center"
+            style="margin-bottom: 20px;"
+            v-if="next_page_url"
+          >
+            <q-spinner-dots
+              slot="message"
+              :size="40"
+            />
           </div>
         </q-infinite-scroll>
       </div>
     </div>
 
-    <q-modal v-model="maximizedModal" maximized v-if="employee.can_open">
+    <q-modal
+      v-model="maximizedModal"
+      maximized
+      v-if="employee.can_open"
+    >
       <q-modal-layout>
         <q-toolbar slot="header">
           <q-toolbar-title>
@@ -159,7 +258,7 @@
                 <p class="text-faded no-margin">วันบรรจุ</p>
                 <p class="no-margin q-pl-xs">{{ employee.assign_date }}</p>
                 <p class="text-faded no-margin">วันเกษียณอายุ (อายุงานคงเหลือ)</p>
-                <p class="no-margin q-pl-xs">{{ employee.retire_date }}  ({{employee.remain_work_age }})</p>
+                <p class="no-margin q-pl-xs">{{ employee.retire_date }} ({{employee.remain_work_age }})</p>
                 <p class="text-faded no-margin">วันที่เลื่อนระดับ (อายุงานในระดับ)</p>
                 <p class="no-margin q-pl-xs">{{ employee.level_date }} ({{ employee.level_work_age }})</p>
               </q-card-main>
@@ -170,25 +269,41 @@
               <q-card-title class="bg-primary text-white">
                 ตำแหน่ง
               </q-card-title>
-              <q-card-main class="text-left" v-if="employee.positions">
-                <q-list no-border separator>
-                  <q-item v-for="(position, index) in employee.positions" :key="index" multiline>
+              <q-card-main
+                class="text-left"
+                v-if="employee.positions"
+              >
+                <q-list
+                  no-border
+                  separator
+                >
+                  <q-item
+                    v-for="(position, index) in employee.positions"
+                    :key="index"
+                    multiline
+                  >
                     <q-item-main>
-                    <q-item-tile label lines="5">{{ position.position_full + " (" + position.position_abb + ")"}}</q-item-tile>
-                    <q-item-tile sublabel lines="10">
-                    <span> {{position.section_full}}</span>
-                    <span> {{position.department_full}}</span>
-                    <span> {{position.division_full}}</span>
-                    <span> {{position.assistant_full}}</span>
-                    <span> {{position.deputy_full}}</span>
-                    (
-                    <span> {{position.section_abb}}</span>
-                    <span> {{position.department_abb}}</span>
-                    <span> {{position.division_abb}}</span>
-                    <span> {{position.assistant_abb}}</span>
-                    <span> {{position.deputy_abb}}</span>
-                    )
-                    </q-item-tile>
+                      <q-item-tile
+                        label
+                        lines="5"
+                      >{{ position.position_full + " (" + position.position_abb + ")"}}</q-item-tile>
+                      <q-item-tile
+                        sublabel
+                        lines="10"
+                      >
+                        <span> {{position.section_full}}</span>
+                        <span> {{position.department_full}}</span>
+                        <span> {{position.division_full}}</span>
+                        <span> {{position.assistant_full}}</span>
+                        <span> {{position.deputy_full}}</span>
+                        (
+                        <span> {{position.section_abb}}</span>
+                        <span> {{position.department_abb}}</span>
+                        <span> {{position.division_abb}}</span>
+                        <span> {{position.assistant_abb}}</span>
+                        <span> {{position.deputy_abb}}</span>
+                        )
+                      </q-item-tile>
                     </q-item-main>
                   </q-item>
                 </q-list>
@@ -200,10 +315,19 @@
               <q-card-title class="bg-primary text-white">
                 การศึกษา
               </q-card-title>
-              <q-card-main class="text-left" v-if="employee.educations">
-                <q-list  no-border separator>
-                  <q-item v-for="(education, index) in employee.educations" :key="index" >
-                    {{ education.degree_name + ' ' + education.certificate_name + ' ' + education.branch_name}} {{ education.school_name }}  GPA.= {{ education.grade }} (ปีจบการศึกษา {{ education.graduated_year | convertToThaiYear}}) {{ education.degree_main=="X"?"(วุฒิหลัก)":""}} {{ education.degree_entry=="X"?"(วุฒิแรกเข้า)":""}}
+              <q-card-main
+                class="text-left"
+                v-if="employee.educations"
+              >
+                <q-list
+                  no-border
+                  separator
+                >
+                  <q-item
+                    v-for="(education, index) in employee.educations"
+                    :key="index"
+                  >
+                    {{ education.degree_name + ' ' + education.certificate_name + ' ' + education.branch_name}} {{ education.school_name }} GPA.= {{ education.grade }} (ปีจบการศึกษา {{ education.graduated_year | convertToThaiYear}}) {{ education.degree_main=="X"?"(วุฒิหลัก)":""}} {{ education.degree_entry=="X"?"(วุฒิแรกเข้า)":""}}
                   </q-item>
                 </q-list>
               </q-card-main>
@@ -234,13 +358,19 @@
         <div class="row">
           <div class="col-6">เฉพาะผบ.</div>
           <div class="col-6">
-            <q-toggle v-model="filter.onlyBoss" color="secondary"/>
+            <q-toggle
+              v-model="filter.onlyBoss"
+              color="secondary"
+            />
           </div>
         </div>
         <div class="row">
           <div class="col-6">เรียงลำดับอาวุโส</div>
           <div class="col-6">
-            <q-toggle v-model="filter.orderBySenior" color="secondary"/>
+            <q-toggle
+              v-model="filter.orderBySenior"
+              color="secondary"
+            />
           </div>
         </div>
         <div class="row q-mt-lg">
@@ -250,11 +380,13 @@
               @click="search"
               label="ค้นหา"
             />
-            <q-btn class="q-ml-sm"
+            <q-btn
+              class="q-ml-sm"
               @click="clearFilter"
               label="ล้างค่า"
             />
-            <q-btn class="q-ml-sm"
+            <q-btn
+              class="q-ml-sm"
               color="red"
               @click="filterOpened = false"
               label="ปิด"
@@ -366,10 +498,10 @@ export default {
     },
     blockColor (employee) {
       return !employee.is_boss ? '' : (parseInt(employee.level) === 14 || parseInt(employee.level) === 0 ? 'deep-orange-5'
-      : (parseInt(employee.level) === 13 ? 'orange-5'
-      : (parseInt(employee.level) === 12 ? 'green-5'
-      : (parseInt(employee.level) === 11 && parseInt(employee.org_level) === 3 ? 'green-5'
-      : (parseInt(employee.org_level) === 4 ? 'teal-5' : 'blue-5')))))
+        : (parseInt(employee.level) === 13 ? 'orange-5'
+          : (parseInt(employee.level) === 12 ? 'green-5'
+            : (parseInt(employee.level) === 11 && parseInt(employee.org_level) === 3 ? 'green-5'
+              : (parseInt(employee.org_level) === 4 ? 'teal-5' : 'blue-5')))))
     }
   },
   // name: 'PageName',
@@ -423,18 +555,22 @@ export default {
     handle () {
       console.log('toggle')
     },
+    initial () {
+      this.total = 0
+      this.current_page = 0
+      this.last_page = 0
+      this.next_page_url = null
+      this.showResult = false
+    },
     search () {
       this.filterOpened = false
       this.employees = []
       this.loadedPages = []
       if (this.searchText.length === 0) {
-        this.total = 0
-        this.current_page = 0
-        this.last_page = 0
-        this.next_page_url = null
-        this.showResult = false
+        this.initial()
       }
-      if (this.searchText && this.searchText.length > 2) {
+      if (this.searchText && this.searchText.length > 3) {
+        this.initial()
         let query = ''
         this.showResult = false
         if (this.filter.level.min !== 0 || this.filter.level.max !== 14) {

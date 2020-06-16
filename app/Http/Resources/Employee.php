@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Carbon\Carbon;
+use App\Http\Resources\WorkFromHome;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\EducationCollection;
 use App\Http\Resources\WorkFromHomeCollection;
@@ -18,7 +19,9 @@ class Employee extends JsonResource
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
+        $permission = Auth::user()->hasRole('admin') || (Auth::user()->employee->is_boss &&
+            Auth::user()->username != $this->id &&
+            $this->isOwnerDataLevel(Auth::user()));
         return [
             'id' => $this->id,
             'code' => $this->employee_code,
@@ -37,39 +40,40 @@ class Employee extends JsonResource
             'department_full' => $this->department_full,
             'section_abb' => $this->section_abb,
             'section_full' => $this->section_full,
-            'building' => trim($this->building),
-            'room' => trim($this->room),
-            'phone' => $this->phone,
             'senior' => $this->senior,
             'image_path' => $this->image_path,
             'level' => $this->employee_subgroup,
             'org_level' => $this->org->org_level,
             'is_boss' => $this->is_boss,
-            'person_location' => $this->person->FirstLocation,
-            'templocation' => $this->templocation ? $this->templocation->makeHidden(['ZZMOBL', 'INTM_NAME', 'INTM_TEL', 'INTM_RELATION', 'GENTEXT_AT']) : null,
-            'work_from_home' => $this->workFromHome()->exists(),
-            $this->mergeWhen(Auth::user()->hasRole('admin') ||
-                (Auth::user()->employee->is_boss &&
-                    Auth::user()->username != $this->id &&
-                    $this->isOwnerDataLevel(Auth::user())), [
-                'mobile_number' => $this->templocation ? $this->templocation->ZZMOBL : $this->person->MobilePhoneNumber,
-                'name_english' => $this->name_english,
-                'blood_group' => $this->blood_group,
-                'employee_group_name' => $this->employee_group_name,
-                'religion' => $this->religion_name,
-                'birth_date' => $this->birth_thai_date,
-                'age' => $this->age,
-                'entry_date' => $this->entry_thai_date,
-                'assign_date' => $this->assign_thai_date,
-                'work_age' => $this->agew,
-                'retire_date' => $this->retire_thai_date,
-                'remain_work_age' => $this->remain_work_age,
-                'level_date' => $this->old_dat,
-                'level_work_age' => $this->old_dat_age,
-                'positions' => $this->positions,
-                'educations' => new EducationCollection($this->educations),
-                'can_open' => true
-            ]),
+            'person_location' => $this->when(
+                $this->relationLoaded('person') && $this->person->relationLoaded('workLocations'),
+                function () use ($permission) {
+                    return new WorkLocation($this->person->workLocations->first(), $permission);
+                }
+            ),
+            'templocation' => new WorkLocation($this->whenLoaded('templocation'), $permission),
+            'work_from_home' => new WorkFromHome($this->whenLoaded('workFromHome')),
+            $this->mergeWhen(
+                $permission,
+                [
+                    'name_english' => $this->name_english,
+                    'blood_group' => $this->blood_group,
+                    'employee_group_name' => $this->employee_group_name,
+                    'religion' => $this->religion_name,
+                    'birth_date' => $this->birth_thai_date,
+                    'age' => $this->age,
+                    'entry_date' => $this->entry_thai_date,
+                    'assign_date' => $this->assign_thai_date,
+                    'work_age' => $this->agew,
+                    'retire_date' => $this->retire_thai_date,
+                    'remain_work_age' => $this->remain_work_age,
+                    'level_date' => $this->old_dat,
+                    'level_work_age' => $this->old_dat_age,
+                    'positions' => $this->positions,
+                    'educations' => new EducationCollection($this->educations),
+                    'can_open' => true
+                ]
+            ),
         ];
     }
 

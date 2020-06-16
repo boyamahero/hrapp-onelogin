@@ -90,6 +90,8 @@ class EmployeesController extends Controller
                     ->orWhere('employee_group', '9');
             });
         }
+        $query = $query->with(['workFromHome', 'templocation', 'person.workLocations']);
+
         if ($orderBySenior) {
             $employees = $query->orderBy('employee_type_priority')
                 ->orderBy('employee_subgroup', 'desc')
