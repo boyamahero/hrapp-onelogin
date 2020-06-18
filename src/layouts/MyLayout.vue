@@ -35,18 +35,22 @@
         </q-toolbar-title>
       </q-toolbar>
     </q-layout-header>
-    <q-layout-drawer
-      v-model="leftDrawerOpen"
-      :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
-    >
+    <q-layout-drawer v-model="leftDrawerOpen">
       <q-list
         class="q-ma-none bg-light-blue-2"
         no-border
-        link
         inset-delimiter
       >
-        <q-item class="q-ma-none q-pa-none justify-center text-bold">
-          Main Menu
+        <q-item class="q-ma-none q-pa-md justify-center q-title text-bold">
+          HRIS
+        </q-item>
+      </q-list>
+      <q-list>
+        <q-item class="q-mt-sm q-py-none">
+          <q-item-main
+            label="Menu"
+            class="text-left text-bold"
+          />
         </q-item>
       </q-list>
       <q-list
@@ -66,7 +70,7 @@
             inverted-light
           />
           <q-item-main
-            label="HRIS"
+            label="Home"
             class="text-left text-bold"
           />
         </q-item>
@@ -95,7 +99,7 @@
             inverted-light
           />
           <q-item-main
-            label="SMART LIFE"
+            label="Smart Life"
             class="text-left text-bold"
           />
         </q-item>
@@ -114,7 +118,7 @@
           />
         </q-item>
       </q-list>
-      <q-list class="fixed-bottom q-pa-xs q-ma-none bg-light-blue-2">
+      <q-list class="fixed-bottom q-pa-sm q-ma-none bg-light-blue-2">
         <q-item class="q-ma-none q-pa-none">
           <q-item-main class="text-left q-body-1">
             <q-item-tile label>ผู้รับผิดชอบข้อมูล</q-item-tile>
@@ -135,7 +139,7 @@
         </q-item>
         <q-item class="q-ma-none q-pa-none">
           <q-item-main class="text-left q-body-1">
-            <q-item-tile label>ผู้พัฒนา</q-item-tile>
+            <q-item-tile label>ผู้พัฒนาระบบ</q-item-tile>
             <q-item-tile
               sublabel
               class="q-ma-none q-pa-none"

@@ -27,13 +27,11 @@
 
     <q-layout-drawer v-model="leftDrawerOpen">
       <q-list
-        separator
-        border
-        link
-        inset-delimiter
         class="q-ma-none q-pa-none"
+        no-border
+        inset-delimiter
       >
-        <q-list-header class="q-ma-none q-pa-none bg-light-blue-2 text-weight-bolder text-center uppercase">
+        <q-list-header class="q-ma-none q-py-sm bg-light-blue-2 text-weight-bolder text-center uppercase">
           <div class="row justify-center">
             <div
               class="col-xs-8 text-right self-center"
@@ -52,7 +50,22 @@
             </div>
           </div>
         </q-list-header>
-        <q-item-separator class="q-ma-none q-pt-none" />
+      </q-list>
+      <q-list>
+        <q-item class="q-mt-sm q-py-none">
+          <q-item-main
+            label="Menu"
+            class="text-left text-bold"
+          />
+        </q-item>
+      </q-list>
+      <q-list
+        class="q-ma-none q-pa-none"
+        border
+        separator
+        link
+        inset-delimiter
+      >
         <q-item
           @click.native="index"
           dark
@@ -111,7 +124,7 @@
           />
         </q-item>
       </q-list>
-      <q-list class="fixed-bottom q-pa-xs q-ma-none bg-light-blue-2">
+      <q-list class="fixed-bottom q-pa-sm q-ma-none bg-light-blue-2">
         <q-item class="q-ma-none q-pa-none">
           <q-item-main class="text-left q-body-1">
             <q-item-tile label>ผู้รับผิดชอบข้อมูล</q-item-tile>
@@ -132,7 +145,7 @@
         </q-item>
         <q-item class="q-ma-none q-pa-none">
           <q-item-main class="text-left q-body-1">
-            <q-item-tile label>ผู้พัฒนา</q-item-tile>
+            <q-item-tile label>ผู้พัฒนาระบบ</q-item-tile>
             <q-item-tile
               sublabel
               class="q-ma-none q-pa-none"
@@ -154,7 +167,7 @@ export default {
   name: 'SearchLaout',
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      leftDrawerOpen: false
     }
   },
   mounted () {

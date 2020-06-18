@@ -197,7 +197,7 @@ class EmployeesController extends Controller
             ->where('data_status', '!=', '0')
             ->where('organization_type', 'O')
             ->where('percentage', 100)
-            ->whereIn('employee_group', [1, 2, 5, 9])->count();
+            ->whereIn('employee_group', [1, 2, 5])->count();
         $retireYears = Employee::query();
 
         foreach ($years as $year) {
