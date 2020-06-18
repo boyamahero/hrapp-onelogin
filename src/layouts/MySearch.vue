@@ -110,7 +110,7 @@
           />
         </q-item>
       </q-list>
-      <q-list class="fixed-bottom q-pa-xs q-ma-none">
+      <q-list class="fixed-bottom q-pa-xs q-ma-none bg-light-blue-2">
         <q-item class="q-ma-none q-pa-none">
           <q-item-main class="text-left q-body-1">
             <q-item-tile label>ผู้รับผิดชอบข้อมูล</q-item-tile>

@@ -114,23 +114,32 @@
           />
         </q-item>
       </q-list>
-      <q-list class="fixed-bottom q-pa-xs q-ma-none">
+      <q-list class="fixed-bottom q-pa-xs q-ma-none bg-light-blue-2">
         <q-item class="q-ma-none q-pa-none">
           <q-item-main class="text-left q-body-1">
             <q-item-tile label>ผู้รับผิดชอบข้อมูล</q-item-tile>
-            <q-item-tile sublabel>นายอิทธิชัย ดิศวนนท์ (อทบ.) โทร 65300</q-item-tile>
+            <q-item-tile
+              sublabel
+              class="q-ma-none q-pa-none"
+            >นายอิทธิชัย ดิศวนนท์ (อทบ.) โทร 65300</q-item-tile>
           </q-item-main>
         </q-item>
         <q-item class="q-ma-none q-pa-none">
           <q-item-main class="text-left q-body-1">
             <q-item-tile label>ผู้ดูแลเว็บไซต์</q-item-tile>
-            <q-item-tile sublabel>นายสุรพล ปังอุทา (กทห-ห.) โทร 64450</q-item-tile>
+            <q-item-tile
+              sublabel
+              class="q-ma-none q-pa-none"
+            >นายสุรพล ปังอุทา (กทห-ห.) โทร 64450</q-item-tile>
           </q-item-main>
         </q-item>
         <q-item class="q-ma-none q-pa-none">
           <q-item-main class="text-left q-body-1">
             <q-item-tile label>ผู้พัฒนา</q-item-tile>
-            <q-item-tile sublabel>นายธนากร จะโต (หบค-ห.) โทร 64452</q-item-tile>
+            <q-item-tile
+              sublabel
+              class="q-ma-none q-pa-none"
+            >นายธนากร จะโต (หบค-ห.) โทร 64452</q-item-tile>
           </q-item-main>
         </q-item>
       </q-list>
