@@ -40,17 +40,17 @@
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
     >
       <q-list
-        class="q-mt-md"
+        class="q-ma-none bg-light-blue-2"
         no-border
         link
         inset-delimiter
       >
-        <q-item class="justify-center text-bold">
+        <q-item class="q-ma-none q-pa-none justify-center text-bold">
           Main Menu
         </q-item>
       </q-list>
       <q-list
-        class="q-mt-md"
+        class="q-ma-none q-pt-none"
         border
         separator
         link

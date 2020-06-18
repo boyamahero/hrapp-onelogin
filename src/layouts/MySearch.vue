@@ -31,8 +31,9 @@
         border
         link
         inset-delimiter
+        class="q-ma-none q-pa-none"
       >
-        <q-list-header class="text-weight-bolder text-center uppercase">
+        <q-list-header class="q-ma-none q-pa-none bg-light-blue-2 text-weight-bolder text-center uppercase">
           <div class="row justify-center">
             <div
               class="col-xs-8 text-right self-center"
@@ -51,7 +52,7 @@
             </div>
           </div>
         </q-list-header>
-        <q-item-separator />
+        <q-item-separator class="q-ma-none q-pt-none" />
         <q-item
           @click.native="index"
           dark
