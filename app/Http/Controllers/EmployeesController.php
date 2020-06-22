@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use App\User;
+use Throwable;
 use App\Document;
 use App\Employee;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\Facades\Image;
 use App\Http\Resources\EmployeeCollection;
 
 class EmployeesController extends Controller
@@ -26,21 +28,40 @@ class EmployeesController extends Controller
 
     public function images($id, $hash)
     {
-        // if ($hash !== base64_encode( substr(sprintf("%06d", $id),0,3) ).env('APP_SECRET','HrApP').base64_encode( substr(sprintf("%06d", $id),3,3) ) )
-        //     return null;
-
-        // $emp = Employee::where('id',$id)
-        // ->where('status','!=','0')
-        // ->first();
-        // header('Content-type: image/jpeg');
-        // echo file_get_contents('http://10.40.61.208/IMAGE/WINFOMA/PERSON/DATA/DATA'.substr($emp->docuname,1,4).'/'.$emp->docuname.'.jpg');
-
         if ($hash !== base64_encode(substr(sprintf("%06d", $id), 0, 3)) . env('APP_SECRET', 'HrApP') . base64_encode(substr(sprintf("%06d", $id), 3, 3)))
             return null;
-        header('Content-type: image/jpeg');
-        $document = Document::where('employee_code', '00' . $id)->where('type', '001')->first();
-        echo file_get_contents('http://10.40.61.208/IMAGE/WINFOMA/PERSON/DATA/DATA' . substr($document->docuname, 1, 4) . '/' . $document->docuname . '.jpg');
+        try {
+            $document = Document::where('employee_code', $id)->where('document_subtype', '1')->first();
+            $image_path = 'http://hrerp.egat.co.th/images/' . $document->document_subtype . '/' . $document->document_name . '.' . $document->document_extension;
+            $img = Image::make($image_path);
+            return $img->response('jpg');
+        } catch (Throwable $e) {
+            return response()->json([
+                'message' => 'ไม่พบรูปผู้ปฏิบัติงาน'
+            ], 400);
+        }
     }
+
+    // public function images($id, $hash)
+    // {
+    //     $texts = explode('-', $hash);
+
+    //     if ($texts[1]  !== base64_encode(substr(sprintf("%06d", $id), 0, 3)) . env('APP_SECRET', 'HrApP') . base64_encode(substr(sprintf("%06d", $id), 3, 3)))
+    //         return null;
+
+    //     try {
+    //         $document = Document::where('employee_code', $id)->where('document_subtype', '1')->first();
+    //         $image_path = 'http://hrerp.egat.co.th/images/' . $document->document_subtype . '/' . $document->document_name . '.' . $document->document_extension;
+    //         $img = Image::make($image_path)->text('F:' . Crypt::decryptString($texts[0]), 120, 200, function ($font) {
+    //             $font->color(array(255, 255, 255, 0.3));
+    //         });
+    //         return $img->response('jpg');
+    //     } catch (Throwable $e) {
+    //         return response()->json([
+    //             'message' => 'ไม่พบรูปผู้ปฏิบัติงาน'
+    //         ], 400);
+    //     }
+    // }
 
     public function show()
     {

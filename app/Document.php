@@ -8,6 +8,8 @@ use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 class Document extends Model
 {
     use Cachable;
-    
-    protected $table = 'HRDATA.dbo.documents';
+
+    protected $connection = 'HRDatabase';
+
+    protected $table = 'documents';
 }
