@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use Throwable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,8 +25,7 @@ class WorkLocation extends JsonResource
     public function toArray($request)
     {
         $data = [];
-
-        if ($this->PWAH_Address) {
+        if ($this->resource->getTable() == 'PSNEngine_PersonWorkAddressHistory') {
             $data = [
                 'Address' => $this->PWAH_Address,
                 'Building' => $this->PWAH_Building,
@@ -39,7 +40,7 @@ class WorkLocation extends JsonResource
             ];
         }
 
-        if ($this->id) {
+        if ($this->resource->getTable() == 'work_locations') {
             $data = [
                 'Address' => $this->wlfullname->WL_SubDistrict . ' ' . $this->wlfullname->WL_District . ' ' . $this->wlfullname->WL_Province,
                 'Building' => $this->ZZFLBLD,

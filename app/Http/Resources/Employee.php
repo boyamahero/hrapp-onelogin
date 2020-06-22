@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Carbon\Carbon;
 use App\Http\Resources\WorkFromHome;
+use App\Http\Resources\WorkLocation;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\EducationCollection;
 use App\Http\Resources\WorkFromHomeCollection;
