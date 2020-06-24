@@ -30,7 +30,7 @@
       <div class="text-left self-center">
         <div>
           <div v-if="total > 0">พบผลการค้นหาจำนวน {{ total }} ท่าน</div>
-          <div v-else>ไม่พบผลการค้นหา</div>
+          <div v-else>{{ message }}</div>
         </div>
         <div class="subtitle">
           <span v-if="filter.level.min !== 0 || filter.level.max !==14">ระดับ {{filter.level.min}} {{filter.level.min===filter.level.max?'':'ถึง '+filter.level.max}}</span>
@@ -525,7 +525,9 @@ export default {
       maximizedModal: false,
       showResult: false,
       pages: [],
-      employee: {}
+      employee: {},
+      message: '',
+      min_length: 3
     }
   },
   computed: {
@@ -557,6 +559,7 @@ export default {
     },
     initial () {
       this.total = 0
+      this.employees = []
       this.current_page = 0
       this.last_page = 0
       this.next_page_url = null
@@ -569,10 +572,12 @@ export default {
       if (this.searchText.length === 0) {
         this.initial()
       }
-      if (this.searchText && this.searchText.length > 3) {
+      if (this.searchText && this.searchText.length >= 3) {
         this.initial()
         let query = ''
-        this.showResult = false
+        this.showResult = true
+        this.message = 'กำลังค้นหา......'
+
         if (this.filter.level.min !== 0 || this.filter.level.max !== 14) {
           query += 'levelMin=' + this.filter.level.min + '&levelMax=' + this.filter.level.max
         }
@@ -590,8 +595,8 @@ export default {
               this.total = res.data.meta.total
               this.current_page = res.data.meta.current_page
               this.last_page = res.data.meta.last_page
-              this.next_page_url = res.data.links.next
               this.showResult = true
+              this.next_page_url = res.data.links.next
               this.loadedPages.push(res.data.meta.current_page)
             }
           }).catch((e) => {
@@ -604,6 +609,11 @@ export default {
               // this.$router.push({name: 'login'})
             })
           })
+      } else {
+        this.employees = []
+        this.showResult = true
+        this.total = 0
+        this.message = 'ไม่พบผลการค้นหา กรุณาระบุคำค้นให้ถูกต้องและจำนวน ' + this.min_length + ' ตัวอักษรขึ้นไป'
       }
     },
     loadMore (index, done) {
