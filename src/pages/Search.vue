@@ -598,6 +598,9 @@ export default {
               this.showResult = true
               this.next_page_url = res.data.links.next
               this.loadedPages.push(res.data.meta.current_page)
+              if (this.employees.length === 0) {
+                this.message = 'ไม่พบผลการค้นหา กรุณาระบุคำค้นให้ถูกต้อง'
+              }
             }
           }).catch((e) => {
             this.$q.dialog({
@@ -613,7 +616,7 @@ export default {
         this.employees = []
         this.showResult = true
         this.total = 0
-        this.message = 'ไม่พบผลการค้นหา กรุณาระบุคำค้นให้ถูกต้องและจำนวน ' + this.min_length + ' ตัวอักษรขึ้นไป'
+        this.message = 'กรุณาระบุคำค้นจำนวน ' + this.min_length + ' ตัวอักษรขึ้นไป'
       }
     },
     loadMore (index, done) {
