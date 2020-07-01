@@ -42,16 +42,16 @@ class WorkLocation extends JsonResource
 
         if ($this->resource->getTable() == 'work_locations') {
             $data = [
-                'Address' => $this->wlfullname->WL_SubDistrict . ' ' . $this->wlfullname->WL_District . ' ' . $this->wlfullname->WL_Province,
-                'Building' => $this->ZZFLBLD,
+                'Address' => $this->wlfullname ? $this->wlfullname->WL_SubDistrict . ' ' . $this->wlfullname->WL_District . ' ' . $this->wlfullname->WL_Province : '',
+                'Building' => $this->ZZFLBLD ?? '',
                 'MobilePhoneNumber' => $this->when(
                     $this->permission,
-                    $this->ZZMOBL
+                    $this->ZZMOBL ?? ''
                 ),
-                'Name' => $this->wlfullname->WL_Name,
-                'PhoneNumber' => $this->ZZOFTEL,
-                'Room' => $this->ZZROMNO,
-                'WorkLocationCode' => $this->ZZCODE,
+                'Name' => $this->wlfullname ? $this->wlfullname->WL_Name : '',
+                'PhoneNumber' => $this->ZZOFTEL ?? '',
+                'Room' => $this->ZZROMNO ?? '',
+                'WorkLocationCode' => $this->ZZCODE ?? '',
             ];
         }
 
