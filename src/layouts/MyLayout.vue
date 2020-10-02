@@ -125,25 +125,16 @@
             <q-item-tile
               sublabel
               class="q-ma-none q-pa-none"
-            >นายอิทธิชัย ดิศวนนท์ (อทบ.) โทร 65300</q-item-tile>
+            >คุณปรารถนา โกยทอง (อทบ.) โทร 65300</q-item-tile>
           </q-item-main>
         </q-item>
         <q-item class="q-ma-none q-pa-none">
           <q-item-main class="text-left q-body-1">
-            <q-item-tile label>ผู้ดูแลเว็บไซต์</q-item-tile>
+            <q-item-tile label>ผู้พัฒนาและผู้ดูแลระบบ</q-item-tile>
             <q-item-tile
               sublabel
               class="q-ma-none q-pa-none"
-            >นายสุรพล ปังอุทา (กทห-ห.) โทร 64450</q-item-tile>
-          </q-item-main>
-        </q-item>
-        <q-item class="q-ma-none q-pa-none">
-          <q-item-main class="text-left q-body-1">
-            <q-item-tile label>ผู้พัฒนาระบบ</q-item-tile>
-            <q-item-tile
-              sublabel
-              class="q-ma-none q-pa-none"
-            >นายธนากร จะโต (หบค-ห.) โทร 64452</q-item-tile>
+            >หบค-ห. กทห-ห. อจส. โทร 64452</q-item-tile>
           </q-item-main>
         </q-item>
       </q-list>
