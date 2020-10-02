@@ -256,11 +256,11 @@
                 <p class="text-faded no-margin">วันเข้าทำงาน (อายุงาน)</p>
                 <p class="no-margin q-pl-xs">{{ employee.entry_date | dateFormatTh }} ({{ employee.work_age }})</p>
                 <p class="text-faded no-margin">วันบรรจุ</p>
-                <p class="no-margin q-pl-xs">{{ employee.assign_date }}</p>
+                <p class="no-margin q-pl-xs">{{ employee.assign_date | dateFormatTh}}</p>
                 <p class="text-faded no-margin">วันเกษียณอายุ (อายุงานคงเหลือ)</p>
-                <p class="no-margin q-pl-xs">{{ employee.retire_date }} ({{employee.remain_work_age }})</p>
+                <p class="no-margin q-pl-xs">{{ employee.retire_date | dateFormatTh}} ({{employee.remain_work_age }})</p>
                 <p class="text-faded no-margin">วันที่เลื่อนระดับ (อายุงานในระดับ)</p>
-                <p class="no-margin q-pl-xs">{{ employee.level_date }} ({{ employee.level_work_age }})</p>
+                <p class="no-margin q-pl-xs">{{ employee.level_date | dateFormatEnToTh}} ({{ employee.level_work_age }})</p>
               </q-card-main>
             </q-card>
           </div>
