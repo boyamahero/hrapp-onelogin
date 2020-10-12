@@ -20,7 +20,7 @@ class Person extends Model
 
     public function secretary()
     {
-        return $this->hasMany('App\Secretary', 'PATH_PersonID', 'PersonID')->where('PATH_SecretaryType', 24);
+        return $this->hasMany('App\Secretary', 'PATH_PersonID', 'PersonID')->where('PATH_SecretaryType', 24)->orderBy('PATH_DataValidYear','desc');
     }
 
     public function MedicalFees()
