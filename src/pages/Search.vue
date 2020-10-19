@@ -8,7 +8,7 @@
               <q-search
                 class="full-width"
                 v-model="searchText"
-                :debounce="1000"
+                :debounce="2000"
                 placeholder="ชื่อ/นามสกุล(TH/EN)/ สังกัด(ย่อ/เต็ม)/ ตำแหน่งย่อ/ เลขประจำตัว/ อีเมล"
                 icon="person"
                 float-label="คำค้น"
@@ -143,6 +143,14 @@
                       class="q-body-2 text-primary bg-green-2"
                     >{{ employee.section_full }}</q-tooltip></span>
                 </q-item-tile>
+                <div v-if='employee.email'>
+                  <q-item-tile class="q-body-1">
+                    <q-icon name="email" />
+                    <span>
+                      {{ employee.email }}
+                    </span>
+                  </q-item-tile>
+                </div>
                 <div v-if='employee.templocation'>
                   <q-item-tile class="q-body-1">
                     <q-icon name="room" /> {{ employee.templocation.Name }}</q-item-tile>
