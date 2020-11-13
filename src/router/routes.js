@@ -52,7 +52,7 @@ const routes = [
       {
         path: 'statistic',
         name: 'statistic',
-        component: () => import('pages/Statistic.vue'),
+        component: () => import('pages/UnderConstruction.vue'),
         meta: {
           requiresAuth: true
         }
@@ -60,7 +60,7 @@ const routes = [
       {
         path: 'manpower',
         name: 'manpower',
-        component: () => import('pages/Manpower.vue'),
+        component: () => import('pages/UnderConstruction.vue'),
         meta: {
           requiresAuth: true
         }
@@ -68,7 +68,7 @@ const routes = [
       {
         path: 'retire',
         name: 'retire',
-        component: () => import('pages/Retire.vue'),
+        component: () => import('pages/UnderConstruction.vue'),
         meta: {
           requiresAuth: true
         }
@@ -76,7 +76,7 @@ const routes = [
       {
         path: 'infographic',
         name: 'infographic',
-        component: () => import('pages/Infographic.vue'),
+        component: () => import('pages/UnderConstruction.vue'),
         meta: {
           requiresAuth: true
         }
@@ -84,7 +84,7 @@ const routes = [
       {
         path: 'infographic_list',
         name: 'infographic_list',
-        component: () => import('pages/InfographicList.vue'),
+        component: () => import('pages/UnderConstruction.vue'),
         meta: {
           requiresAuth: true
         }
@@ -92,7 +92,7 @@ const routes = [
       {
         path: 'portfolio',
         name: 'portfolio',
-        component: () => import('pages/Portfolio.vue'),
+        component: () => import('pages/UnderConstruction.vue'),
         meta: {
           requiresAuth: true
         }
