@@ -92,7 +92,7 @@ const routes = [
       {
         path: 'portfolio',
         name: 'portfolio',
-        component: () => import('pages/UnderConstruction.vue'),
+        beforeEnter () { location.href = 'https://pis.egat.co.th' },
         meta: {
           requiresAuth: true
         }
