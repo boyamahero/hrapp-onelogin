@@ -96,11 +96,9 @@
             <img class="full-width" src="statics/menu/menu-ess1.png" @click="$router.push('/portfolio')"><br>
             <div class="text-bold text-red" style="position: absolute;top: 7px;right:5px;">สำหรับเครือข่ายภายใน</div>
           </div>
-          <div class="col-lg-2 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-infographic.png" @click="$router.push('/infographic')"></div>
-          <div class="col-lg-2 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-dashboard.png" @click="$router.push('/statistic')"></div>
           <div class="col-lg-2 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-search1.png" @click="$router.push('/search')"></div>
-          <div class="col-lg-2 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-benefit.png" @click="$router.push('/benefit')"></div>
           <div class="col-lg-2 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-compen.png" @click="$router.push('/salary')"></div>
+          <div class="col-lg-2 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-dashboard.png" @click="$router.push('/statistic')"></div>
          </div>
       </q-card-main>
     </q-card>
