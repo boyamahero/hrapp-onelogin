@@ -88,6 +88,15 @@
         <p><q-input type="text"  v-model="PWAH_MobilePhoneNumber" clearable/></p>
       </q-card-main>
       </q-card>
+      <q-card class="q-ma-md q-px-xs">
+       <q-card-title>
+          Line ID
+        </q-card-title>
+        <q-card-separator />
+      <q-card-main>
+        <p><q-input type="text"  v-model="lineID" clearable/></p>
+      </q-card-main>
+      </q-card>
        <div class="col-12">
         <q-card class="q-ma-md">
           <q-card-main class="bg-blue">
@@ -270,7 +279,8 @@ export default {
       PWAH_Building: null,
       PWAH_Floor: null,
       PWAH_PhoneNumber: null,
-      PWAH_Room: null
+      PWAH_Room: null,
+      lineID: null
     }
   },
   computed: {
@@ -306,6 +316,7 @@ export default {
       this.PWAH_Floor = templocation.ZZFL
       this.PWAH_PhoneNumber = templocation.ZZOFTEL
       this.PWAH_Room = templocation.ZZROMNO
+      this.lineID = templocation.line_id
       this.INTM_NAME = templocation.INTM_NAME
       this.INTM_TEL = templocation.INTM_TEL
       this.INTM_RELATION = templocation.INTM_RELATION
@@ -492,6 +503,7 @@ export default {
       fd.append('INTM_NAME', this.INTM_NAME)
       fd.append('INTM_TEL', this.INTM_TEL)
       fd.append('INTM_RELATION', this.INTM_RELATION)
+      fd.append('lineID', this.lineID)
       this.$axios.post('saveWlupdate', fd)
         .then((res) => {
           this.$q.notify({
