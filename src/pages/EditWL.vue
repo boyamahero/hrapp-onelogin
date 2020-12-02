@@ -280,7 +280,8 @@ export default {
       PWAH_Floor: null,
       PWAH_PhoneNumber: null,
       PWAH_Room: null,
-      lineID: null
+      lineID: null,
+      url_redirect: null
     }
   },
   computed: {
@@ -294,6 +295,7 @@ export default {
   },
   methods: {
     createForm () {
+      this.url_redirect = this.$router.history.current.query.backurl
       if (this.user.templocation) {
         this.getTemplocation()
       } else {
@@ -513,7 +515,11 @@ export default {
              icon: 'done',
              timeout: 1000
             })
-          this.$store.dispatch('employee/setEmployee').then(window.location.assign('/'))
+          if (this.url_redirect) {
+            window.location.assign(this.url_redirect)
+          } else {
+            this.$store.dispatch('employee/setEmployee').then(window.location.assign('/'))
+          }
       }).catch(() => {
         this.$q.dialog({
           color: 'negative',
