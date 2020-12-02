@@ -92,13 +92,11 @@
       <q-card-main>
          <p class="header">เมนู</p>
          <div class="row gutter-xs">
-          <div class="col-lg-2 col-md-3 col-xs-6" style="position: relative;">
+          <div class="col-lg-3 col-md-3 col-xs-6" style="position: relative;">
             <img class="full-width" src="statics/menu/menu-ess1.png" @click="$router.push('/portfolio')"><br>
             <div class="text-bold text-red" style="position: absolute;top: 7px;right:5px;">สำหรับเครือข่ายภายใน</div>
           </div>
-          <div class="col-lg-2 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-search1.png" @click="$router.push('/search')"></div>
-          <div class="col-lg-2 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-compen.png" @click="$router.push('/salary')"></div>
-          <div class="col-lg-2 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-dashboard.png" @click="$router.push('/statistic')"></div>
+          <div class="col-lg-3 col-md-3 col-xs-6"><img class="full-width" src="statics/menu/menu-search1.png" @click="$router.push('/search')"></div>
          </div>
       </q-card-main>
     </q-card>
