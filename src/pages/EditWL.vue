@@ -4,149 +4,126 @@
       <div class="col-12">
         <q-card class="q-ma-md">
           <q-card-main class="bg-blue">
-            <p class="header text-bold" style="color:white">แก้ไขข้อมูลสถานที่ทำงาน</p>
+            <p class="header text-bold" style="color:white">แก้ไขข้อมูลสำหรับติดต่อสื่อสาร</p>
+          </q-card-main>
+        </q-card>
+      </div>
+    </div>
+    <div class="row justify-center">
+      <div class="col-xs-12 col-md-6 col-lg-6">
+        <q-card class="q-ma-md q-px-md">
+          <q-select
+            float-label="ประเภทสถานที่ทำงาน"
+            v-model="WL_Type"
+            separator
+            @input="getWLList"
+            :options="SL_WL_Type"
+          />
+        </q-card>
+      </div>
+      <div class="col-xs-12 col-md-6 col-lg-6">
+        <q-card class="q-ma-md q-px-md" v-if="SL_WL_Name">
+          <q-select
+            float-label="สถานที่ทำงาน"
+            v-model="WL_Name"
+            separator
+            @input="getWLdetail"
+            :options="SL_WL_Name"
+          />
+          </q-card>
+      </div>
+      <div class="col-12">
+        <q-card class="q-mx-md q-px-md" v-if="WL_Province">
+            {{WL_SubDistrict + ' ' + WL_District  + ' จ.' +  WL_Province}}
+        </q-card>
+      </div>
+      <div class="col-xs-12 col-md-6 col-lg-4">
+        <q-card class="q-ma-md q-px-md">
+          <q-input float-label="ห้อง" v-model="PWAH_Room" clearable/>
+        </q-card>
+      </div>
+      <div class="col-xs-12 col-md-6 col-lg-4">
+        <q-card class="q-ma-md q-px-md">
+          <q-input float-label="อาคาร" v-model="PWAH_Building" clearable/>
+        </q-card>
+      </div>
+      <div class="col-xs-12 col-md-6 col-lg-4">
+        <q-card class="q-ma-md q-px-md" v-if="SL_Floor">
+          <q-select
+            float-label="ชั้น"
+            v-model="PWAH_Floor"
+            separator
+            :options="SL_Floor"
+          />
+        </q-card>
+      </div>
+      <div class="col-xs-12 col-md-6 col-lg-4">
+        <q-card class="q-ma-md q-px-md">
+          <q-card-main>
+            <q-input float-label="เบอร์โทรภายใน" type="text" v-model="PWAH_PhoneNumber" clearable/>
+          </q-card-main>
+        </q-card>
+      </div>
+      <div class="col-xs-12 col-md-6 col-lg-4">
+        <q-card class="q-ma-md q-px-md">
+          <q-card-main>
+            <q-input float-label="เบอร์โทรสำหรับบุคคลภายนอก" type="text" v-model="PWAH_PhoneNumberFull" clearable/>
+          </q-card-main>
+        </q-card>
+      </div>
+      <div class="col-xs-12 col-md-6 col-lg-4">
+        <q-card class="q-ma-md q-px-md">
+          <q-card-main>
+            <q-input float-label="เบอร์มือถือ" type="text"  v-model="PWAH_MobilePhoneNumber" clearable/>
           </q-card-main>
         </q-card>
       </div>
       <div class="col-12">
-        <q-card class="q-ma-md">
-           <q-select
-        inverted-light
-        color="white"
-        float-label="ประเภทสถานที่ทำงาน"
-        v-model="WL_Type"
-        separator
-        @input="getWLList"
-        :options="SL_WL_Type"
-      />
+        <q-card class="q-ma-md q-px-md">
+          <q-card-main>
+            <q-input float-label="Line ID" type="text"  v-model="lineID" clearable/>
+          </q-card-main>
         </q-card>
-        <q-card class="q-ma-md" v-if="SL_WL_Name">
-           <q-select
-           dense
-        inverted-light
-        color="white"
-        float-label="สถานที่ทำงาน"
-        v-model="WL_Name"
-        @input="getWLdetail"
-        separator
-        :options="SL_WL_Name"
-      />
-        </q-card>
-        <q-card class="q-ma-md q-px-xs" v-if="WL_Province">
-       <q-card-title>
-          ที่อยู่
-        </q-card-title>
-        <q-card-separator />
-      <q-card-main>
-        <p>{{WL_SubDistrict + ' ' + WL_District  + ' จ.' +  WL_Province}}</p>
-  </q-card-main>
-</q-card>
-      <q-card class="q-ma-md q-px-xs">
-       <q-card-title>
-          ห้อง
-        </q-card-title>
-        <q-card-separator />
-      <q-card-main>
-        <p><q-input v-model="PWAH_Room" clearable/></p>
-      </q-card-main>
-      </q-card>
-      <q-card class="q-ma-md q-px-xs">
-       <q-card-title>
-          อาคาร
-        </q-card-title>
-        <q-card-separator />
-      <q-card-main>
-        <p><q-input v-model="PWAH_Building" clearable/></p>
-      </q-card-main>
-      </q-card>
-      <q-card class="q-ma-md" v-if="SL_Floor">
-        <q-select
-          dense
-          inverted-light
-          color="white"
-          float-label="ชั้น"
-          v-model="PWAH_Floor"
-          separator
-          :options="SL_Floor"
-   />
-     </q-card>
-      <q-card class="q-ma-md q-px-xs">
-       <q-card-title>
-          เบอร์โทรภายใน
-        </q-card-title>
-        <q-card-separator />
-      <q-card-main>
-        <p><q-input type="text" v-model="PWAH_PhoneNumber" clearable/></p>
-      </q-card-main>
-      </q-card>
-      <q-card class="q-ma-md q-px-xs">
-       <q-card-title>
-          เบอร์โทรสำหรับบุคคลภายนอก
-        </q-card-title>
-        <q-card-separator />
-      <q-card-main>
-        <p><q-input type="text" v-model="PWAH_PhoneNumberFull" clearable/></p>
-      </q-card-main>
-      </q-card>
-      <q-card class="q-ma-md q-px-xs">
-       <q-card-title>
-          เบอร์มือถือ
-        </q-card-title>
-        <q-card-separator />
-      <q-card-main>
-        <p><q-input type="text"  v-model="PWAH_MobilePhoneNumber" clearable/></p>
-      </q-card-main>
-      </q-card>
-      <q-card class="q-ma-md q-px-xs">
-       <q-card-title>
-          Line ID
-        </q-card-title>
-        <q-card-separator />
-      <q-card-main>
-        <p><q-input type="text"  v-model="lineID" clearable/></p>
-      </q-card-main>
-      </q-card>
-       <div class="col-12">
+      </div>
+    </div>
+    <div class="row justify-center">
+      <div class="col-12">
         <q-card class="q-ma-md">
           <q-card-main class="bg-blue">
             <p class="header text-bold" style="color:white">ผู้ที่สามารถติดต่อได้กรณีฉุกเฉิน</p>
           </q-card-main>
         </q-card>
       </div>
-      <q-card class="q-ma-md q-px-xs">
-       <q-card-title>
-          ชื่อ-สกุล
-        </q-card-title>
-        <q-card-separator />
-      <q-card-main>
-        <p><q-input type="text"  v-model="INTM_NAME" clearable/></p>
-      </q-card-main>
-      </q-card>
-       <q-card class="q-ma-md q-px-xs">
-       <q-card-title>
-          เบอร์โทรศัพท์
-        </q-card-title>
-        <q-card-separator />
-      <q-card-main>
-        <p><q-input type="text"  v-model="INTM_TEL" clearable/></p>
-      </q-card-main>
-      </q-card>
-         <q-card class="q-ma-md" v-if="SL_Floor">
-        <q-select
-          dense
-          inverted-light
-          color="white"
-          float-label="ความสัมพันธ์"
-          v-model="INTM_RELATION"
-          separator
-          :options="SL_RELATION"
-   />
-     </q-card>
-      <div class="row justify-center">
-      <q-btn class="q-ma-lg center" label="คืนค่าเริ่มต้น" color="warning" @click="getTemplocation"/>
-      <q-btn class="q-ma-lg center" label="บันทึกการปรับปรุง" color="secondary" @click="checkForm"/>
+    </div>
+    <div class="row justify-center">
+      <div class="col-xs-12 col-md-6 col-lg-4">
+        <q-card class="q-ma-md q-px-md">
+          <q-card-main>
+            <q-input float-label="ชื่อ-สกุล" type="text"  v-model="INTM_NAME" clearable/>
+          </q-card-main>
+        </q-card>
       </div>
+      <div class="col-xs-12 col-md-6 col-lg-4">
+        <q-card class="q-ma-md q-px-md">
+          <q-card-main>
+            <q-input float-label="เบอร์โทรศัพท์" type="text"  v-model="INTM_TEL" clearable/>
+          </q-card-main>
+        </q-card>
       </div>
+      <div class="col-xs-12 col-md-6 col-lg-4">
+         <q-card class="q-ma-md q-px-md" v-if="SL_Floor">
+            <q-select
+              float-label="ความสัมพันธ์"
+              v-model="INTM_RELATION"
+              separator
+              :options="SL_RELATION"
+            />
+          </q-card>
+      </div>
+    </div>
+    <div class="row justify-center">
+      <q-btn class="q-ma-lg" label="คืนค่าเริ่มต้น" color="warning" @click="getTemplocation"/>
+      <q-btn class="q-ma-lg" label="บันทึกการปรับปรุง" color="secondary" @click="checkForm"/>
     </div>
   </q-page>
 </template>
@@ -558,10 +535,10 @@ export default {
 </script>
 
 <style>
-.q-if-standard {
+/* .q-if-standard {
    border: 1px solid #000;
     border-radius: 5px;
     padding: 5px;
     background-color: aliceblue;
-}
+} */
 </style>
