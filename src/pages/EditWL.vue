@@ -72,11 +72,20 @@
      </q-card>
       <q-card class="q-ma-md q-px-xs">
        <q-card-title>
-          เบอร์โทร
+          เบอร์โทรภายใน
         </q-card-title>
         <q-card-separator />
       <q-card-main>
         <p><q-input type="text" v-model="PWAH_PhoneNumber" clearable/></p>
+      </q-card-main>
+      </q-card>
+      <q-card class="q-ma-md q-px-xs">
+       <q-card-title>
+          เบอร์โทรสำหรับบุคคลภายนอก
+        </q-card-title>
+        <q-card-separator />
+      <q-card-main>
+        <p><q-input type="text" v-model="PWAH_PhoneNumberFull" clearable/></p>
       </q-card-main>
       </q-card>
       <q-card class="q-ma-md q-px-xs">
@@ -279,6 +288,7 @@ export default {
       PWAH_Building: null,
       PWAH_Floor: null,
       PWAH_PhoneNumber: null,
+      PWAH_PhoneNumberFull: null,
       PWAH_Room: null,
       lineID: null,
       url_redirect: null
@@ -317,6 +327,7 @@ export default {
       this.PWAH_Building = templocation.ZZBLD
       this.PWAH_Floor = templocation.ZZFL
       this.PWAH_PhoneNumber = templocation.ZZOFTEL
+      this.PWAH_PhoneNumberFull = templocation.ZZOFTELFULL
       this.PWAH_Room = templocation.ZZROMNO
       this.lineID = templocation.line_id
       this.INTM_NAME = templocation.INTM_NAME
@@ -344,6 +355,7 @@ export default {
           }
           // this.PWAH_Building = location.PWAH_Building
           this.PWAH_PhoneNumber = location.PWAH_PhoneNumber
+          this.PWAH_PhoneNumberFull = location.PWAH_PhoneNumberFull
           this.PWAH_Room = location.PWAH_Room
           this.$q.loading.hide()
       } catch (error) {
@@ -443,6 +455,15 @@ export default {
               ok: 'ok'
             })
       }
+      if (!this.PWAH_PhoneNumberFull) {
+        this.errors.push('ไม่ได้กรอกข้อมูลเบอร์โทรสำหรับบุคคลภายนอก')
+        this.$q.dialog({
+              color: 'negative',
+              message: 'ไม่ได้กรอกข้อมูลเบอร์โทรสำหรับบุคคลภายนอก',
+              icon: 'report_problem',
+              ok: 'ok'
+            })
+      }
       if (!this.PWAH_Room) {
         this.errors.push('ไม่ได้กรอกข้อมูลห้อง')
         this.$q.dialog({
@@ -501,6 +522,7 @@ export default {
       fd.append('PWAH_Building', this.PWAH_Building)
       fd.append('PWAH_Floor', this.PWAH_Floor)
       fd.append('PWAH_PhoneNumber', this.PWAH_PhoneNumber)
+      fd.append('PWAH_PhoneNumberFull', this.PWAH_PhoneNumberFull)
       fd.append('PWAH_Room', this.PWAH_Room)
       fd.append('INTM_NAME', this.INTM_NAME)
       fd.append('INTM_TEL', this.INTM_TEL)

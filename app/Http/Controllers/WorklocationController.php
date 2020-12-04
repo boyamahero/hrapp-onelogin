@@ -58,6 +58,7 @@ class WorklocationController extends Controller
     $data->ZZBLD =  $request->PWAH_Building;
     $data->ZZFL =  $request->PWAH_Floor;
     $data->ZZOFTEL =  $request->PWAH_PhoneNumber;
+    $data->ZZOFTELFULL =  $request->PWAH_PhoneNumberFull;
     $data->ZZMOBL =  $request->PWAH_MobilePhoneNumber;
     $data->line_id =  $request->lineID;
     $data->INTM_NAME =$request->INTM_NAME;
@@ -76,6 +77,7 @@ class WorklocationController extends Controller
     $data->ZZBLD =  $request->PWAH_Building;
     $data->ZZFL =  $request->PWAH_Floor;
     $data->ZZOFTEL =  $request->PWAH_PhoneNumber;
+    $data->ZZOFTELFULL =  $request->PWAH_PhoneNumberFull;
     $data->ZZMOBL =  $request->PWAH_MobilePhoneNumber;
     $data->line_id =  $request->lineID;
     $data->INTM_NAME =$request->INTM_NAME;
