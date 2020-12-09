@@ -22,7 +22,7 @@
                   <p>เบอร์ติดต่อภายใน. : {{user.templocation.ZZOFTEL}}</p>
                   <p>เบอร์ติดต่อมือถือ : {{user.templocation.ZZMOBL}}</p>
                 </div>
-                <div v-else>
+                <div v-else-if="user.location">
                   <p>สถานที่ทำงาน : {{user.location.PWAH_Name}}</p>
                   <p>อาคารและชั้น : {{user.location.PWAH_Building}}</p>
                   <p>ห้อง : {{user.location.PWAH_Room}}</p>

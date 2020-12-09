@@ -319,30 +319,34 @@ export default {
         spinnerSize: 140
       })
       let location = this.user.location
-      try {
-          this.WL_Type = location.PWAH_WorkLocationCode.charAt(0)
-          this.getWLList()
-          this.WL_Name = location.PWAH_WorkLocationCode
-          this.getWLdetail()
-          this.PWAH_MobilePhoneNumber = this.user.mobile_number
-          if (location.PWAH_Building) {
-          let splbld = location.PWAH_Building.split(' ชั้น ')
-          this.PWAH_Building = splbld[0]
-          this.PWAH_Floor = splbld[1]
-          }
-          // this.PWAH_Building = location.PWAH_Building
-          this.PWAH_PhoneNumber = location.PWAH_PhoneNumber
-          this.PWAH_PhoneNumberFull = location.PWAH_PhoneNumberFull
-          this.PWAH_Room = location.PWAH_Room
+      if (location) {
+        try {
+            this.WL_Type = location.PWAH_WorkLocationCode.charAt(0)
+            this.getWLList()
+            this.WL_Name = location.PWAH_WorkLocationCode
+            this.getWLdetail()
+            this.PWAH_MobilePhoneNumber = this.user.mobile_number
+            if (location.PWAH_Building) {
+            let splbld = location.PWAH_Building.split(' ชั้น ')
+            this.PWAH_Building = splbld[0]
+            this.PWAH_Floor = splbld[1]
+            }
+            // this.PWAH_Building = location.PWAH_Building
+            this.PWAH_PhoneNumber = location.PWAH_PhoneNumber
+            this.PWAH_PhoneNumberFull = location.PWAH_PhoneNumberFull
+            this.PWAH_Room = location.PWAH_Room
+            this.$q.loading.hide()
+        } catch (error) {
           this.$q.loading.hide()
-      } catch (error) {
+              this.$q.dialog({
+                color: 'negative',
+                message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
+                icon: 'report_problem',
+                ok: 'ok'
+              })
+        }
+      } else {
         this.$q.loading.hide()
-            this.$q.dialog({
-              color: 'negative',
-              message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
-              icon: 'report_problem',
-              ok: 'ok'
-            })
       }
     },
     getWLType () {
