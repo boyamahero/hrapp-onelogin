@@ -105,10 +105,18 @@ const routes = [
       //     requiresAuth: true
       //   }
       // },
+      // {
+      //   path: 'salary',
+      //   name: 'salary',
+      //   component: () => import('pages/Salary.vue'),
+      //   meta: {
+      //     requiresAuth: true
+      //   }
+      // },
       {
         path: 'salary',
         name: 'salary',
-        component: () => import('pages/Salary.vue'),
+        beforeEnter () { location.href = 'https://pis.egat.co.th/psn_extra' },
         meta: {
           requiresAuth: true
         }
