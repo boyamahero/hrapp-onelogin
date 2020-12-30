@@ -91,7 +91,7 @@
                   {{ employee.name }} ({{ employee.code }})
                   <q-icon
                       v-if="employee.work_from_home.length > 0"
-                      name="fas fa-laptop-house"
+                      name="fas fa-home"
                       :color="employee.is_boss?'indigo-10':'orange'"
                       class="q-ml-xs"
                     >
