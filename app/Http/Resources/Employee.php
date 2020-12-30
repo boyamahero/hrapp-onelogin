@@ -55,6 +55,7 @@ class Employee extends JsonResource
             ),
             'templocation' => new WorkLocation($this->whenLoaded('templocation'), $permission),
             'work_from_home' => new WorkFromHome($this->whenLoaded('workFromHome')),
+            'work_from_any_where' => new WorkFromHome($this->whenLoaded('workFromAnyWhere')),
             $this->mergeWhen(
                 $permission,
                 [

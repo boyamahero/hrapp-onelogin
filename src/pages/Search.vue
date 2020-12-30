@@ -83,25 +83,42 @@
                       @click.native="itemClicked(employee)"
                       :color="employee.is_boss?'white':'primary'"
                     />
-                    <q-icon
-                      v-if="employee.work_from_home.length > 0"
-                      name="fas fa-home"
-                      :color="employee.is_boss?'white':'secondary'"
-                    >
-                      <q-tooltip
-                        color="black"
-                        class="q-body-2 text-primary bg-green-2"
-                        v-for="(wfh, index) in employee.work_from_home"
-                        :key="index"
-                      >
-                        {{wfh.BeginDate}} {{wfh.BeginTime}} - {{wfh.EndDate}} {{wfh.EndTime}}
-                      </q-tooltip>
-                    </q-icon>
                   </div>
                 </div>
               </q-item-side>
               <q-item-main>
-                <q-item-tile class="q-body-1 text-weight-bold">{{ employee.name }} ({{ employee.code }})</q-item-tile>
+                <q-item-tile class="q-body-1 text-weight-bold">
+                  {{ employee.name }} ({{ employee.code }})
+                  <q-icon
+                      v-if="employee.work_from_home.length > 0"
+                      name="fas fa-laptop-house"
+                      :color="employee.is_boss?'indigo-10':'orange'"
+                      class="q-ml-xs"
+                    >
+                      <q-tooltip
+                        color="black"
+                        :class="employee.is_boss?'q-body-2 text-white text-bold bg-indigo-10':'q-body-2 text-white text-bold bg-orange'"
+                        v-for="(wfh, index) in employee.work_from_home"
+                        :key="index"
+                      >
+                        WFH {{wfh.BeginDate}} {{wfh.BeginTime}} - {{wfh.EndDate}} {{wfh.EndTime}}
+                      </q-tooltip>
+                    </q-icon>
+                    <q-icon
+                      v-if="employee.work_from_any_where.length > 0"
+                      name="fas fa-globe-americas"
+                      :color="employee.is_boss?'indigo-10':'orange'"
+                      class="q-ml-xs"
+                    >
+                      <q-tooltip
+                        :class="employee.is_boss?'q-body-2 text-white text-bold bg-indigo-10':'q-body-2 text-white text-bold bg-orange'"
+                        v-for="(wfa, index) in employee.work_from_any_where"
+                        :key="index"
+                      >
+                        WFA {{wfa.BeginDate}} {{wfa.BeginTime}} - {{wfa.EndDate}} {{wfa.EndTime}}
+                      </q-tooltip>
+                    </q-icon>
+                  </q-item-tile>
                 <q-item-tile class="q-body-1">
                   <q-icon name="work" />
                   <span>

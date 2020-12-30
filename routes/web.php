@@ -21,6 +21,16 @@ Route::get('/flush-cache', function () {
     return 'Done';
 });
 
+Route::get('/modelCacheClear/{models}', function ($models) {
+
+    $models = explode(',' ,$models);
+    foreach($models as $model) {
+        $cmd = "modelCache:clear --model=App\\\\{$model}";
+        $exitCode = Artisan::call($cmd);
+    }
+    return 'Done';
+});
+
 Route::get('/flush-cache-permission', function () {
     $exitCode = Artisan::call('cache:forget spatie.permission.cache');
     return 'Done';

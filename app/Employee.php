@@ -78,6 +78,11 @@ class Employee extends Model
 
     public function workFromHome()
     {
-        return $this->hasMany('App\WorkFromHome', 'EmpNo', 'PSCode');
+        return $this->hasMany('App\WorkFromHome', 'EmpNo', 'employee_code');
+    }
+
+    public function workFromAnyWhere()
+    {
+        return $this->hasMany('App\WorkFromAnyWhere', 'EmpNo', 'employee_code');
     }
 }
