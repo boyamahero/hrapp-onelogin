@@ -52,7 +52,7 @@
     <!-- <q-item-separator /> -->
 
     <div class="row justify-center">
-      <div class="col-12 justify-between">
+      <div class="col-xs-12 col-md-10 col-lg-8 justify-between">
         <q-infinite-scroll
           :handler="loadMore"
           ref="infiniteScroll"
@@ -89,36 +89,33 @@
               <q-item-main>
                 <q-item-tile class="q-body-1 text-weight-bold">
                   {{ employee.name }} ({{ employee.code }})
-                  <q-icon
-                      v-if="employee.work_from_home.length > 0"
-                      name="fas fa-home"
-                      :color="employee.is_boss?'indigo-10':'orange'"
-                      class="q-ml-xs"
+                  <q-chip
+                    v-if="employee.work_from_home.length > 0"
+                    color="deep-orange" text-color="white" icon="fas fa-home" dense>
+                    WFH
+                    <q-tooltip
+                      class="q-body-2 text-white text-bold bg-deep-orange"
+                      v-for="(wfh, index) in employee.work_from_home"
+                      :key="index"
+                      :offset="[5, 5]"
                     >
-                      <q-tooltip
-                        color="black"
-                        :class="employee.is_boss?'q-body-2 text-white text-bold bg-indigo-10':'q-body-2 text-white text-bold bg-orange'"
-                        v-for="(wfh, index) in employee.work_from_home"
-                        :key="index"
-                      >
-                        WFH {{wfh.BeginDate}} {{wfh.BeginTime}} - {{wfh.EndDate}} {{wfh.EndTime}}
-                      </q-tooltip>
-                    </q-icon>
-                    <q-icon
-                      v-if="employee.work_from_any_where.length > 0"
-                      name="fas fa-globe-americas"
-                      :color="employee.is_boss?'indigo-10':'orange'"
-                      class="q-ml-xs"
+                      WFH {{wfh.BeginDate}} {{wfh.BeginTime}} - {{wfh.EndDate}} {{wfh.EndTime}}
+                    </q-tooltip>
+                  </q-chip>
+                  <q-chip
+                    v-if="employee.work_from_any_where.length > 0"
+                    color="deep-orange" text-color="white" icon="fas fa-globe-americas" dense>
+                    WFA
+                    <q-tooltip
+                      class="q-body-2 text-white text-bold bg-deep-orange"
+                      v-for="(wfa, index) in employee.work_from_any_where"
+                      :key="index"
+                      :offset="[5, 5]"
                     >
-                      <q-tooltip
-                        :class="employee.is_boss?'q-body-2 text-white text-bold bg-indigo-10':'q-body-2 text-white text-bold bg-orange'"
-                        v-for="(wfa, index) in employee.work_from_any_where"
-                        :key="index"
-                      >
-                        WFA {{wfa.BeginDate}} {{wfa.BeginTime}} - {{wfa.EndDate}} {{wfa.EndTime}}
-                      </q-tooltip>
-                    </q-icon>
-                  </q-item-tile>
+                      WFA {{wfa.BeginDate}} {{wfa.BeginTime}} - {{wfa.EndDate}} {{wfa.EndTime}}
+                    </q-tooltip>
+                  </q-chip>
+                </q-item-tile>
                 <q-item-tile class="q-body-1">
                   <q-icon name="work" />
                   <span>
@@ -130,6 +127,7 @@
                     >
                       {{ employee.secretary? employee.position_full + ' ' + employee.secretary.PATH_PositionName : employee.position_full }}
                     </q-tooltip>
+                    <span v-if="$q.platform.is.desktop">({{employee.secretary? employee.position_full + ' ' + employee.secretary.PATH_PositionName : employee.position_full }})</span>
                   </span>
                 </q-item-tile>
                 <q-item-tile class="q-body-1">
