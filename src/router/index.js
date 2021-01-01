@@ -30,11 +30,12 @@ export default function ({ store }) {
     if (to.meta.requiresAuth) {
       const auth = store.state.security.auth
       if (!auth.authenticated) {
+        // console.log('Local authentication' + auth.authenticated)
         keycloakAuth.init({ onLoad: 'login-required' }).success(function (authenticated) {
+          // console.log('SSO authentication ' + authenticated)
           if (!authenticated) {
             window.location.reload()
           }
-          // alert(authenticated ? 'authenticated' : 'not authenticated')
           store.dispatch('authLogin', keycloakAuth)
           next()
           setInterval(function () {
@@ -48,7 +49,7 @@ export default function ({ store }) {
             })
           }, 60000)
         }).error(function () {
-          alert('failed to login')
+          window.location.reload()
         })
       } else {
         next()
