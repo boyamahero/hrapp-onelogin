@@ -71,7 +71,7 @@
                   >
                     <img
                       v-lazy="employee.image_path"
-                      style="width: 75px;"
+                      style="width: 75px;border-radius: 20%"
                       draggable="false"
                       oncontextmenu="return false"
                     ><br>
