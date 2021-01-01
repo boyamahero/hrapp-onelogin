@@ -127,7 +127,7 @@
                     >
                       {{ employee.secretary? employee.position_full + ' ' + employee.secretary.PATH_PositionName : employee.position_full }}
                     </q-tooltip>
-                    <span v-if="$q.platform.is.desktop">({{employee.secretary? employee.position_full + ' ' + employee.secretary.PATH_PositionName : employee.position_full }})</span>
+                    <span v-if="$q.platform.is.desktop">({{employee.secretary? employee.position_full + ' ' + employee.secretary.PATH_PositionName : employee.position_full }} )</span>
                   </span>
                 </q-item-tile>
                 <q-item-tile class="q-body-1">
@@ -520,8 +520,9 @@ export default {
       return parseInt(dd[0]) + ' ' + ThaiMonth + ' ' + parseInt(dd[2])
     },
     blockColor (employee) {
-      return !employee.is_boss ? '' : (parseInt(employee.level) === 14 || parseInt(employee.level) === 0 ? 'deep-orange-5'
-        : (parseInt(employee.level) === 13 ? 'orange-5'
+      return !employee.is_boss ? '' : parseInt(employee.level) === 0 ? 'red-5'
+      : (parseInt(employee.level) === 14 ? 'deep-orange-5'
+        : (parseInt(employee.level) === 13 ? 'orange-8'
           : (parseInt(employee.level) === 12 ? 'green-5'
             : (parseInt(employee.level) === 11 && parseInt(employee.org_level) === 3 ? 'green-5'
               : (parseInt(employee.org_level) === 4 ? 'teal-5' : 'blue-5')))))
