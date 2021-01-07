@@ -50,6 +50,7 @@ class WorkLocation extends JsonResource
                 ),
                 'Name' => $this->wlfullname ? $this->wlfullname->WL_Name : '',
                 'PhoneNumber' => $this->ZZOFTEL ?? '',
+                'PhoneNumberFull' => $this->ZZOFTELFULL ?? '',
                 'Room' => $this->ZZROMNO ?? '',
                 'WorkLocationCode' => $this->ZZCODE ?? '',
             ];
