@@ -65,6 +65,7 @@ class WorklocationController extends Controller
     $data->INTM_TEL =$request->INTM_TEL;
     $data->INTM_RELATION =$request->INTM_RELATION;
     $data->GENTEXT_AT =  NULL;
+    $data->updated_at = date("Y-m-d h:i:sa");
     $data->save();
   } else {
     $data = new WLSavedata;
