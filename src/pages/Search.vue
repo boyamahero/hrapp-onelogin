@@ -264,7 +264,7 @@
           <div class="col-xs-10 col-md-4 col-lg-2 text-center">
             <q-card>
               <q-card-media class="q-py-md q-px-md">
-                <img v-auth-image="employee.image_path" lazy="loading">
+                <img v-auth-image="employee.image_path">
               </q-card-media>
             </q-card>
           </div>
