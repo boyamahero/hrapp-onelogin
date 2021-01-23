@@ -20,8 +20,8 @@ class Employee extends Model
 
     public function getImagePathAttribute()
     {
-        // return '/api/images/' . sprintf("%06d", $this->id) . '/' . Crypt::encryptString('590006') . '-' . base64_encode(substr(sprintf("%06d", $this->id), 0, 3)) . env('APP_SECRET', 'HrApP') . base64_encode(substr(sprintf("%06d", $this->id), 3, 3));
-        return '/api/images/' . sprintf("%06d", $this->id) . '/' . base64_encode(substr(sprintf("%06d", $this->id), 0, 3)) . env('APP_SECRET', 'HrApP') . base64_encode(substr(sprintf("%06d", $this->id), 3, 3));
+        return '/images/' . sprintf("%06d", $this->id);
+        // return '/api/images/' . sprintf("%06d", $this->id) . '/' . base64_encode(substr(sprintf("%06d", $this->id), 0, 3)) . env('APP_SECRET', 'HrApP') . base64_encode(substr(sprintf("%06d", $this->id), 3, 3));
     }
 
     public function getIsBossAttribute()

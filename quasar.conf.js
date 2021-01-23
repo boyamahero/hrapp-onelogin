@@ -13,6 +13,7 @@ module.exports = function (ctx) {
       'AppExit',
       'i18n',
       'axios',
+      'VueAuthImage',
       'VueLazyload'
     ],
     css: [

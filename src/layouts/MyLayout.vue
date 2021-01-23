@@ -27,7 +27,7 @@
             </div>
             <div class="col-xs-4 col-lg-1 text-center self-center">
               <img
-                :src="user.image_path"
+                v-auth-image="user.image_path"
                 class="q-item-avatar"
               >
             </div>

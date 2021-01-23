@@ -86,12 +86,14 @@
                     class="col-12"
                     :id="employee.image_path"
                   >
+                    <lazy-component>
                     <img
-                      v-lazy="employee.image_path"
+                      v-auth-image="employee.image_path"
                       style="width: 75px;border-radius: 20%"
                       draggable="false"
                       oncontextmenu="return false"
-                    ><br>
+                    >
+                    </lazy-component>
                   </div>
                   <div class="col-12">
                     <q-icon
@@ -262,7 +264,7 @@
           <div class="col-xs-10 col-md-4 col-lg-2 text-center">
             <q-card>
               <q-card-media class="q-py-md q-px-md">
-                <img :src="employee.image_path">
+                <img v-auth-image="employee.image_path" lazy="loading">
               </q-card-media>
             </q-card>
           </div>
@@ -300,7 +302,7 @@
                 <p class="text-faded no-margin">วันเกษียณอายุ (อายุงานคงเหลือ)</p>
                 <p class="no-margin q-pl-xs">{{ employee.retire_date | dateFormatTh}} ({{employee.remain_work_age }})</p>
                 <p class="text-faded no-margin">วันที่เลื่อนระดับ (อายุงานในระดับ)</p>
-                <p class="no-margin q-pl-xs">{{ employee.level_date | dateFormatEnToTh}} ({{ employee.level_work_age }})</p>
+                <p class="no-margin q-pl-xs">{{ employee.level_date | dateFormatEnToTh}} ({{ employee.level_work_age | age}})</p>
               </q-card-main>
             </q-card>
           </div>
@@ -539,10 +541,16 @@ export default {
     convertToThaiYear (year) {
       return parseInt(year) + 543
     },
+    age (age) {
+      return age === '' ? '0 ป. 0 ด.' : age
+    },
     dateFormatEnToTh (date) {
       let dd = (date || '').split('.')
       let ThaiMonth = ''
       switch (dd[1]) {
+        case '00':
+          ThaiMonth = ''
+          break
         case '01':
           ThaiMonth = 'ม.ค.'
           break
@@ -580,12 +588,15 @@ export default {
           ThaiMonth = 'ธ.ค.'
           break
       }
-      return parseInt(dd[0]) + ' ' + ThaiMonth + ' ' + (parseInt(dd[2]) + 543)
+      return ThaiMonth === '' ? '-' : (parseInt(dd[0]) + ' ' + ThaiMonth + ' ' + (parseInt(dd[2]) + 543))
     },
     dateFormatTh (date) {
       let dd = (date || '').split('.')
       let ThaiMonth = ''
       switch (dd[1]) {
+        case '00':
+          ThaiMonth = ''
+          break
         case '01':
           ThaiMonth = 'ม.ค.'
           break
@@ -623,7 +634,7 @@ export default {
           ThaiMonth = 'ธ.ค.'
           break
       }
-      return parseInt(dd[0]) + ' ' + ThaiMonth + ' ' + parseInt(dd[2])
+      return ThaiMonth === '' ? '-' : (parseInt(dd[0]) + ' ' + ThaiMonth + ' ' + parseInt(dd[2]))
     },
     blockColor (employee) {
       return !employee.is_boss ? '' : parseInt(employee.level) === 0 ? 'red-5'

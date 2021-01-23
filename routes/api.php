@@ -58,6 +58,8 @@ Route::middleware(['jwt.verify'])->group(function () {
 
   Route::post('/saveWlupdate', 'WorklocationController@saveWlupdate');
 
+  Route::get('/images/{id}', 'EmployeesController@images');
+  
   //hrapi
 });
 
@@ -70,8 +72,6 @@ Route::get('/requiredEmergencyContactPerson/{employeeCode}', 'TempLocationContro
 
 
 Route::get('/retire-next/{year?}/{abb?}', 'EmployeesController@retire');
-
-Route::get('/images/{id}/{hash}', 'EmployeesController@images');
 
 // Route::get('/employee/{id}', 'EmployeesController@show');
 
