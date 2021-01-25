@@ -24,9 +24,11 @@
       <div class="col-xs-12 col-md-6 col-lg-6">
         <q-card class="q-ma-md q-px-md" v-if="SL_WL_Name">
           <q-select
+            :error="SL_WL_Name_error"
             float-label="สถานที่ทำงาน"
             v-model="WL_Name"
             separator
+            ref="WL_Name"
             @input="getWLdetail"
             :options="SL_WL_Name"
           />
@@ -135,6 +137,7 @@ export default {
     return {
       SL_WL_Type: [],
       SL_WL_Name: [],
+      SL_WL_Name_error: false,
       SL_Floor: [
       {
           label: 'ชั้น G',
@@ -382,6 +385,7 @@ export default {
       })
     },
     getWLdetail () {
+      this.SL_WL_Name_error = false
       this.$axios.get('getwladdress/' + this.WL_Name)
         .then((res) => {
           this.WL_Province = res.data[0].WL_Province
@@ -453,6 +457,16 @@ export default {
               icon: 'report_problem',
               ok: 'ok'
             })
+      }
+       if (!this.WL_Name) {
+        this.errors.push('ไม่ได้เลือกสถานที่ทำงาน')
+        this.$q.dialog({
+              color: 'negative',
+              message: 'ไม่ได้เลือกสถานที่ทำงาน',
+              icon: 'report_problem',
+              ok: 'ok'
+            })
+            this.SL_WL_Name_error = true
       }
        if (!this.INTM_NAME) {
         this.errors.push('ไม่ได้กรอกชื่อผู้ที่สามารถติดต่อได้กรณีฉุกเฉิน')
