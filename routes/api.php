@@ -58,7 +58,7 @@ Route::middleware(['jwt.verify'])->group(function () {
 
   Route::post('/saveWlupdate', 'WorklocationController@saveWlupdate');
 
-  Route::get('/images/{id}', 'EmployeesController@images');
+  Route::get('/images/{id}/{width?}/{height?}', 'EmployeesController@images');
   
   //hrapi
 });
@@ -99,4 +99,28 @@ Route::get('/wfh/{dateFrom?}', function ($dateFrom = null) {
   $body = $response->getBody()->getContents();
 
   echo preg_replace('//', '', $body);
+});
+
+
+Route::get('/hrapi', function () {
+
+  $client = new \GuzzleHttp\Client();
+  $response = $client->get(
+    'https://hrapi.egat.co.th/api/v1/persons',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '. env('HR_API_TOKEN'),
+        ],
+        'query' => [
+            // 'filter[MainOrganizationName]'=> 'อจส.',
+            'filter[PersonCode]'=> '00592825',
+            'include'=> 'positions.organization',
+            'paginate'=> '50',
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
 });

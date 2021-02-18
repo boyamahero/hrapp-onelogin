@@ -26,14 +26,15 @@ class EmployeesController extends Controller
         return $request->user()->employee()->with('templocation')->first()->setAttribute('roles', $roles)->setAttribute('permissions', $permissions);
     }
 
-    public function images($id)
+    public function images($id, $width=75, $height=90)
     {
-        // if ($hash !== base64_encode(substr(sprintf("%06d", $id), 0, 3)) . env('APP_SECRET', 'HrApP') . base64_encode(substr(sprintf("%06d", $id), 3, 3)))
-        //     return null;
+        
         try {
             $document = Document::where('employee_code', $id)->where('document_subtype', '1')->first();
             $image_path = 'http://hrerp.egat.co.th/images/' . $document->document_subtype . '/' . $document->document_name . '.' . $document->document_extension;
-            $img = Image::make($image_path);
+            $img = Image::make($image_path)->resize($width, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
             return $img->encode('jpg');
         } catch (Throwable $e) {
             return response()->json([
