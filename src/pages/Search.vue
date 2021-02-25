@@ -514,11 +514,13 @@ export default {
           }).catch((e) => {
             this.$q.dialog({
               color: 'negative',
-              message: e.message,
+              message: 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้',
               icon: 'report_problem',
               ok: 'ok'
             }).then(() => {
-              // this.$router.push({name: 'login'})
+              this.employees = []
+              this.showResult = true
+              this.total = 0
             })
           })
       } else {
@@ -543,11 +545,13 @@ export default {
             }).catch(() => {
               this.$q.dialog({
                 color: 'negative',
-                message: 'ไม่สามารถเชื่อมต่อข้อมูลได้',
+                message: 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้',
                 icon: 'report_problem',
                 ok: 'ok'
               }).then(() => {
-                // this.$router.push({name: 'login'})
+                this.employees = []
+                this.showResult = true
+                this.total = 0
               })
             })
         }
