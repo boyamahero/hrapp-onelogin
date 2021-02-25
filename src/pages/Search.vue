@@ -92,6 +92,7 @@
                       style="width: 75px;border-radius: 20%"
                       draggable="false"
                       oncontextmenu="return false"
+                      v-if="employee.image_path.includes(employee.code)"
                     >
                     </lazy-component>
                   </div>
