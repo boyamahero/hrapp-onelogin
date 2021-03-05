@@ -60,7 +60,11 @@ class WorklocationController extends Controller
     $data->ZZOFTEL =  $request->PWAH_PhoneNumber;
     $data->ZZOFTELFULL =  $request->PWAH_PhoneNumberFull;
     $data->ZZMOBL =  $request->PWAH_MobilePhoneNumber;
-    $data->line_id =  $request->lineID;
+    if($request->lineID=='null'){
+      $data->line_id =  NULL;
+    }else{
+      $data->line_id =  $request->lineID;
+    }    
     $data->INTM_NAME =$request->INTM_NAME;
     $data->INTM_TEL =$request->INTM_TEL;
     $data->INTM_RELATION =$request->INTM_RELATION;
@@ -80,11 +84,15 @@ class WorklocationController extends Controller
     $data->ZZOFTEL =  $request->PWAH_PhoneNumber;
     $data->ZZOFTELFULL =  $request->PWAH_PhoneNumberFull;
     $data->ZZMOBL =  $request->PWAH_MobilePhoneNumber;
-    $data->line_id =  $request->lineID;
+    if($request->lineID=='null'){
+      $data->line_id =  NULL;
+    }else{
+      $data->line_id =  $request->lineID;
+    }  
     $data->INTM_NAME =$request->INTM_NAME;
     $data->INTM_TEL =$request->INTM_TEL;
     $data->INTM_RELATION =$request->INTM_RELATION;
-    $data->GENTEXT_AT =  NULL;
+    $data->GENTEXT_AT =  date("Y-m-d h:i:sa");
     $data->save();
   }
  
@@ -94,5 +102,46 @@ class WorklocationController extends Controller
    exit();
  }
  }
+
+ public function saveWlupdateByBP(Request $request)  {
+  $ZZFLBLD = $request->PWAH_Building." ชั้น ".$request->PWAH_Floor;
+ $data = WLSavedata::where('PERNR',$request->employee_code)->first();
+ if($data) {
+   $data->type_code = $request->WL_Type;
+   $data->BEGDA = date("Y.m.d");
+   $data->ZZCODE = $request->WL_Name;
+   $data->ZZROMNO =  $request->PWAH_Room;
+   $data->ZZFLBLD =  $ZZFLBLD;
+   $data->ZZBLD =  $request->PWAH_Building;
+   $data->ZZFL =  $request->PWAH_Floor;
+   $data->ZZOFTEL =  $request->PWAH_PhoneNumber;
+   $data->ZZOFTELFULL =  $request->PWAH_PhoneNumberFull;
+   $data->GENTEXT_AT =  NULL;
+   $data->updated_at = date("Y-m-d h:i:sa");
+   $data->updated_by = auth()->user()->username;
+   $data->save();
+ } else {
+   $data = new WLSavedata;
+   $data->PERNR = $request->employee_code;
+   $data->type_code = $request->WL_Type;
+   $data->BEGDA = date("Y.m.d");
+   $data->ZZCODE = $request->WL_Name;
+   $data->ZZROMNO =  $request->PWAH_Room;
+   $data->ZZFLBLD =  $ZZFLBLD;
+   $data->ZZBLD =  $request->PWAH_Building;
+   $data->ZZFL =  $request->PWAH_Floor;
+   $data->ZZOFTEL =  $request->PWAH_PhoneNumber;
+   $data->ZZOFTELFULL =  $request->PWAH_PhoneNumberFull;
+   $data->GENTEXT_AT =  NULL;
+   $data->updated_by = auth()->user()->username;
+   $data->save();
+ }
+
+if($data){
+  return ['message' => 'บันทึกการเปลี่ยนแปลงแล้ว'];
+}else{
+  exit();
+}
+}
 
 }

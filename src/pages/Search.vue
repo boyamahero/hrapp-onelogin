@@ -188,7 +188,18 @@
                 </div>
                 <div v-if='employee.templocation'>
                   <q-item-tile class="q-body-1">
-                    <q-icon name="room" /> {{ employee.templocation.Name }}</q-item-tile>
+                    <q-icon name="room" /> {{ employee.templocation.Name }}
+                    <q-icon
+                    class="text-red"
+                    style="margin-left : 10px"
+                      name="fas fa-edit"
+                      @click.native="$router.push({ name: 'editwl_by_bp', params: {
+                        employee_code: employee.code,
+                        employee_name: employee.name,
+                        employee_templocation: employee.templocation,
+                        employee_person_location: employee.person_location
+                        } })"
+                    /></q-item-tile>
                   <q-item-tile class="q-body-1"> &nbsp;&nbsp;&nbsp;&nbsp; {{ employee.templocation.Building }}<span> ห้อง {{ employee.templocation.Room }}</span></q-item-tile>
                   <q-item-tile class="q-body-1">
                     <q-icon name="call" /> {{ employee.templocation.PhoneNumber }} {{employee.templocation.PhoneNumberFull ? '( '+employee.templocation.PhoneNumberFull+' )' :''}} </q-item-tile>
@@ -200,7 +211,17 @@
                 </div>
                 <div v-else-if='employee.person_location'>
                   <q-item-tile class="q-body-1">
-                    <q-icon name="room" /> {{ employee.person_location.Name }}</q-item-tile>
+                    <q-icon name="room" /> {{ employee.person_location.Name }}
+                    <q-icon
+                    class="text-red"
+                    style="margin-left : 10px"
+                      name="fas fa-edit"
+                      @click.native="$router.push({ name: 'editwl_by_bp', params: {
+                        employee_code: employee.code,
+                        employee_name: employee.name,
+                        employee_person_location: employee.person_location
+                        } })"
+                    /></q-item-tile>
                   <q-item-tile class="q-body-1"> &nbsp;&nbsp;&nbsp;&nbsp; {{ employee.person_location.Building }}<span> ห้อง {{ employee.person_location.Room  }}</span></q-item-tile>
                   <q-item-tile class="q-body-1">
                     <q-icon name="call" /> {{ employee.person_location.PhoneNumber }}</q-item-tile>

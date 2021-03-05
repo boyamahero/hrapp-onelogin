@@ -57,6 +57,7 @@ Route::middleware(['jwt.verify'])->group(function () {
   Route::get('/getwladdress/{wlcode}', 'WorklocationController@getwladdress');
 
   Route::post('/saveWlupdate', 'WorklocationController@saveWlupdate');
+  Route::post('/saveWlupdateByBP', 'WorklocationController@saveWlupdateByBP');
 
   Route::get('/images/{id}/{width?}/{height?}', 'EmployeesController@images');
   

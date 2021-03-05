@@ -128,6 +128,14 @@ const routes = [
         meta: {
           requiresAuth: true
         }
+      },
+      {
+        path: 'editwl_by_bp',
+        name: 'editwl_by_bp',
+        component: () => import('pages/EditWLbyBP.vue'),
+        meta: {
+          requiresAuth: true
+        }
       }
     ]
   },
