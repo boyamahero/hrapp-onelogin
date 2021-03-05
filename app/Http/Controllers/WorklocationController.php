@@ -92,7 +92,7 @@ class WorklocationController extends Controller
     $data->INTM_NAME =$request->INTM_NAME;
     $data->INTM_TEL =$request->INTM_TEL;
     $data->INTM_RELATION =$request->INTM_RELATION;
-    $data->GENTEXT_AT =  date("Y-m-d h:i:sa");
+    $data->GENTEXT_AT = NULL;
     $data->save();
   }
  
