@@ -43,10 +43,12 @@
               <div class="subtitle">{{ user.org_path }}</div>
             </div>
             <div class="col-xs-4 text-center self-center">
+              <lazy-component>
               <img
-                v-auth-image="user.image_path"
+                v-auth-image="user.image_path + '/220' || ''"
                 class="q-item-avatar"
               >
+              </lazy-component>
             </div>
           </div>
         </q-list-header>

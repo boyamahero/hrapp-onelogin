@@ -20,9 +20,12 @@ class Employee extends JsonResource
      */
     public function toArray($request)
     {
-        $permission = Auth::user()->hasRole('admin') || (Auth::user()->employee->is_boss &&
+        $permissionViewDetail = Auth::user()->hasRole('admin') || (Auth::user()->employee->is_boss &&
             Auth::user()->username != $this->id &&
             $this->isOwnerDataLevel(Auth::user()));
+        $permissionEditWorkLocation = Auth::user()->hasRole('admin') || (Auth::user()->employee->is_boss &&
+            Auth::user()->username != $this->id &&
+            $this->isOwnerDataLevel(Auth::user()) || Auth::user()->employee->department_abb === 'กบส-ห.');
         return [
             'id' => $this->id,
             'code' => $this->employee_code,
@@ -49,15 +52,15 @@ class Employee extends JsonResource
             'is_boss' => $this->is_boss,
             'person_location' => $this->when(
                 $this->relationLoaded('person') && $this->person->relationLoaded('workLocations'),
-                function () use ($permission) {
-                    return new WorkLocation($this->person->workLocations->first(), $permission);
+                function () use ($permissionViewDetail) {
+                    return new WorkLocation($this->person->workLocations->first(), $permissionViewDetail);
                 }
             ),
-            'templocation' => new WorkLocation($this->whenLoaded('templocation'), $permission),
+            'templocation' => new WorkLocation($this->whenLoaded('templocation'), $permissionViewDetail),
             'work_from_home' => new WorkFromHome($this->whenLoaded('workFromHome')),
             'work_from_any_where' => new WorkFromHome($this->whenLoaded('workFromAnyWhere')),
             $this->mergeWhen(
-                $permission,
+                $permissionViewDetail,
                 [
                     'name_english' => $this->name_english,
                     'blood_group' => $this->blood_group,
@@ -75,6 +78,12 @@ class Employee extends JsonResource
                     'positions' => $this->positions,
                     'educations' => new EducationCollection($this->educations),
                     'can_open' => true
+                ]
+            ),
+            $this->mergeWhen(
+                $permissionEditWorkLocation,
+                [
+                    'can_edit_work_location' => true
                 ]
             ),
         ];
