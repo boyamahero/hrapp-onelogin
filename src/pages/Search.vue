@@ -190,14 +190,9 @@
                   <q-item-tile class="q-body-1">
                     <q-icon name="room" /> {{ employee.templocation.Name }}
                     <q-icon
-<<<<<<< HEAD
                       class="text-red"
                       style="margin-left : 10px"
                       v-if="employee.can_edit_work_location"
-=======
-                    class="text-red"
-                    style="margin-left : 10px;cursor:pointer;"
->>>>>>> 653af0989d18a01339bcb363e5cbfbd470e5cfb8
                       name="fas fa-edit"
                       @click.native="$router.push({ name: 'editwl_by_bp', params: {
                         employee_code: employee.code,
@@ -219,14 +214,9 @@
                   <q-item-tile class="q-body-1">
                     <q-icon name="room" /> {{ employee.person_location.Name }}
                     <q-icon
-<<<<<<< HEAD
                       class="text-red"
                       style="margin-left : 10px"
                       v-if="employee.can_edit_work_location"
-=======
-                    class="text-red"
-                    style="margin-left : 10px;cursor:pointer;"
->>>>>>> 653af0989d18a01339bcb363e5cbfbd470e5cfb8
                       name="fas fa-edit"
                       @click.native="$router.push({ name: 'editwl_by_bp', params: {
                         employee_code: employee.code,
