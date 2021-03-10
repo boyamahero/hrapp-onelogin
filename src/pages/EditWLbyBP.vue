@@ -86,7 +86,7 @@
       </div>
     </div>
     <div class="row justify-center">
-      <q-btn class="q-ma-lg" label="คืนค่าเริ่มต้น" color="warning" @click="getTemplocation"/>
+      <q-btn class="q-ma-lg" label="คืนค่าเริ่มต้น" color="warning" @click="getTemplocation" v-if="employee.employee_templocation || employee.employee_person_location" />
       <q-btn class="q-ma-lg" label="บันทึกการปรับปรุง" color="secondary" @click="checkForm"/>
     </div>
   </q-page>
@@ -250,9 +250,15 @@ export default {
   methods: {
     createForm () {
       this.url_redirect = this.$router.history.current.query.backurl
-       if (this.employee) {
+       if (this.employee.employee_templocation || this.employee.employee_person_location) {
         this.getTemplocation()
+      } else {
+        this.getDefaultLocation()
       }
+    },
+    getDefaultLocation () {
+      this.WL_Type = 'A'
+      this.getWLList()
     },
     getTemplocation () {
       this.$q.loading.show({
