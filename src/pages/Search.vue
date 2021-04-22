@@ -461,7 +461,6 @@ i.snow:before { -webkit-transform: rotate(240deg); }
 } */
 </style>
 <script>
-import { isMobile } from 'mobile-device-detect'
 import BackToTop from 'vue-backtotop'
 import DetailModal from '../components/search/detail-modal.vue'
 import { QModalLayout } from 'quasar'
@@ -485,7 +484,7 @@ export default {
   data () {
     return {
       searchText: '',
-      isMobile: isMobile,
+      isMobile: this.$q.platform.is.mobile,
       filter: {
         level: {
           min: 0,
@@ -553,7 +552,7 @@ export default {
       this.$axios.get('mobile-phone/' + data.employee_code)
           .then((res) => {
             if (res.data.mobile_phone) {
-              if (isMobile) {
+              if (this.$q.platform.is.mobile) {
               window.location = 'tel:' + res.data.mobile_phone
               } else {
                 this.employees[data.id].templocation.MobilePhoneNumber = res.data.mobile_phone
