@@ -60,6 +60,9 @@ Route::middleware(['jwt.verify'])->group(function () {
   Route::post('/saveWlupdateByBP', 'WorklocationController@saveWlupdateByBP');
 
   Route::get('/images/{id}/{width?}/{height?}', 'EmployeesController@images');
+
+  Route::middleware('log_access_mobile_phone:api')->get('/mobile-phone/{employee_code}', 'MobilePhoneLogController@show');
+
   
   //hrapi
 });
