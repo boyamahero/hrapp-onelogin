@@ -20,6 +20,9 @@ class Employee extends JsonResource
      */
     public function toArray($request)
     {
+        $permissionViewMobilePhone = Auth::user()->hasRole('admin') || (Auth::user()->employee->is_boss &&
+            Auth::user()->username != $this->id &&
+            $this->isOwnerDataLevel(Auth::user()) || ($this->workFromAnyWhere->count() > 0 || $this->workFromHome->count() > 0));
         $permissionViewDetail = Auth::user()->hasRole('admin') || (Auth::user()->employee->is_boss &&
             Auth::user()->username != $this->id &&
             $this->isOwnerDataLevel(Auth::user()));
@@ -52,11 +55,11 @@ class Employee extends JsonResource
             'is_boss' => $this->is_boss,
             'person_location' => $this->when(
                 $this->relationLoaded('person') && $this->person->relationLoaded('workLocations'),
-                function () use ($permissionViewDetail) {
-                    return new WorkLocation($this->person->workLocations->first(), $permissionViewDetail);
+                function () use ($permissionViewMobilePhone) {
+                    return new WorkLocation($this->person->workLocations->first(), $permissionViewMobilePhone);
                 }
             ),
-            'templocation' => new WorkLocation($this->whenLoaded('templocation'), $permissionViewDetail),
+            'templocation' => new WorkLocation($this->whenLoaded('templocation'), $permissionViewMobilePhone),
             'work_from_home' => new WorkFromHome($this->whenLoaded('workFromHome')),
             'work_from_any_where' => new WorkFromHome($this->whenLoaded('workFromAnyWhere')),
             $this->mergeWhen(

@@ -31,7 +31,7 @@ class WorkLocation extends JsonResource
                 'Building' => $this->PWAH_Building,
                 'MobilePhoneNumber' => $this->when(
                     $this->permission,
-                    $this->PWAH_MobilePhoneNumber
+                    'XXX-XXX-' .substr($this->PWAH_MobilePhoneNumber, -4)
                 ),
                 'Name' => $this->PWAH_Name,
                 'PhoneNumber' => $this->PWAH_PhoneNumber,
@@ -46,7 +46,7 @@ class WorkLocation extends JsonResource
                 'Building' => $this->ZZFLBLD ?? '',
                 'MobilePhoneNumber' => $this->when(
                     $this->permission,
-                    $this->ZZMOBL ?? ''
+                    'XXX-XXX-' . substr($this->ZZMOBL, -4) ?? ''
                 ),
                 'Name' => $this->wlfullname ? $this->wlfullname->WL_Name : '',
                 'PhoneNumber' => $this->ZZOFTEL ?? '',
