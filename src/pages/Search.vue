@@ -285,13 +285,13 @@
               :passedObject="objectToPass"
               ref="modalRef">
             <div style="padding: 15px;">
-            <div class="q-display-1 q-mb-md">ข้อตกลงการใช้งาน</div>
+            <div class="q-headline q-mb-md">ข้อตกลงและเงื่อนไขการใช้งาน</div>
             <q-alert color="red-4">
               การใช้หรือเปิดเผยข้อมูลนอกเหนือจากวัตถุประสงค์เพื่อกิจการของ กฟผ. หรือเพื่อแสวงหาผลประโยชน์ที่มิควรได้โดยไม่ได้รับความยินยอมจากเจ้าของข้อมูล ต้องระวางโทษจำคุกไม่เกิน 6 เดือนถึง 1 ปี หรือปรับไม่เกิน 500,000 ถึง 1,000,000 บาท หรือทั้งจำทั้งปรับ
-              <br><br>เมื่อกดปุ่มยอมรับระบบจะจัดเก็บประวัติการเข้าใช้งานของท่าน ในการดูข้อมูลเบอร์โทรศัพท์ของบุคคลอื่น
+              <br>กรณีกดปุ่มยอมรับระบบจะบันทึกข้อมูลการเรียกดูเบอร์โทรศัพท์ เพื่อตรวจจับ ป้องกัน หรือตรวจสอบปัญหาด้านความปลอดภัย
             </q-alert>
-            <div class="row justify-between q-pa-md">
-              <q-btn color="red" v-close-overlay label="ไม่ยอมรับ" />
+            <div class="row justify-between q-pa-lg">
+              <q-btn color="white" text-color="red" v-close-overlay label="ไม่ยอมรับ" />
               <q-btn color="green" label="ยอมรับ" @click="requestmobilenumber(objectToPass)"/>
             </div>
             </div>
