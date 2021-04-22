@@ -208,7 +208,14 @@
                     class="q-body-1"
                     v-if="employee.templocation.MobilePhoneNumber"
                   >
-                    <q-icon name="smartphone" /> {{ employee.templocation.MobilePhoneNumber }}</q-item-tile>
+                    <q-icon name="smartphone" /> {{ employee.templocation.MobilePhoneNumber }}
+                    <q-chip
+                    @click.native="showconsent({employee_code: employee.code,id: index})"
+                    style="cursor: pointer;padding-left:8px;"
+                    color="cyan-2" text-color="black" :icon="isMobile ? 'fa fa-phone-volume' : 'fas fa-eye'" dense>
+                    {{isMobile ? 'โทรออก' : 'แสดงข้อมูล' }}
+                  </q-chip>
+                  </q-item-tile>
                 </div>
                 <div v-else-if='employee.person_location'>
                   <q-item-tile class="q-body-1">
@@ -231,7 +238,14 @@
                     class="q-body-1"
                     v-if="employee.person_location.MobilePhoneNumber"
                   >
-                    <q-icon name="smartphone" /> {{ employee.person_location.MobilePhoneNumber }}</q-item-tile>
+                    <q-icon name="smartphone" /> {{ employee.person_location.MobilePhoneNumber }}
+                    <q-chip
+                    @click.native="showconsent({employee_code: employee.code,id: index})"
+                    style="cursor: pointer;padding-left:8px;"
+                    color="cyan-2" text-color="black" :icon="isMobile ? 'fa fa-phone-volume' : 'fas fa-eye'" dense>
+                    {{isMobile ? 'โทรออก' : 'แสดงข้อมูล' }}
+                  </q-chip>
+                  </q-item-tile>
                 </div>
                 <div v-else>
                   <q-item-tile class="q-body-1">
@@ -263,6 +277,25 @@
               class="btn btn-info btn-to-top"
             ><i class="fa fa-chevron-up"></i></button>
           </back-to-top>
+             <q-modal v-model="showConsentModal"
+             :content-css="{maxWidth: '40vw'}"
+              minimized
+              no-esc-dismiss
+              no-backdrop-dismiss
+              :passedObject="objectToPass"
+              ref="modalRef">
+            <div style="padding: 15px;">
+            <div class="q-display-1 q-mb-md">ข้อตกลงการใช้งาน</div>
+            <q-alert color="red-4">
+              การใช้หรือเปิดเผยข้อมูลนอกเหนือจากวัตถุประสงค์เพื่อกิจการของ กฟผ. หรือเพื่อแสวงหาผลประโยชน์ที่มิควรได้โดยไม่ได้รับความยินยอมจากเจ้าของข้อมูล ต้องระวางโทษจำคุกไม่เกิน 6 เดือนถึง 1 ปี หรือปรับไม่เกิน 500,000 ถึง 1,000,000 บาท หรือทั้งจำทั้งปรับ
+              <br><br>เมื่อกดปุ่มยอมรับระบบจะจัดเก็บประวัติการเข้าใช้งานของท่าน ในการดูข้อมูลเบอร์โทรศัพท์ของบุคคลอื่น
+            </q-alert>
+            <div class="row justify-between q-pa-md">
+              <q-btn color="red" v-close-overlay label="ไม่ยอมรับ" />
+              <q-btn color="green" label="ยอมรับ" @click="requestmobilenumber(objectToPass)"/>
+            </div>
+            </div>
+            </q-modal>
           <div
             class="row justify-center"
             style="margin-bottom: 20px;"
@@ -276,7 +309,6 @@
         </q-infinite-scroll>
       </div>
     </div>
-
     <detail-modal :employee="employee" v-model="showDetailModal"></detail-modal>
     <q-modal v-model="filterOpened">
       <div class="q-pa-md">
@@ -429,6 +461,7 @@ i.snow:before { -webkit-transform: rotate(240deg); }
 } */
 </style>
 <script>
+import { isMobile } from 'mobile-device-detect'
 import BackToTop from 'vue-backtotop'
 import DetailModal from '../components/search/detail-modal.vue'
 import { QModalLayout } from 'quasar'
@@ -452,6 +485,7 @@ export default {
   data () {
     return {
       searchText: '',
+      isMobile: isMobile,
       filter: {
         level: {
           min: 0,
@@ -467,11 +501,13 @@ export default {
       next_page_url: null,
       filterOpened: false,
       showDetailModal: false,
+      showConsentModal: false,
       showResult: false,
       pages: [],
       employee: {},
       message: '',
-      min_length: 3
+      min_length: 3,
+      objectToPass: []
     }
   },
   computed: {
@@ -480,6 +516,10 @@ export default {
     }
   },
   methods: {
+    showconsent (item) {
+            this.showConsentModal = true
+            this.objectToPass = item
+    },
     log (templocation) {
       if (typeof (templocation.wlfullname) === 'undefined' || templocation.wlfullname === null) {
         console.log(templocation)
@@ -508,6 +548,26 @@ export default {
       this.last_page = 0
       this.next_page_url = null
       this.showResult = false
+    },
+    requestmobilenumber (data) {
+      this.$axios.get('mobile-phone/' + data.employee_code)
+          .then((res) => {
+            if (res.data.mobile_phone) {
+              if (isMobile) {
+              window.location = 'tel:' + res.data.mobile_phone
+              } else {
+                this.employees[data.id].templocation.MobilePhoneNumber = res.data.mobile_phone
+              }
+              this.showConsentModal = false
+            }
+          }).catch((e) => {
+            this.$q.dialog({
+              color: 'negative',
+              message: 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้',
+              icon: 'report_problem',
+              ok: 'ok'
+            })
+          })
     },
     search () {
       this.filterOpened = false
