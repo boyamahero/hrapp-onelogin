@@ -16,7 +16,7 @@ class MobilePhoneLogController extends Controller
 
         $permissionViewMobilePhone = Auth::user()->hasRole('admin') || (Auth::user()->employee->is_boss &&
             Auth::user()->username != $employee->id &&
-            $employee->isOwnerDataLevel(Auth::user()) || ($employee->workFromAnyWhere->count() > 0 || $employee->workFromHome->count() > 0));
+            $this->isOwnerDataLevel(Auth::user(),$employee) || ($employee->workFromAnyWhere->count() > 0 || $employee->workFromHome->count() > 0));
 
         if (!$permissionViewMobilePhone)
         {
@@ -27,5 +27,22 @@ class MobilePhoneLogController extends Controller
             'employee' => $employee->employee_code,
             'mobile_phone' => $employee->templocation->ZZMOBL ?? $employee->person->workLocations[0]->PWAH_MobilePhoneNumber ?? null
         ]);
+    }
+
+    public function isOwnerDataLevel($user,$employee)
+    {
+        if ($user->employee->employee_group == 9) {
+            return true;
+        } else if ($user->employee->org->org_level == 5) {
+            return $user->employee->section_abb == $employee->section_abb;
+        } else if ($user->employee->org->org_level == 4) {
+            return $user->employee->department_abb == $employee->department_abb;
+        } else if ($user->employee->org->org_level == 3) {
+            return $user->employee->division_abb == $employee->division_abb;
+        } else if ($user->employee->org->org_level == 2) {
+            return $user->employee->assistant_abb == $employee->assistant_abb;
+        } else if ($user->employee->org->org_level == 1) {
+            return $user->employee->deputy_abb == $employee->deputy_abb;
+        }
     }
 }
