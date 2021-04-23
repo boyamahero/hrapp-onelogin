@@ -211,7 +211,7 @@
                   <div v-if="!employee.canshow_mobilephone">
                     <q-icon name="smartphone" /> {{ employee.templocation.MobilePhoneNumber }}
                     <q-chip
-                    @click.native="showconsent({employee_code: employee.code,id: index})"
+                    @click.native="showconsent({employee_code: employee.code,id: index,from: 'templocation'})"
                     style="cursor: pointer;padding-left:8px;"
                     color="cyan-2" text-color="black" icon="fas fa-eye" dense>
                     แสดงข้อมูล
@@ -256,11 +256,11 @@
                     class="q-body-1"
                     v-if="employee.person_location.MobilePhoneNumber"
                   >
-                    <q-icon name="smartphone" /> {{ employee.person_location.MobilePhoneNumber }}
+                    <!-- <q-icon name="smartphone" /> {{ employee.person_location.MobilePhoneNumber }} -->
                     <div v-if="!employee.canshow_mobilephone">
                     <q-icon name="smartphone" /> {{ employee.person_location.MobilePhoneNumber }}
                     <q-chip
-                    @click.native="showconsent({employee_code: employee.code,id: index})"
+                    @click.native="showconsent({employee_code: employee.code,id: index,from: 'person_location'})"
                     style="cursor: pointer;padding-left:8px;"
                     color="cyan-2" text-color="black" icon="fas fa-eye" dense>
                     แสดงข้อมูล
@@ -597,12 +597,12 @@ export default {
       this.$axios.get('mobile-phone/' + data.employee_code)
           .then((res) => {
             if (res.data.mobile_phone) {
-              // if (this.$q.platform.is.mobile) {
-              // window.location = 'tel:' + res.data.mobile_phone
-              // } else {
-                this.employees[data.id].templocation.MobilePhoneNumber = res.data.mobile_phone
+              if (data.from === 'person_location') {
+                  this.employees[data.id].person_location.MobilePhoneNumber = res.data.mobile_phone
+              } else {
+                  this.employees[data.id].templocation.MobilePhoneNumber = res.data.mobile_phone
+              }
                 this.employees[data.id].canshow_mobilephone = true
-              // }
               this.showConsentModal = false
             }
           }).catch((e) => {
@@ -626,7 +626,8 @@ export default {
         size: 'md',
         position: 'center',
         color: 'green-2',
-        textColor: 'black'
+        textColor: 'black',
+        timeout: 2000
         })
     },
     search () {
