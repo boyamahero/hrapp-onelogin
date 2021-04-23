@@ -224,14 +224,20 @@
                     color="#000" text-color="black" dense>
                     <q-icon name="smartphone" /> {{employee.templocation.MobilePhoneNumber}}
                   </q-chip>
+                    <q-btn
+                      v-if="isMobile && $q.platform.is.cordova"
+                      round dense type="a" :href="'tel:'+employee.templocation.MobilePhoneNumber" target="_blank"
+                      icon="fa fa-phone-volume"
+                      class="q-mx-sm"
+                      color="cyan-2" text-color="black" label="โทรออก" />
                     <q-chip
-                    v-if="isMobile"
-                    class="q-mx-sm"
-                    @click.native="callto(employee.templocation.MobilePhoneNumber)"
-                    style="cursor: pointer;padding-left:8px;"
-                    color="cyan-2" text-color="black" icon="fa fa-phone-volume" dense>
-                    โทรออก
-                  </q-chip>
+                      v-else-if="isMobile"
+                      class="q-mx-sm"
+                      @click.native="callto(employee.templocation.MobilePhoneNumber)"
+                      style="cursor: pointer;padding-left:8px;"
+                      color="cyan-2" text-color="black" icon="fa fa-phone-volume" dense>
+                      โทรออก
+                    </q-chip>
                   </div>
                   </q-item-tile>
                 </div>
@@ -273,14 +279,20 @@
                     color="#000" text-color="black" dense>
                     <q-icon name="smartphone" /> {{employee.person_location.MobilePhoneNumber}}
                   </q-chip>
+                    <q-btn
+                      v-if="isMobile && $q.platform.is.cordova"
+                      round dense type="a" :href="'tel:'+employee.person_location.MobilePhoneNumber" target="_blank"
+                      icon="fa fa-phone-volume"
+                      class="q-mx-sm"
+                      color="cyan-2" text-color="black" label="โทรออก" />
                     <q-chip
-                    v-if="isMobile"
-                    class="q-mx-sm"
-                    @click.native="callto(employee.person_location.MobilePhoneNumber)"
-                    style="cursor: pointer;padding-left:8px;"
-                    color="cyan-2" text-color="black" icon="fa fa-phone-volume" dense>
-                    โทรออก
-                  </q-chip>
+                      v-else-if="isMobile"
+                      class="q-mx-sm"
+                      @click.native="callto(employee.person_location.MobilePhoneNumber)"
+                      style="cursor: pointer;padding-left:8px;"
+                      color="cyan-2" text-color="black" icon="fa fa-phone-volume" dense>
+                      โทรออก
+                    </q-chip>
                   </div>
                   </q-item-tile>
                 </div>
