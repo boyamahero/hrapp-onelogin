@@ -208,13 +208,39 @@
                     class="q-body-1"
                     v-if="employee.templocation.MobilePhoneNumber"
                   >
+                  <div v-if="!employee.canshow_mobilephone">
                     <q-icon name="smartphone" /> {{ employee.templocation.MobilePhoneNumber }}
                     <q-chip
                     @click.native="showconsent({employee_code: employee.code,id: index})"
                     style="cursor: pointer;padding-left:8px;"
-                    color="cyan-2" text-color="black" :icon="isMobile ? 'fa fa-phone-volume' : 'fas fa-eye'" dense>
-                    {{isMobile ? 'โทรออก' : 'แสดงข้อมูล' }}
+                    color="cyan-2" text-color="black" icon="fas fa-eye" dense>
+                    แสดงข้อมูล
                   </q-chip>
+                  </div>
+                  <div v-else>
+                    <q-chip
+                    @click.native="coppynumber(employee.templocation.MobilePhoneNumber)"
+                    style="cursor: pointer;padding-left:8px;font-size:14px"
+                    color="#000" text-color="black" dense>
+                    <q-icon name="smartphone" /> {{employee.templocation.MobilePhoneNumber}}
+                  </q-chip>
+                    <q-chip
+                    v-if="isMobile"
+                    class="q-mx-sm"
+                    @click.native="callto(employee.templocation.MobilePhoneNumber)"
+                    style="cursor: pointer;padding-left:8px;"
+                    color="cyan-2" text-color="black" icon="fa fa-phone-volume" dense>
+                    โทรออก
+                  </q-chip>
+                  </div>
+                    <!-- <q-chip
+                    @click.native="showconsent({employee_code: employee.code,id: index})"
+                    style="cursor: pointer;padding-left:10px;"
+                    :color="employee.canshow_mobilephone ? 'green-2' : 'cyan-2'"
+                    text-color="black"
+                    :icon="employee.canshow_mobilephone ? 'fa fa-clone' : 'fas fa-eye'" dense>
+                    {{employee.canshow_mobilephone ? 'คัดลอก' : 'แสดงข้อมูล' }}
+                  </q-chip> -->
                   </q-item-tile>
                 </div>
                 <div v-else-if='employee.person_location'>
@@ -285,10 +311,10 @@
               :passedObject="objectToPass"
               ref="modalRef">
             <div style="padding: 15px;">
-            <div class="q-headline q-mb-md">ข้อตกลงและเงื่อนไขการใช้งาน</div>
+            <div class="q-headline q-mb-md" :style="isMobile ? 'font-size: 16px' : null">ข้อตกลงและเงื่อนไขการใช้งาน</div>
             <q-alert color="red-4">
-              การใช้หรือเปิดเผยข้อมูลนอกเหนือจากวัตถุประสงค์เพื่อกิจการของ กฟผ. หรือเพื่อแสวงหาผลประโยชน์ที่มิควรได้โดยไม่ได้รับความยินยอมจากเจ้าของข้อมูล ต้องระวางโทษจำคุกไม่เกิน 6 เดือนถึง 1 ปี หรือปรับไม่เกิน 500,000 ถึง 1,000,000 บาท หรือทั้งจำทั้งปรับ
-              <br>กรณีกดปุ่มยอมรับระบบจะบันทึกข้อมูลการเรียกดูเบอร์โทรศัพท์ เพื่อตรวจจับ ป้องกัน หรือตรวจสอบปัญหาด้านความปลอดภัย
+              <p  :style="isMobile ? 'font-size: 12px' : null">การใช้หรือเปิดเผยข้อมูลนอกเหนือจากวัตถุประสงค์เพื่อกิจการของ กฟผ. หรือเพื่อแสวงหาผลประโยชน์ที่มิควรได้โดยไม่ได้รับความยินยอมจากเจ้าของข้อมูล ต้องระวางโทษจำคุกไม่เกิน 6 เดือนถึง 1 ปี หรือปรับไม่เกิน 500,000 ถึง 1,000,000 บาท หรือทั้งจำทั้งปรับ
+              <br>กรณีกดปุ่มยอมรับระบบจะบันทึกข้อมูลการเรียกดูเบอร์โทรศัพท์ เพื่อตรวจจับ ป้องกัน หรือตรวจสอบปัญหาด้านความปลอดภัย</p>
             </q-alert>
             <div class="row justify-between q-pa-lg">
               <q-btn color="white" text-color="red" v-close-overlay label="ไม่ยอมรับ" />
@@ -463,7 +489,7 @@ i.snow:before { -webkit-transform: rotate(240deg); }
 <script>
 import BackToTop from 'vue-backtotop'
 import DetailModal from '../components/search/detail-modal.vue'
-import { QModalLayout } from 'quasar'
+import { QModalLayout, openURL } from 'quasar'
 export default {
   components: {
     BackToTop,
@@ -484,6 +510,7 @@ export default {
   data () {
     return {
       searchText: '',
+      canshow_mobilephone: false,
       isMobile: this.$q.platform.is.mobile,
       filter: {
         level: {
@@ -548,15 +575,23 @@ export default {
       this.next_page_url = null
       this.showResult = false
     },
+    callto (phonenumber) {
+      if (this.$q.platform.is.cordova) {
+        openURL('tel:' + phonenumber)
+      } else {
+        window.location = 'tel:' + phonenumber
+      }
+    },
     requestmobilenumber (data) {
       this.$axios.get('mobile-phone/' + data.employee_code)
           .then((res) => {
             if (res.data.mobile_phone) {
-              if (this.$q.platform.is.mobile) {
-              window.location = 'tel:' + res.data.mobile_phone
-              } else {
+              // if (this.$q.platform.is.mobile) {
+              // window.location = 'tel:' + res.data.mobile_phone
+              // } else {
                 this.employees[data.id].templocation.MobilePhoneNumber = res.data.mobile_phone
-              }
+                this.employees[data.id].canshow_mobilephone = true
+              // }
               this.showConsentModal = false
             }
           }).catch((e) => {
@@ -567,6 +602,21 @@ export default {
               ok: 'ok'
             })
           })
+    },
+    coppynumber (phonenumber) {
+      var textField = document.createElement('textarea')
+      textField.innerText = phonenumber
+      document.body.appendChild(textField)
+      textField.select()
+      document.execCommand('copy')
+      textField.remove()
+      this.$q.notify({
+        message: 'คัดลอกเบอร์โทรแล้ว',
+        size: 'md',
+        position: 'center',
+        color: 'green-2',
+        textColor: 'black'
+        })
     },
     search () {
       this.filterOpened = false
