@@ -233,14 +233,6 @@
                     โทรออก
                   </q-chip>
                   </div>
-                    <!-- <q-chip
-                    @click.native="showconsent({employee_code: employee.code,id: index})"
-                    style="cursor: pointer;padding-left:10px;"
-                    :color="employee.canshow_mobilephone ? 'green-2' : 'cyan-2'"
-                    text-color="black"
-                    :icon="employee.canshow_mobilephone ? 'fa fa-clone' : 'fas fa-eye'" dense>
-                    {{employee.canshow_mobilephone ? 'คัดลอก' : 'แสดงข้อมูล' }}
-                  </q-chip> -->
                   </q-item-tile>
                 </div>
                 <div v-else-if='employee.person_location'>
@@ -265,12 +257,31 @@
                     v-if="employee.person_location.MobilePhoneNumber"
                   >
                     <q-icon name="smartphone" /> {{ employee.person_location.MobilePhoneNumber }}
+                    <div v-if="!employee.canshow_mobilephone">
+                    <q-icon name="smartphone" /> {{ employee.person_location.MobilePhoneNumber }}
                     <q-chip
                     @click.native="showconsent({employee_code: employee.code,id: index})"
                     style="cursor: pointer;padding-left:8px;"
-                    color="cyan-2" text-color="black" :icon="isMobile ? 'fa fa-phone-volume' : 'fas fa-eye'" dense>
-                    {{isMobile ? 'โทรออก' : 'แสดงข้อมูล' }}
+                    color="cyan-2" text-color="black" icon="fas fa-eye" dense>
+                    แสดงข้อมูล
                   </q-chip>
+                  </div>
+                  <div v-else>
+                    <q-chip
+                    @click.native="coppynumber(employee.person_location.MobilePhoneNumber)"
+                    style="cursor: pointer;padding-left:8px;font-size:14px"
+                    color="#000" text-color="black" dense>
+                    <q-icon name="smartphone" /> {{employee.person_location.MobilePhoneNumber}}
+                  </q-chip>
+                    <q-chip
+                    v-if="isMobile"
+                    class="q-mx-sm"
+                    @click.native="callto(employee.person_location.MobilePhoneNumber)"
+                    style="cursor: pointer;padding-left:8px;"
+                    color="cyan-2" text-color="black" icon="fa fa-phone-volume" dense>
+                    โทรออก
+                  </q-chip>
+                  </div>
                   </q-item-tile>
                 </div>
                 <div v-else>
