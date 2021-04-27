@@ -438,6 +438,7 @@ export default {
         orderBySenior: false
       },
       employees: [],
+      loadedPages: [],
       total: 0,
       current_page: 0,
       last_page: 0,
@@ -562,6 +563,7 @@ export default {
           .then((res) => {
             if (res.data.data) {
               this.employees = []
+              this.loadedPages = []
               this.employees = res.data.data
               this.total = res.data.meta.total
               this.current_page = res.data.meta.current_page
