@@ -405,7 +405,7 @@ export default {
     checkForm: function (e) {
       this.errors = []
       // eslint-disable-next-line
-      if (this.PWAH_MobilePhoneNumber && /^(\+)?(66)?0?(8|9)\d{8}$/.test(this.PWAH_MobilePhoneNumber)===false) {
+      if (this.PWAH_MobilePhoneNumber && /^(\+)?(66)?0?(6|8|9)\d{8}$/.test(this.PWAH_MobilePhoneNumber)===false) {
         this.errors.push('เบอร์มือถือไม่ถูกต้อง')
         this.$q.dialog({
               color: 'negative',
