@@ -57,8 +57,8 @@
           :handler="loadMore"
           ref="infiniteScroll"
         >
-          <lazy-component v-for="(employee, index) in employees" :key="employee.image_path">
           <q-card
+            v-for="(employee, index) in employees" :key="index"
             :color="employee | blockColor"
           >
             <q-item>
@@ -68,14 +68,15 @@
                     class="col-12"
                     :id="employee.image_path"
                   >
+                    <lazy-component :key="employee.image_path">
                     <img
                       v-auth-image="employee.image_path"
                       style="width: 75px;border-radius: 20%"
                       draggable="false"
                       oncontextmenu="return false"
                       v-if="employee.image_path.includes(employee.code)"
-                      :id="employee.image_path"
-                    >
+                    />
+                    </lazy-component>
                   </div>
                   <div class="col-12">
                     <q-icon
@@ -298,7 +299,6 @@
               </q-item-main>
             </q-item>
           </q-card>
-          </lazy-component>
           <back-to-top
             bottom="100px"
             right="10px"
