@@ -118,14 +118,14 @@ class EmployeesController extends Controller
             $employees = $query->orderBy('employee_type_priority')
                 ->orderBy('employee_subgroup', 'desc')
                 ->orderBy('senior')
-                ->paginate(50);
+                ->paginate(10);
         } else {
             $employees = $query->orderBy('org_egat_id')
                 ->orderBy('employee_type_priority')
                 ->orderBy('is_boss', 'desc')
                 ->orderBy('employee_subgroup', 'desc')
                 ->orderBy('senior')
-                ->paginate(50);
+                ->paginate(10);
         }
 
         $employees->appends(request()->query());
