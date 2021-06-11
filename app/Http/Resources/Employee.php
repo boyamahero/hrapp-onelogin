@@ -56,12 +56,12 @@ class Employee extends JsonResource
             'person_location' => $this->when(
                 $this->relationLoaded('person') && $this->person->relationLoaded('workLocations'),
                 function () use ($permissionViewMobilePhone) {
-                    return new WorkLocation($this->person->workLocations->first(), $permissionViewMobilePhone);
+                    return new WorkLocation($this->person->workLocations->first(), $permissionViewMobilePhone,$this->whenLoaded('workFromAnyWhere'));
                 }
             ),
-            'templocation' => new WorkLocation($this->whenLoaded('templocation'), $permissionViewMobilePhone),
-            'work_from_home' => new WorkFromHome($this->whenLoaded('workFromHome')),
-            'work_from_any_where' => new WorkFromHome($this->whenLoaded('workFromAnyWhere')),
+            'templocation' => new WorkLocation($this->whenLoaded('templocation'), $permissionViewMobilePhone,$this->whenLoaded('workFromAnyWhere')),
+            'work_from_home' => new WorkFromHomeCollection($this->whenLoaded('workFromHome')),
+            'work_from_any_where' => new WorkFromHomeCollection($this->whenLoaded('workFromAnyWhere')),
             $this->mergeWhen(
                 $permissionViewDetail,
                 [

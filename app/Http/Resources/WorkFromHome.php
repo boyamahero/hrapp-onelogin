@@ -14,6 +14,11 @@ class WorkFromHome extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'BeginDate' => $this->BeginDate,
+            'EndDate' => $this->EndDate,
+            'BeginTime' => $this->BeginTime,
+            'EndTime' => $this->EndTime,
+        ];    
     }
 }
