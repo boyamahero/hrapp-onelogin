@@ -11,7 +11,7 @@ class WorkLocation extends JsonResource
 {
     protected $permission;
 
-    public function __construct($resource, $permission = false, $wfa)
+    public function __construct($resource, $permission = false, $wfa = null)
     {
         $this->resource = $resource;
         $this->permission = $permission;
@@ -28,11 +28,12 @@ class WorkLocation extends JsonResource
         $data = [];
 
         if ($this->resource->getTable() == 'work_locations') {
-            if (count($this->wfa)==0){
-                $mobilenumber = $this->ZZMOBL;
-            } else {
-                $mobilenumber = $this->wfa[0]->Mobile ? $this->wfa[0]->Mobile : $this->ZZMOBL;
-            }
+            $mobilenumber = $this->ZZMOBL;
+            // if (count($this->wfa)==0){
+            //     $mobilenumber = $this->ZZMOBL;
+            // } else {
+            //     $mobilenumber = $this->wfa[0]->Mobile ? $this->wfa[0]->Mobile : $this->ZZMOBL;
+            // }
             $data = [
                 'Address' => $this->wlfullname ? $this->wlfullname->WL_SubDistrict . ' ' . $this->wlfullname->WL_District . ' ' . $this->wlfullname->WL_Province : '',
                 'Building' => $this->ZZFLBLD ?? '',
@@ -49,11 +50,12 @@ class WorkLocation extends JsonResource
         }
 
         if ($this->resource->getTable() == 'PSNEngine_PersonWorkAddressHistory') {
-            if (count($this->wfa)==0){
-                $mobilenumber = $this->PWAH_MobilePhoneNumber;
-            } else {
-                $mobilenumber = $this->wfa[0]->Mobile ? $this->wfa[0]->Mobile : $this->PWAH_MobilePhoneNumber;
-            }
+            $mobilenumber = $this->PWAH_MobilePhoneNumber;
+            // if (count($this->wfa)==0){
+            //     $mobilenumber = $this->PWAH_MobilePhoneNumber;
+            // } else {
+            //     $mobilenumber = $this->wfa[0]->Mobile ? $this->wfa[0]->Mobile : $this->PWAH_MobilePhoneNumber;
+            // }
             $data = [
                 'Address' => $this->PWAH_Address,
                 'Building' => $this->PWAH_Building,

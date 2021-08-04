@@ -22,12 +22,13 @@ class MobilePhoneLogController extends Controller
         {
             abort(403);
         }
+
         $mobilenumber_wf = "";
-        if(count($employee->workFromAnyWhere)>0){
-            $mobilenumber_wf = $employee->workFromAnyWhere->first()->Mobile;
-        }else if(count($employee->workFromHome)>0){
-            $mobilenumber_wf = $employee->workFromHome->first()->Mobile;
-        }
+        // if(count($employee->workFromAnyWhere)>0){
+        //     $mobilenumber_wf = $employee->workFromAnyWhere->first()->Mobile;
+        // }else if(count($employee->workFromHome)>0){
+        //     $mobilenumber_wf = $employee->workFromHome->first()->Mobile;
+        // }
         
         return response()->json([
             'employee' => $employee->employee_code,
