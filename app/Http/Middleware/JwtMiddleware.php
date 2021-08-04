@@ -4,9 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use JWTAuth;
-use Exception;
 use App\User;
+use Exception;
 use App\Position;
+use Illuminate\Support\Str;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 
 class JwtMiddleware extends BaseMiddleware
@@ -94,11 +95,21 @@ class JwtMiddleware extends BaseMiddleware
                 'username' => $employeeCode,
                 'name' => $employee->employee_name,
                 'email' => $employeeCode . "@egat.co.th",
-                'password' => bcrypt('keycloak')
+                'password' => bcrypt('keycloak'),
+                'api_token' => Str::random(60),
             ]);
         }
+
+        if (! $user->api_token)
+        {
+            return $user->update([
+                'name' => $employee->employee_name,
+                'api_token' => Str::random(60),
+            ]);
+        }
+
         return $user->update([
-            'name' => $employee->employee_name
+            'name' => $employee->employee_name,
         ]);
     }
 }

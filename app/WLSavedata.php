@@ -17,7 +17,7 @@ class WLSavedata extends Model
 
     protected $guarded = [];
 
-    protected $with = ['wlfullname'];
+    // protected $with = ['wlfullname'];
 
     public function scopeExclude($query,$value = array()) 
     {

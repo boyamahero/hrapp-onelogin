@@ -23,7 +23,7 @@ class EmployeesController extends Controller
     {
         $roles = $request->user()->roles;
         $permissions = $request->user()->getAllPermissions();
-        return $request->user()->employee()->with('templocation')->first()->setAttribute('roles', $roles)->setAttribute('permissions', $permissions);
+        return $request->user()->employee()->with('templocation.wlfullname')->first()->setAttribute('roles', $roles)->setAttribute('permissions', $permissions);
     }
 
     public function images($id, $width=75, $height=90)

@@ -28,6 +28,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['middleware' => ['auth:api']], function () {
+
+  Route::get('mobile', 'MobilePhoneController@show')->middleware('role:edms');
+  Route::post('mobile', 'MobilePhoneController@store')->middleware('role:edms');
+
+});
+
+
 Route::middleware(['jwt.verify'])->group(function () {
 
   Route::get('/user', 'EmployeesController@user');
