@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Person;
 use App\WLSavedata;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -11,7 +12,10 @@ class MobilePhoneController extends Controller
 {
     public function show(Request $request)
     {
-        $mobile = WLSavedata::select('ZZMOBL')->where('PERNR','like',"%{$request->empIDTarget}%")->first();
+        $mobile = optional(WLSavedata::select('ZZMOBL')->where('PERNR','like',"%{$request->empIDTarget}%")->first())->ZZMOBL;
+
+        if (!$mobile) 
+            $mobile = optional(Person::with('workLocations')->where('PS_Code','like',"%{$request->empIDTarget}%")->first()->workLocations->first())->PWAH_MobilePhoneNumber;
 
         if(!$mobile)
             return response()->json([
@@ -19,7 +23,7 @@ class MobilePhoneController extends Controller
             ],404);
 
         return response()->json([
-            'mobile_number' => $request->empIDLogin !== $request->empIDTarget ? ('XXXXXX'. substr($mobile->ZZMOBL,-4)) : $mobile->ZZMOBL
+            'mobile_number' => $request->empIDLogin !== $request->empIDTarget ? ('XXXXXX'. substr($mobile,-4)) : $mobile
         ],200);
     }
 
@@ -41,6 +45,29 @@ class MobilePhoneController extends Controller
             return response()->json([
                 'errors' => $validator->messages()
             ],Response::HTTP_BAD_REQUEST);
+        }
+
+        if (!$worklocation = WLSavedata::where('PERNR','like',"%{$request->empIDTarget}%")->first())
+        {
+            $worklocation = Person::with('workLocations')->where('PS_Code','like',"%{$request->empIDTarget}%")->first()->workLocations->first();
+
+            WLSavedata::create([
+                'PERNR' => $request->empIDTarget,
+                'type_code' => substr($worklocation->PWAH_WorkLocationCode,0,1) ?? null,
+                'BEGDA' => date("Y.m.d"),
+                'ZZCODE' => $worklocation->PWAH_WorkLocationCode ?? null,
+                'ZZROMNO' => $worklocation->PWAH_Room ?? null,
+                'ZZFLBLD' => $worklocation->PWAH_Building ?? null,
+                'ZZOFTEL' => $worklocation->PWAH_PhoneNumber ?? null,
+                'ZZOFTELFULL' => $worklocation->PWAH_PhoneNumberFull ?? null,
+                'ZZMOBL' => $request->mobile_number, 
+                'GENTEXT_AT' => null,
+                'updated_by' => $request->empIDLogin
+            ]);
+
+            return response()->json([
+                'message' => 'บันทึกข้อมูลเรียบร้อย'
+            ],Response::HTTP_OK);
         }
 
         WLSavedata::updateOrCreate(
