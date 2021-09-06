@@ -76,7 +76,7 @@
       <div class="col-xs-12 col-md-6 col-lg-4">
         <q-card class="q-ma-md q-px-md">
           <q-card-main>
-            <q-input float-label="เบอร์มือถือ" type="text"  v-model="PWAH_MobilePhoneNumber" clearable/>
+            <q-input float-label="เบอร์มือถือ" type="text"  maxlength="12" v-model="PWAH_MobilePhoneNumber" @input="autoTab($event, 'PWAH_MobilePhoneNumber')" clearable/>
           </q-card-main>
         </q-card>
       </div>
@@ -108,7 +108,7 @@
       <div class="col-xs-12 col-md-6 col-lg-4">
         <q-card class="q-ma-md q-px-md">
           <q-card-main>
-            <q-input float-label="เบอร์โทรศัพท์" type="text"  v-model="INTM_TEL" clearable/>
+            <q-input float-label="เบอร์โทรศัพท์" type="text"  v-model="INTM_TEL" maxlength="12" @input="autoTab($event, 'INTM_TEL')" clearable/>
           </q-card-main>
         </q-card>
       </div>
@@ -284,6 +284,23 @@ export default {
     this.getWLType()
   },
   methods: {
+    autoTab: function (e, model) {
+      // console.log(e.length)
+      var pattern = '___-___-____'
+      var patternEx = '-'
+      var returnText = ''
+      var objL = e.length
+      var objL2 = objL - 1
+      for (var i = 0; i < pattern.length; i++) {
+        if (objL2 === i && pattern.charAt(i + 1) === patternEx) {
+          returnText += e + patternEx
+          this[model] = returnText
+        }
+      }
+      if (objL >= pattern.length) {
+          this[model] = e.substr(0, pattern.length)
+      }
+    },
     createForm () {
       this.url_redirect = this.$router.history.current.query.backurl
       if (this.user.templocation) {
@@ -405,7 +422,7 @@ export default {
     checkForm: function (e) {
       this.errors = []
       // eslint-disable-next-line
-      if (this.PWAH_MobilePhoneNumber && /^(\+)?(66)?0?(6|8|9)\d{8}$/.test(this.PWAH_MobilePhoneNumber)===false) {
+      if (this.PWAH_MobilePhoneNumber.replaceAll('-', '').length !== 10 && /^[0-9]{3}[-\s]?[0-9]{3}[-\s]?[0-9]{4}$/.test(this.PWAH_MobilePhoneNumber.replaceAll('-', '')) === false) {
         this.errors.push('เบอร์มือถือไม่ถูกต้อง')
         this.$q.dialog({
               color: 'negative',
@@ -497,6 +514,15 @@ export default {
               ok: 'ok'
             })
       }
+      if (this.INTM_TEL.replaceAll('-', '').length !== 10 && /^[0-9]{3}[-\s]?[0-9]{3}[-\s]?[0-9]{4}$/.test(this.INTM_TEL.replaceAll('-', '')) === false) {
+        this.errors.push('เบอร์มือถือไม่ถูกต้อง')
+        this.$q.dialog({
+              color: 'negative',
+              message: 'เบอร์มือถือไม่ถูกต้อง',
+              icon: 'report_problem',
+              ok: 'ok'
+            })
+      }
        if (!this.INTM_RELATION) {
         this.errors.push('ไม่ได้กรอกความสัมพันธ์ผู้ที่สามารถติดต่อได้กรณีฉุกเฉิน')
         this.$q.dialog({
@@ -524,14 +550,14 @@ export default {
       const fd = new FormData()
       fd.append('WL_Type', this.WL_Type)
       fd.append('WL_Name', this.WL_Name)
-      fd.append('PWAH_MobilePhoneNumber', this.PWAH_MobilePhoneNumber)
+      fd.append('PWAH_MobilePhoneNumber', this.PWAH_MobilePhoneNumber.replaceAll('-', ''))
       fd.append('PWAH_Building', this.PWAH_Building)
       fd.append('PWAH_Floor', this.PWAH_Floor)
       fd.append('PWAH_PhoneNumber', this.PWAH_PhoneNumber)
       fd.append('PWAH_PhoneNumberFull', this.PWAH_PhoneNumberFull)
       fd.append('PWAH_Room', this.PWAH_Room)
       fd.append('INTM_NAME', this.INTM_NAME)
-      fd.append('INTM_TEL', this.INTM_TEL)
+      fd.append('INTM_TEL', this.INTM_TEL.replaceAll('-', ''))
       fd.append('INTM_RELATION', this.INTM_RELATION)
       fd.append('lineID', this.lineID)
       this.$axios.post('saveWlupdate', fd)
