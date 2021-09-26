@@ -108,7 +108,7 @@
       <div class="col-xs-12 col-md-6 col-lg-4">
         <q-card class="q-ma-md q-px-md">
           <q-card-main>
-            <q-input float-label="เบอร์โทรศัพท์" type="text"  v-model="INTM_TEL" maxlength="12" @input="autoTab($event, 'INTM_TEL')" clearable/>
+            <q-input float-label="เบอร์มือถือ" type="text"  v-model="INTM_TEL" maxlength="12" @input="autoTab($event, 'INTM_TEL')" clearable/>
           </q-card-main>
         </q-card>
       </div>
@@ -506,19 +506,19 @@ export default {
             })
       }
        if (!this.INTM_TEL) {
-        this.errors.push('ไม่ได้กรอกเบอร์ผู้ที่สามารถติดต่อได้กรณีฉุกเฉิน')
+        this.errors.push('ไม่ได้กรอกเบอร์มือถือผู้ที่สามารถติดต่อได้กรณีฉุกเฉิน')
         this.$q.dialog({
               color: 'negative',
-              message: 'ไม่ได้กรอกเบอร์ผู้ที่สามารถติดต่อได้กรณีฉุกเฉิน',
+              message: 'ไม่ได้กรอกเบอร์มือถือผู้ที่สามารถติดต่อได้กรณีฉุกเฉิน',
               icon: 'report_problem',
               ok: 'ok'
             })
       }
       if (this.INTM_TEL.replaceAll('-', '').length !== 10 && /^[0-9]{3}[-\s]?[0-9]{3}[-\s]?[0-9]{4}$/.test(this.INTM_TEL.replaceAll('-', '')) === false) {
-        this.errors.push('เบอร์มือถือไม่ถูกต้อง')
+        this.errors.push('เบอร์มือถือผู้ที่สามารถติดต่อได้กรณีฉุกเฉินไม่ถูกต้อง')
         this.$q.dialog({
               color: 'negative',
-              message: 'เบอร์มือถือไม่ถูกต้อง',
+              message: 'เบอร์มือถือผู้ที่สามารถติดต่อได้กรณีฉุกเฉินไม่ถูกต้อง',
               icon: 'report_problem',
               ok: 'ok'
             })
