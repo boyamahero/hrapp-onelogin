@@ -11,7 +11,7 @@
                 class="full-width"
                 v-model="searchText"
                 :debounce="2000"
-                placeholder="ชื่อ/นามสกุล(TH/EN)/ สังกัด(ย่อ/เต็ม)/ ตำแหน่งย่อ/ เลขประจำตัว/ อีเมล"
+                placeholder="ชื่อ/นามสกุล(TH/EN)/ สังกัด(ย่อ/เต็ม)/ ตำแหน่งย่อ/ เลขประจำตัว/ อีเมล/เลขา สังกัดย่อ"
                 icon="person"
                 float-label="คำค้น"
                 clearable
