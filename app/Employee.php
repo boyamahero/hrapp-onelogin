@@ -21,7 +21,6 @@ class Employee extends Model
     public function getImagePathAttribute()
     {
         return '/images/' . sprintf("%06d", $this->id);
-        // return '/api/images/' . sprintf("%06d", $this->id) . '/' . base64_encode(substr(sprintf("%06d", $this->id), 0, 3)) . env('APP_SECRET', 'HrApP') . base64_encode(substr(sprintf("%06d", $this->id), 3, 3));
     }
 
     public function getIsBossAttribute()
@@ -63,7 +62,7 @@ class Employee extends Model
 
     public function person()
     {
-        return $this->hasOne('App\Person', 'PS_Code', 'PSCode');
+        return $this->hasOne('App\Person', 'PS_Code', 'PS_Code');
     }
 
     public function getLocationAttribute()

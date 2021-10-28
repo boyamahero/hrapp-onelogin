@@ -9,9 +9,9 @@ class Secretary extends Model
 {
     use Cachable;
 
-    protected $connection = 'NewHRDatabase';
+    protected $connection = 'HRDatabase';
 
-    protected $table = 'V_PersonAction';
+    protected $table = 'PSNEngine_V_PersonAction';
 
     public function positionBoss()
     {

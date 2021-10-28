@@ -9,7 +9,7 @@ class PositionNew extends Model
 {
     use Cachable;
 
-    protected $connection = 'NewHRDatabase';
+    protected $connection = 'HRDatabase';
 
-    protected $table = 'Position';
+    protected $table = 'PSNEngine_Position';
 }
