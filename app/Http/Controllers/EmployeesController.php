@@ -125,13 +125,13 @@ class EmployeesController extends Controller
 
         $employees->appends(request()->query());
 
-        if ($employees[0]->person->secretary->count() > 0)
+        // if ($employees[0]->person->secretary->count() > 0)
 
-        {
-            $temp = $employees[0];
-            $employees[0] = $employees[1];
-            $employees[1] = $temp;
-        }
+        // {
+        //     $temp = $employees[0];
+        //     $employees[0] = $employees[1];
+        //     $employees[1] = $temp;
+        // }
 
         return new EmployeeCollection($employees);
     }
