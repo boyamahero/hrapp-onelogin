@@ -129,7 +129,7 @@
                     >
                       {{ employee.secretary? employee.position_full + ' ทนท.เลขานุการ ' + employee.secretary.position_boss.PST_TLongName : employee.position_full }}
                     </q-tooltip>
-                    <span v-if="$q.platform.is.desktop">({{employee.secretary? employee.position_full + ' ' + employee.secretary.PATH_PositionName : employee.position_full }} )</span>
+                    <span v-if="$q.platform.is.desktop">({{employee.secretary? employee.position_full + ' ทนท.เลขานุการ ' + employee.secretary.position_boss.PST_TLongName : employee.position_full }} )</span>
                   </span>
                 </q-item-tile>
                 <q-item-tile class="q-body-1">
