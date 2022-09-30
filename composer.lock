@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc2854fa960abde1e4c7391c0c4bd7a4",
+    "content-hash": "b8b364ace8d6d1b0e8959f109bff840c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -559,16 +559,16 @@
         },
         {
             "name": "genealabs/laravel-model-caching",
-            "version": "0.8.10",
+            "version": "0.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GeneaLabs/laravel-model-caching.git",
-                "reference": "f9be69e6937ef4bb4477deacf10e65c40d7df00f"
+                "reference": "01a522ba747d35838f4d1f2ebddec6660b9e14fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GeneaLabs/laravel-model-caching/zipball/f9be69e6937ef4bb4477deacf10e65c40d7df00f",
-                "reference": "f9be69e6937ef4bb4477deacf10e65c40d7df00f",
+                "url": "https://api.github.com/repos/GeneaLabs/laravel-model-caching/zipball/01a522ba747d35838f4d1f2ebddec6660b9e14fa",
+                "reference": "01a522ba747d35838f4d1f2ebddec6660b9e14fa",
                 "shasum": ""
             },
             "require": {
@@ -580,7 +580,7 @@
                 "illuminate/database": "^7.0",
                 "illuminate/http": "^7.0",
                 "illuminate/support": "^7.0",
-                "php": ">=7.2.5",
+                "php": ">=7.3",
                 "predis/predis": "^1.1"
             },
             "require-dev": {
@@ -634,7 +634,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-07-08T18:08:06+00:00"
+            "time": "2020-07-17T15:32:03+00:00"
         },
         {
             "name": "genealabs/laravel-pivot-events",
@@ -2872,16 +2872,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v5.4.12",
+            "version": "v5.4.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "c072aa8f724c3af64e2c7a96b796a4863d24dba1"
+                "reference": "3f97f6c7b7e26848a90c0c0cfb91eeb2bb8618be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/c072aa8f724c3af64e2c7a96b796a4863d24dba1",
-                "reference": "c072aa8f724c3af64e2c7a96b796a4863d24dba1",
+                "url": "https://api.github.com/repos/symfony/console/zipball/3f97f6c7b7e26848a90c0c0cfb91eeb2bb8618be",
+                "reference": "3f97f6c7b7e26848a90c0c0cfb91eeb2bb8618be",
                 "shasum": ""
             },
             "require": {
@@ -2951,7 +2951,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v5.4.12"
+                "source": "https://github.com/symfony/console/tree/v5.4.13"
             },
             "funding": [
                 {
@@ -2967,7 +2967,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-08-17T13:18:05+00:00"
+            "time": "2022-08-26T13:50:20+00:00"
         },
         {
             "name": "symfony/css-selector",
