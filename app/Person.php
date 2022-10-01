@@ -22,6 +22,7 @@ class Person extends Model
     {
         return $this->hasMany('App\Secretary', 'PATH_PersonID', 'PersonID')
             ->where('PATH_SecretaryType', 24)
+            ->where('PATH_ActionCode', 'Z7')
             ->where('PATH_ActiveFlag', 10)
             ->orderBy('PATH_DataValidYear','desc');
     }

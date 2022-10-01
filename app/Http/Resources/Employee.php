@@ -20,9 +20,10 @@ class Employee extends JsonResource
      */
     public function toArray($request)
     {
-        $permissionViewMobilePhone = Auth::user()->hasRole('admin') || (Auth::user()->employee->is_boss &&
-            Auth::user()->username != $this->id &&
-            $this->isOwnerDataLevel(Auth::user()) || ($this->workFromAnyWhere->count() > 0 || $this->workFromHome->count() > 0));
+        // $permissionViewMobilePhone = Auth::user()->hasRole('admin') || (Auth::user()->employee->is_boss &&
+        //     Auth::user()->username != $this->id &&
+        //     $this->isOwnerDataLevel(Auth::user()) || ($this->workFromAnyWhere->count() > 0 || $this->workFromHome->count() > 0));
+        $permissionViewMobilePhone = true;
         $permissionViewDetail = Auth::user()->hasRole('admin') || (Auth::user()->employee->is_boss &&
             Auth::user()->username != $this->id &&
             $this->isOwnerDataLevel(Auth::user()));

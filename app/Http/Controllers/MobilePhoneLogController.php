@@ -14,10 +14,11 @@ class MobilePhoneLogController extends Controller
 
         // dd($employee->employee_code);
 
-        $permissionViewMobilePhone = Auth::user()->hasRole('admin') || (Auth::user()->employee->is_boss &&
-            Auth::user()->username != $employee->id &&
-            $this->isOwnerDataLevel(Auth::user(),$employee) || ($employee->workFromAnyWhere->count() > 0 || $employee->workFromHome->count() > 0));
+        // $permissionViewMobilePhone = Auth::user()->hasRole('admin') || (Auth::user()->employee->is_boss &&
+        //     Auth::user()->username != $employee->id &&
+        //     $this->isOwnerDataLevel(Auth::user(),$employee) || ($employee->workFromAnyWhere->count() > 0 || $employee->workFromHome->count() > 0));
 
+        $permissionViewMobilePhone = true;
         if (!$permissionViewMobilePhone)
         {
             abort(403);
@@ -29,7 +30,7 @@ class MobilePhoneLogController extends Controller
         // }else if(count($employee->workFromHome)>0){
         //     $mobilenumber_wf = $employee->workFromHome->first()->Mobile;
         // }
-        
+
         return response()->json([
             'employee' => $employee->employee_code,
             // 'mobile_phone' => $employee->templocation->ZZMOBL ?? $employee->person->workLocations[0]->PWAH_MobilePhoneNumber ?? null
