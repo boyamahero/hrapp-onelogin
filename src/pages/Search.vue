@@ -6,7 +6,7 @@
       <div class="col-12">
         <q-card class="q-mx-md q-mb-xs q-mt-md">
           <q-card-main>
-            <div class="row q-ma-md">
+            <div class="row justify-between q-ma-md">
               <q-search
                 class="full-width"
                 v-model="searchText"
@@ -29,10 +29,9 @@
       class="row justify-between q-ma-md"
       v-if="showResult"
     >
-      <div class="text-left self-center">
+      <div class="col-md-10 col-xs-9 text-left self-center">
         <div>
-          <div v-if="total > 0">พบผลการค้นหาจำนวน {{ total }} ท่าน</div>
-          <div v-else>{{ message }}</div>
+          <div>{{ message }}</div>
         </div>
         <div class="subtitle">
           <span v-if="filter.level.min !== 0 || filter.level.max !==14">ระดับ {{filter.level.min}} {{filter.level.min===filter.level.max?'':'ถึง '+filter.level.max}}</span>
@@ -40,7 +39,7 @@
           <span v-if="filter.orderBySenior"> <span v-if="filter.level.min !== 0 || filter.level.max !==14 || filter.onlyBoss"> , </span>เรียงลำดับอาวุโส</span>
         </div>
       </div>
-      <div class="text-right self-center">
+      <div class="text-right self-center" v-if="!hasRecommend">
         <q-btn
           icon="filter_list"
           round
@@ -439,6 +438,7 @@ export default {
       },
       employees: [],
       loadedPages: [],
+      hasRecommend: false,
       total: 0,
       current_page: 0,
       last_page: 0,
@@ -571,8 +571,11 @@ export default {
               this.showResult = true
               this.next_page_url = res.data.links.next
               this.loadedPages.push(res.data.meta.current_page)
+              this.message = 'พบผลการค้นหาจำนวน ' + res.data.meta.total + ' ท่าน'
+              this.hasRecommend = false
               if (this.employees.length === 0) {
-                this.message = 'ไม่พบผลการค้นหา กรุณาระบุคำค้นให้ถูกต้อง'
+                this.message = 'กำลังค้นหา......'
+                this.recommend()
               }
             }
           }).catch((e) => {
@@ -621,6 +624,28 @@ export default {
         }
         done()
       }, 5000)
+    },
+    recommend () {
+        this.$axios.get('search/' + this.searchText)
+        .then((res) => {
+            this.employees = res.data.data
+            this.total = res.data.meta.total
+            this.current_page = res.data.meta.current_page
+            this.last_page = res.data.meta.last_page
+            this.showResult = true
+            this.next_page_url = res.data.links.next
+            this.loadedPages.push(res.data.meta.current_page)
+            this.message = 'ไม่พบผลการค้นหาคำว่า ' + this.searchText + ' นำเสนอผลลัพธ์ที่ใกล้เคียงจำนวน ' + res.data.meta.total + ' ท่าน'
+            this.hasRecommend = true
+            this.filter = {
+                level: {
+                min: 0,
+                max: 14
+                },
+                onlyBoss: false,
+                orderBySenior: false
+            }
+        })
     }
   }
 }

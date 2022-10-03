@@ -60,9 +60,9 @@ class Employee extends JsonResource
                     return new WorkLocation($this->person->workLocations->first(), $permissionViewMobilePhone);
                 }
             ),
-            'templocation' => new WorkLocation($this->whenLoaded('templocation'), $permissionViewMobilePhone),
-            'work_from_home' => new WorkFromHomeCollection($this->whenLoaded('workFromHome')),
-            'work_from_any_where' => new WorkFromHomeCollection($this->whenLoaded('workFromAnyWhere')),
+            'templocation' => new WorkLocation($this->templocation, $permissionViewMobilePhone),
+            'work_from_home' => new WorkFromHomeCollection($this->workFromHome),
+            'work_from_any_where' => new WorkFromHomeCollection($this->workFromAnyWhere),
             $this->mergeWhen(
                 $permissionViewDetail,
                 [

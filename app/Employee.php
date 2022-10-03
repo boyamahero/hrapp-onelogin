@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 
 class Employee extends Model
 {
+    use Searchable;
     use Cachable;
 
     protected $connection = 'HRDatabase';
@@ -17,6 +19,29 @@ class Employee extends Model
     protected $appends = ['image_path', 'is_boss', 'location'];
 
     protected $hidden = ['birth_date', 'birth_thai_date', 'birth_year', 'birth_month', 'birth_day', 'age', 'idcard_number', 'weight', 'weight_ratio', 'height', 'height_ratio', 'blood_group'];
+
+    public function searchableAs()
+    {
+        return 'employees';
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'org_path' => $this->org_path,
+            'name_english' => $this->name_english,
+            'email' => $this->email,
+            'position_combine_abb' => $this->position_combine_abb,
+            'position_combine_full' => $this->position_combine_full,
+            'deputy_full' => $this->deputy_full,
+            'assistant_full' => $this->assistant_full,
+            'division_full' => $this->division_full,
+            'department_full' => $this->department_full,
+            'section_full' => $this->section_full,
+        ];
+    }
 
     public function getImagePathAttribute()
     {

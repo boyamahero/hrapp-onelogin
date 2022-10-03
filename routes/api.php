@@ -54,7 +54,7 @@ Route::middleware(['jwt.verify'])->group(function () {
 
   Route::get('/medical-fees/{year?}', 'MedicalFeeController@show');
 
-  //worklocation 
+  //worklocation
 
   Route::get('/getwltype', 'WorklocationController@getwltype');
 
@@ -71,7 +71,7 @@ Route::middleware(['jwt.verify'])->group(function () {
 
   Route::middleware('log_access_mobile_phone:api')->get('/mobile-phone/{employee_code}', 'MobilePhoneLogController@show');
 
-  
+  Route::get('/search/{keyword}', 'EmployeesController@meilisearch');
   //hrapi
 });
 

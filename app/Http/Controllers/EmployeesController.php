@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use App\Http\Resources\EmployeeCollection;
+use Illuminate\Support\Str;
 
 class EmployeesController extends Controller
 {
@@ -28,7 +29,7 @@ class EmployeesController extends Controller
 
     public function images($id, $width=75, $height=90)
     {
-        
+
         try {
             $document = Document::where('employee_code', $id)->where('document_subtype', '1')->first();
             $image_path = 'http://hrerp.egat.co.th/images/' . $document->document_subtype . '/' . $document->document_name . '.' . $document->document_extension;
@@ -61,8 +62,8 @@ class EmployeesController extends Controller
 
         $query = Employee::query();
 
-        if (str_contains($keyword, 'เลขา')) {
-            $orgName = str_replace_first('เลขา ','',$keyword);
+        if (Str::contains($keyword, 'เลขา')) {
+            $orgName = Str::replaceFirst('เลขา ','',$keyword);
 
             $query->whereHas('person.secretary.positionBoss', function($query) use ($orgName) {
                 $query->where('PST_TShortName', 'like', "%{$orgName}%");
@@ -86,14 +87,10 @@ class EmployeesController extends Controller
                     'name', 'name_english', 'email', 'employee_code',
                     'deputy_abb', 'assistant_abb', 'division_abb', 'department_abb', 'section_abb', 'position_combine_abb',
                     'deputy_full', 'assistant_full', 'division_full', 'department_full', 'section_full'
-                ], $keyword)
-                // ->orWhereHas('person.secretary.positionBoss', function($query) use ($keyword) {
-                //     $query->where('PST_TShortName', 'like', "%{$keyword}%");
-                // })
-                ;
+                ], $keyword);
             })
             ->where('status', '!=', '0')
-            ->whereIn('employee_group', [1, 2, 5, 9]);    
+            ->whereIn('employee_group', [1, 2, 5, 9]);
         }
 
         if ($levelMin || $levelMax) {
@@ -101,12 +98,14 @@ class EmployeesController extends Controller
                 $query->whereBetween('employee_subgroup',  [$levelMin, $levelMax]);
             });
         }
+
         if ($onlyBoss) {
             $query->where(function ($query) {
                 $query->whereNotIn('priority',  ['', '04', '05', '06'])
                     ->orWhere('employee_group', '9');
             });
         }
+
         $query = $query->with(['workFromHome','workFromAnyWhere', 'templocation', 'person.workLocations']);
 
         if ($orderBySenior) {
@@ -125,15 +124,12 @@ class EmployeesController extends Controller
 
         $employees->appends(request()->query());
 
-        // if ($employees[0]->person->secretary->count() > 0)
-
-        // {
-        //     $temp = $employees[0];
-        //     $employees[0] = $employees[1];
-        //     $employees[1] = $temp;
-        // }
-
         return new EmployeeCollection($employees);
+    }
+
+    public function meilisearch($keyword)
+    {
+        return new EmployeeCollection(Employee::search($keyword)->paginate(10));
     }
 
     public function manpower($level = null, $abb = null)
