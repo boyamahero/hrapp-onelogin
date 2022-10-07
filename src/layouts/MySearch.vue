@@ -126,26 +126,7 @@
           />
         </q-item>
       </q-list>
-      <q-list class="fixed-bottom q-pa-sm q-ma-none bg-light-blue-2">
-        <q-item class="q-ma-none q-pa-none">
-          <q-item-main class="text-left q-body-1">
-            <q-item-tile label>ผู้รับผิดชอบข้อมูล</q-item-tile>
-            <q-item-tile
-              sublabel
-              class="q-ma-none q-pa-none"
-            >คุณปรารถนา โกยทอง (อทบ.) โทร 65300</q-item-tile>
-          </q-item-main>
-        </q-item>
-        <q-item class="q-ma-none q-pa-none">
-          <q-item-main class="text-left q-body-1">
-            <q-item-tile label>ผู้พัฒนาและผู้ดูแลระบบ</q-item-tile>
-            <q-item-tile
-              sublabel
-              class="q-ma-none q-pa-none"
-            >หบค-ห. กทห-ห. อจส. โทร 64452</q-item-tile>
-          </q-item-main>
-        </q-item>
-      </q-list>
+      <credit/>
     </q-layout-drawer>
 
     <q-page-container>
@@ -156,12 +137,16 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import Credit from '../components/credit.vue'
 export default {
   name: 'SearchLaout',
   data () {
     return {
       leftDrawerOpen: false
     }
+  },
+  components: {
+    Credit
   },
   mounted () {
     this.setUser()
