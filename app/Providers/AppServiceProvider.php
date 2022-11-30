@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Resources\Json\Resource;
+// use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource as Resource;
+use Illuminate\Support\Arr;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,17 +19,17 @@ class AppServiceProvider extends ServiceProvider
     {
         Builder::macro('whereLike', function ($attributes, string $searchTerm) {
             $this->where(function (Builder $query) use ($attributes, $searchTerm) {
-                foreach (array_wrap($attributes) as $attribute) {
+                foreach (Arr::wrap($attributes) as $attribute) {
                     $query->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
                 }
             });
-        
+
             return $this;
         });
 
         Builder::macro('whereIsBoss', function ($attributes) {
             $this->where(function (Builder $query) use ($attributes) {
-                foreach (array_wrap($attributes) as $attribute) {
+                foreach (Arr::wrap($attributes) as $attribute) {
                     if ($attribute === 'priority') {
                         $query->orWhereNotIn($attribute,['','04','05','06']);
                     } elseif ($attribute === 'employee_group') {
@@ -35,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
                     }
                 }
             });
-        
+
             return $this;
         });
 

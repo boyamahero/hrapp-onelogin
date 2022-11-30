@@ -27,6 +27,14 @@ class Kernel extends ConsoleKernel
         $schedule->command('modelCache:clear')
                  ->dailyAt('07:00')
                  ->timezone('Asia/Bangkok');
+
+        $schedule->command('scout:flush "App\Employee"')
+                 ->dailyAt('07:01')
+                 ->timezone('Asia/Bangkok');
+
+        $schedule->command('scout:import "App\Employee"')
+                 ->dailyAt('07:02')
+                 ->timezone('Asia/Bangkok');
     }
 
     /**
