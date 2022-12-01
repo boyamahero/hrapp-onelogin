@@ -29,3 +29,4 @@ yarn-debug.log*
 *.sublime-workspace
 src/statics/keycloak.json
 /src/statics/keycloak.json
+onelogin.config.js
