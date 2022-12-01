@@ -22,22 +22,6 @@ const routes = [
     ]
   },
   {
-    path: '/report',
-    component: () => import('layouts/MySearch.vue'),
-    children: [
-      {
-        path: '',
-        name: 'report',
-        component: () => import('pages/Report.vue'),
-        meta: {
-          requiresAuth: true,
-          title: 'HR Report',
-          description: 'รายงานสารสนเทศบุคคล'
-        }
-      }
-    ]
-  },
-  {
     path: '/',
     component: () => import('layouts/MyLayout.vue'),
     children: [
@@ -50,46 +34,6 @@ const routes = [
         }
       },
       {
-        path: 'statistic',
-        name: 'statistic',
-        component: () => import('pages/UnderConstruction.vue'),
-        meta: {
-          requiresAuth: true
-        }
-      },
-      {
-        path: 'manpower',
-        name: 'manpower',
-        component: () => import('pages/UnderConstruction.vue'),
-        meta: {
-          requiresAuth: true
-        }
-      },
-      {
-        path: 'retire',
-        name: 'retire',
-        component: () => import('pages/UnderConstruction.vue'),
-        meta: {
-          requiresAuth: true
-        }
-      },
-      {
-        path: 'infographic',
-        name: 'infographic',
-        component: () => import('pages/UnderConstruction.vue'),
-        meta: {
-          requiresAuth: true
-        }
-      },
-      {
-        path: 'infographic_list',
-        name: 'infographic_list',
-        component: () => import('pages/UnderConstruction.vue'),
-        meta: {
-          requiresAuth: true
-        }
-      },
-      {
         path: 'portfolio',
         name: 'portfolio',
         beforeEnter () { location.href = 'https://pis.egat.co.th' },
@@ -97,22 +41,6 @@ const routes = [
           requiresAuth: true
         }
       },
-      // {
-      //   path: 'benefit',
-      //   name: 'benefit',
-      //   component: () => import('pages/Benefits.vue'),
-      //   meta: {
-      //     requiresAuth: true
-      //   }
-      // },
-      // {
-      //   path: 'salary',
-      //   name: 'salary',
-      //   component: () => import('pages/Salary.vue'),
-      //   meta: {
-      //     requiresAuth: true
-      //   }
-      // },
       {
         path: 'salary',
         name: 'salary',

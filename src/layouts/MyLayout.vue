@@ -75,21 +75,6 @@
           />
         </q-item>
         <q-item
-          @click.native="report"
-          dark
-          v-if="user.roles.some(el => el.name === 'hrreport')"
-        >
-          <q-item-side
-            icon="description"
-            color="orange-3"
-            inverted-light
-          />
-          <q-item-main
-            label="HR Report"
-            class="text-left text-bold"
-          />
-        </q-item>
-        <q-item
           @click.native="smartlife"
           dark
         >
