@@ -1,0 +1,20 @@
+module.exports = {
+
+    // Development Environment
+
+    development: {
+        "api_endpoint": "/api",
+        "sub_domain": "https://590006-dev.onelogin.com/oidc/2",
+        "client_id": "",
+        "client_secret": ""
+    },
+
+    // Production Environment
+
+    production: {
+        "api_endpoint": "https://hrapp.egat.co.th/api",
+        "sub_domain": "https://egat.onelogin.com/oidc/2",
+        "client_id": "",
+        "client_secret": ""
+    }
+};

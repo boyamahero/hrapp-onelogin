@@ -1,10 +1,10 @@
 import * as types from './types'
 
 export default {
-  authLogin ({ commit }, keycloakAuth) {
-    commit('SECURITY_AUTH', keycloakAuth)
+  authLogin: ({ commit }, { userManager, currentUser }) => {
+    commit('SECURITY_AUTH', { userManager, currentUser })
   },
-  authLogout ({ commit }) {
-    commit(types.SECURITY_AUTH)
+  authLogout: ({ commit }) => {
+    commit(types.SECURITY_AUTH, { userManager: null, currentUser: null })
   }
 }

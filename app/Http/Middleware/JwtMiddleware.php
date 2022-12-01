@@ -27,9 +27,14 @@ class JwtMiddleware extends BaseMiddleware
 
             // check token invalid at sso server
             // return json palyload and get preferred_username to be username
-            $url = "https://ssolb.egat.co.th/auth/realms/EGAT/protocol/openid-connect/userinfo";
+            // $url = "https://ssolb.egat.co.th/auth/realms/EGAT/protocol/openid-connect/userinfo";
+            // $url = "https://ssolb.egat.co.th/auth/realms/EGAT/protocol/openid-connect/userinfo";
+            // $ONELOGIN_SUBDOMAIN = config('oidc-client.onelogin.subdomain');
+            $url = config('onelogin.subdomain')."me";
+
             $json = $this->KeycloakIntrospectToken($url, $atkn);
             $employeeID = (int) json_decode($json)->preferred_username;
+
             // $employeeID  = "592997";
 
             // create user if it is not exist.
@@ -42,7 +47,7 @@ class JwtMiddleware extends BaseMiddleware
             // dd($user);
             // $user = JWTAuth::parseToken()->authenticate();
             // // $refreshed = JWTAuth::refresh(JWTAuth::getToken());
-            // // header('Authorization: Bearer ' . $refreshed); 
+            // // header('Authorization: Bearer ' . $refreshed);
 
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {

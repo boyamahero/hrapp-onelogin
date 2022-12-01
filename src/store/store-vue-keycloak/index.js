@@ -4,7 +4,10 @@ import mutations from './mutations'
 
 const state = {
   auth: {
-    authenticated: false
+    currentUser: {
+      access_token: null
+    },
+    userManager: null
   }
 }
 

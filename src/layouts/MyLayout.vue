@@ -187,8 +187,10 @@ export default {
     },
     logout () {
       this.logoutloading = true
-      var keycloakAuth = this.$store.getters.SECURITY_AUTH
-      keycloakAuth.logout()
+      // var keycloakAuth = this.$store.getters.SECURITY_AUTH
+      // keycloakAuth.logout()
+      const { userManager } = this.$store.getters.SECURITY_AUTH
+      userManager.signoutRedirect()
       this.$store.dispatch('authLogout')
     }
   }

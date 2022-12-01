@@ -3,6 +3,8 @@ const
   path = require('path'),
   SymlinkWebpackPlugin = require('symlink-webpack-plugin'),
   CopyWebpackPlugin = require('copy-webpack-plugin')
+const { env } = require('process')
+const config = require('./onelogin.config')
 
 module.exports = function (ctx) {
   return {
@@ -55,13 +57,19 @@ module.exports = function (ctx) {
           }))
         }
       },
-      env: {
-        api: JSON.stringify(
-          ctx.dev
-            ? '/api'
-            : 'https://hrapp.egat.co.th/api' // production end-point
-        )
-      }
+      env: ctx.dev
+        ? { // so on dev we'll have
+          api: JSON.stringify('/api'),
+          SubDomain: JSON.stringify(config.development.sub_domain),
+          ClientId: JSON.stringify(config.development.client_id),
+          ClientSecret: JSON.stringify(config.development.client_secret),
+        }
+        : { // and on build (production):
+          api: JSON.stringify("https://hrapp.egat.co.th/api"),
+          SubDomain: JSON.stringify(config.production.sub_domain),
+          ClientId: JSON.stringify(config.production.client_id),
+          ClientSecret: JSON.stringify(config.production.client_secret),
+      },
     },
     devServer: {
       // https: true,
