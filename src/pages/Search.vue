@@ -107,14 +107,6 @@
                     v-if="employee.work_from_any_where.length > 0"
                     color="deep-orange" text-color="white" icon="fas fa-globe-americas" dense>
                     WFA
-                    <q-tooltip
-                      class="q-body-2 text-white text-bold bg-deep-orange"
-                      v-for="(wfa, index) in employee.work_from_any_where"
-                      :key="index"
-                      :offset="[5, 5]"
-                    >
-                      WFA {{wfa.BeginDate}} {{wfa.BeginTime}} - {{wfa.EndDate}} {{wfa.EndTime}}
-                    </q-tooltip>
                   </q-chip>
                 </q-item-tile>
                 <q-item-tile class="q-body-1">
